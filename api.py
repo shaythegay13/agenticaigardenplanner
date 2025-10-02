@@ -1,0 +1,169 @@
+"""
+AI Garden Planner REST API
+FastAPI backend for Lovable frontend integration
+"""
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List, Optional
+import os
+
+from agi_agent.gardening.models import (
+    UserInput, LocationInput, GardeningMethod, SpaceSize, Sunlight,
+    Experience, UserGoals, CropInterest, Preference, SoilType,
+)
+from agi_agent.gardening.climate import fetch_simple_forecast, geocode_location
+from agi_agent.gardening.planner import generate_plan
+from agi_agent.gardening.crop_varieties import VARIETY_DATABASE
+
+app = FastAPI(
+    title="AI Garden Planner API",
+    description="REST API for personalized garden planning with 100+ crops",
+    version="4.0.2",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change to your Lovable domain in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class PlanRequest(BaseModel):
+    address: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    method: str
+    size: str
+    sunlight: str
+    soil_type: str = "Medium (Loam, mixed)"
+    experience: str
+    crop_interests: List[str]
+    preferences: List[str] = []
+
+@app.get("/")
+async def root():
+    return {
+        "status": "online",
+        "service": "AI Garden Planner API",
+        "version": "4.0.2",
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy"}
+
+@app.get("/api/enums")
+async def get_enums():
+    """Get dropdown options for frontend forms"""
+    return {
+        "methods": [m.value for m in GardeningMethod],
+        "sizes": [s.value for s in SpaceSize],
+        "sunlight": [s.value for s in Sunlight],
+        "experience": [e.value for e in Experience],
+        "crop_interests": [c.value for c in CropInterest],
+        "preferences": [p.value for p in Preference],
+    }
+
+@app.get("/api/crops")
+async def list_crops():
+    """Get all 100 crops"""
+    crops = [
+        {
+            "name": k.replace("_", " ").title(),
+            "key": k,
+            "variety_count": len(v)
+        }
+        for k, v in VARIETY_DATABASE.items()
+    ]
+    return {"total_crops": len(crops), "crops": sorted(crops, key=lambda x: x["name"])}
+
+@app.post("/api/plan")
+async def generate_garden_plan(request: PlanRequest):
+    """Generate personalized garden plan"""
+    try:
+        # Build location
+        location = LocationInput(
+            address=request.address,
+            latitude=request.latitude,
+            longitude=request.longitude
+        )
+        
+        # Geocode if address provided
+        if request.address and not (request.latitude and request.longitude):
+            try:
+                lat, lon = geocode_location(location)
+                location.latitude = lat
+                location.longitude = lon
+            except Exception as e:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Could not geocode address '{request.address}': {str(e)}"
+                )
+        
+        # Validate coordinates exist
+        if not location.has_coordinates():
+            raise HTTPException(
+                status_code=400, 
+                detail="Must provide either a valid address or latitude/longitude coordinates"
+            )
+        
+        # Map strings to enums
+        method = next((m for m in GardeningMethod if m.value == request.method), GardeningMethod.RAISED_BEDS)
+        size = next((s for s in SpaceSize if s.value == request.size), SpaceSize.MEDIUM)
+        sunlight = next((s for s in Sunlight if s.value == request.sunlight), Sunlight.FULL_SUN)
+        experience = next((e for e in Experience if e.value == request.experience), Experience.BEGINNER)
+        soil_type = next((s for s in SoilType if s.value == request.soil_type), SoilType.MEDIUM)
+        
+        crop_interests = [
+            next((c for c in CropInterest if c.value == i), CropInterest.SUGGEST)
+            for i in request.crop_interests
+        ]
+        preferences = [
+            p for p in [
+                next((p for p in Preference if p.value == pf), None)
+                for pf in request.preferences
+            ] if p
+        ]
+        
+        # Create user input with proper types
+        user_input = UserInput(
+            location=location,  # This is a LocationInput object
+            method=method,
+            size=size,
+            sunlight=sunlight,
+            soil_type=soil_type,
+            experience=experience,
+            goals=UserGoals(crops=crop_interests, preferences=preferences)
+        )
+        
+        # Get climate data
+        climate = fetch_simple_forecast(location.latitude, location.longitude)
+        
+        # Generate plan
+        plan_text = generate_plan(user_input, climate)
+        
+        return {
+            "success": True,
+            "plan": plan_text,
+            "location": {
+                "city": climate.city,
+                "state": climate.state,
+                "usda_zone": climate.usda_zone,
+            },
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error generating plan: {str(e)}\n{traceback.format_exc()}"
+        )
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))

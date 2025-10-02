@@ -1,0 +1,479 @@
+Generating sample garden plan...
+Location: New York City
+Profile: Beginner, Raised Beds, Medium Space, Full Sun
+
+======================================================================
+CUSTOMIZED GARDENING PLAN v4.0
+======================================================================
+
+Location: City of New York New York United States (40.8255, -73.9493) | TZ: America/New_York
+Region: Northeast | USDA Zone: 6
+Frost Window: Last Spring Apr 03 | First Fall Nov 20
+
+Your Garden Profile:
+  Method: GardeningMethod.RAISED_BEDS
+  Space Size: SpaceSize.MEDIUM
+  Sunlight: Sunlight.FULL_SUN
+  Soil Type: SoilType.MEDIUM
+  Experience: Experience.BEGINNER
+  Goals: ['Tomatoes', 'Herbs (basil, parsley, cilantro, mint)', 'Leafy Greens (lettuce, spinach, kale)']
+  Preferences: ['Fast Growing', 'Low Maintenance']
+
+Current Climate Summary: Next 7 days: avg high 24.8°C, avg low 14.4°C, total precip 0.0 mm
+
+USDA Hardiness Zone: 6
+Average Annual Extreme Minimum: 9.0°C (48.2°F)
+
+What this means:
+- Perennial plants rated for zone 6 or lower will typically survive winter
+- This zone is based on 30-year average extreme minimum temperatures
+- Individual winters may be colder or warmer than average
+- Microclimates in your garden may vary by 1-2 zones
+
+Official USDA Zone Map: https://planthardiness.ars.usda.gov/
+
+📍 Your Regional Climate Hub: Northeast
+
+USDA Northeast Climate Hub - Regional climate adaptation resources
+
+Regional Resources:
+- Climate Hub Portal: https://www.climatehubs.usda.gov/hubs/northeast
+- Regional climate change impacts and adaptation strategies
+- Crop-specific guidance for your area
+- Extreme weather preparation resources
+- Connection to local research and extension
+
+State Resources:
+- New York Extension Office: http://cce.cornell.edu/localoffices
+- New York Climate Assessment: Search at https://nysclimateimpacts.org/ (if available)
+
+
+======================================================================
+PLANNING RECOMMENDATIONS
+======================================================================
+
+Layout & Setup Tips:
+- Build 4'x8' beds 10–12" deep; fill with 50/50 compost and topsoil.
+- Adopt square-foot gardening for intensive planting.
+- Use vertical supports to expand growing area.
+- Schedule watering early morning; monitor for heat stress.
+
+Recommended Crops (top matches):
+- Lettuce: Cool-season; quick harvest; frequent sowings.
+- Basil: Warm-season; great for containers and windowsills.
+- Bee Balm (Monarda didyma): Native perennial; pollinator magnet; aromatic foliage.
+- Purple Coneflower (Echinacea purpurea): Native perennial; drought tolerant once established.
+📊 Expected Harvest Yields
+
+Realistic estimates based on your space, sunlight, and experience:
+
+**Lettuce**:
+  Estimated Yield: 8.2-11.0 lbs
+  Days to First Harvest: 45 days
+  Harvest Period: 4 weeks
+
+**Basil**:
+  Estimated Yield: 2.0-2.8 lbs
+  Days to First Harvest: 60 days
+  Harvest Period: 12 weeks
+
+**Total Estimated Harvest**: ~12 lbs of produce
+
+**Yield Factors**:
+  • Space: Medium (balcony, small patio)
+  • Sunlight: Full Sun (6+ hours direct sunlight)
+  • Experience: Beginner (never grown anything before)
+
+**Tips to Maximize Yields**:
+  • Ensure proper spacing for air circulation
+  • Maintain consistent watering schedule
+  • Feed plants regularly with balanced fertilizer
+  • Harvest frequently to encourage production
+  • Practice succession planting for continuous harvests
+
+🌿 Companion Planting Guide
+
+Maximize your garden's potential by planting compatible crops together!
+
+**General Companion Planting Tips**:
+  • Plant strong-scented herbs throughout to deter pests
+  • Marigolds and nasturtiums are universal pest deterrents
+  • Mix different plant families to confuse pests
+  • Taller plants can provide shade for heat-sensitive crops
+  • Deep-rooted and shallow-rooted plants use space efficiently
+
+
+======================================================================
+GARDEN LAYOUT VISUALIZATION
+======================================================================
+
+┌──────────────────────────────────┐
+│ 4'x8' Bed (Full Sun)             │
+├──────────────────────────────────┤
+│                                  │
+│ [Bee Balm (Monarda Didyma)] x8   │
+│ [Purple Coneflower (Echinacea Purpurea)] x8 │
+│                                  │
+│ [Lett]x32 [Basi]x32              │
+└──────────────────────────────────┘
+
+Planting Notes:
+  1. Bee Balm (Monarda Didyma): 8 plants (12-18" spacing)
+  2. Purple Coneflower (Echinacea Purpurea): 8 plants (12-18" spacing)
+  3. Lettuce: 32 plants (4-6" spacing)
+  4. Basil: 32 plants (4-6" spacing)
+
+Layout Notes:
+  • Total space: 32 sq ft
+  • Spacing method: Square Foot
+
+
+======================================================================
+VARIETY RECOMMENDATIONS: LETTUCE
+======================================================================
+
+📦 Black Seeded Simpson
+   Heat-tolerant leaf lettuce, easy to grow
+   Difficulty: Easy
+   Days to Maturity: 45 days
+   Expected Yield: 0.5-1 lb per plant
+   Space Needed: 0.25 sq ft per plant
+   Height: 8-10 inches
+   ✓ Container Suitable
+
+   Harvest Info:
+   • First Harvest: ~45 days from transplant
+   • Harvest Period: 4 weeks
+   • Technique: Cut outer leaves 1 inch above soil; leave center to regrow
+   • Frequency: Every 3-5 days
+
+   Care Tips:
+   • Harvest outer leaves for cut-and-come-again
+   • Plant in succession every 2 weeks
+   • Provide afternoon shade in hot weather
+
+📦 Buttercrunch
+   Crisp butterhead type, heat-tolerant
+   Difficulty: Easy
+   Days to Maturity: 55 days
+   Expected Yield: 1-1.5 lbs per plant
+   Space Needed: 0.5 sq ft per plant
+   Height: 8 inches
+   ✓ Container Suitable
+
+   Harvest Info:
+   • First Harvest: ~55 days from transplant
+   • Harvest Period: 2 weeks
+   • Technique: Cut entire head at soil level when firm
+   • Frequency: Single harvest per plant
+
+   Care Tips:
+   • Forms loose heads
+   • Very heat-tolerant for a butterhead
+   • Harvest whole head when formed
+
+======================================================================
+VARIETY RECOMMENDATIONS: BASIL
+======================================================================
+
+📦 Genovese
+   Classic Italian basil, aromatic
+   Difficulty: Easy
+   Days to Maturity: 68 days
+   Expected Yield: 1-2 lbs leaves per plant
+   Space Needed: 1.0 sq ft per plant
+   Height: 18-24 inches
+   ✓ Container Suitable
+
+   Harvest Info:
+   • First Harvest: ~68 days from transplant
+   • Harvest Period: 12 weeks
+   • Technique: Cut stems above a leaf node
+   • Frequency: Every 1-2 weeks
+
+   Care Tips:
+   • Pinch flowers to encourage bushy growth
+   • Harvest frequently
+   • Sensitive to cold
+
+
+Planting Calendar (Frost-aware):
+- USDA Zone: 6
+- Typical Last Spring Frost: Apr 03
+- Typical First Fall Frost: Nov 20
+- Rule of thumb: Start warm-season transplants ~2–4 weeks after last frost; 
+  start cool-season crops 4–8 weeks before last frost and again late summer for fall.
+
+Care Schedule:
+
+Current Water Status:
+- Water Deficit: 1.75 inches
+- Stress Level: Severe
+- 7-day Average Deficit: 1.06 inches
+
+🚨 URGENT: Severe water stress detected!
+Irrigate immediately with 1.75 inches.
+Split into 2-3 applications if amount is >1 inch to prevent runoff.
+Water early morning or evening to minimize evaporation.
+- Feeding: Organic fertilizer every 3–4 weeks (containers every 2–3 weeks).
+- Mulch: 2–3 inches to retain moisture and suppress weeds.
+- Pest Mgmt: Inspect weekly; use row covers and hand-picking before sprays.
+- Succession: Sow quick crops every 2–3 weeks for continuous harvests.
+
+
+Succession Planting Guide:
+
+Maximize harvests by planting small amounts of fast-growing crops every 2-3 weeks:
+
+**Fall Succession Crops** (quick-maturing for late harvest):
+- **Lettuce** (45 days): Plant every 2 weeks spring and fall for continuous salads
+- **Radishes** (25 days): Fast-growing; sow every 10 days for fresh radishes
+- **Arugula** (30 days): Quick-growing green; succession plant spring and fall
+- **Spinach** (40 days): Plant every 2 weeks; bolt-resistant varieties in summer
+- **Cilantro** (40 days): Bolts quickly in heat; succession plant in cool seasons
+
+**Pro Tips**:
+- Mark plantings with date labels
+- Keep a simple log to track what works
+- Adjust intervals based on weather (faster in warm weather)
+- Consider container plantings for flexibility
+
+
+Cover Crop Recommendations:
+
+Cover crops build soil health between growing seasons:
+- Fix nitrogen (legumes like clover, vetch)
+- Prevent erosion and suppress weeds
+- Break up compacted soil (tillage radish)
+- Add organic matter when tilled in
+
+Fall Cover Crop Planting:
+- **Winter Rye**: Too late to plant Winter Rye for this season.
+  Hardy; establishes quickly; excellent for overwintering
+- **Crimson Clover**: Too late to plant Crimson Clover for this season.
+  Nitrogen fixer; beautiful flowers in spring
+- **Hairy Vetch**: Too late to plant Hairy Vetch for this season.
+  Nitrogen fixer; good for spring vegetable beds
+- **Tillage Radish**: Too late to plant Tillage Radish for this season.
+  Deep roots break up compaction; winter-kills in cold climates
+
+
+Multi-Year Planning (3-year rotation example):
+- Year 1: Leafy greens and herbs; legumes (beans/peas) to fix nitrogen.
+- Year 2: Fruiting crops (tomatoes, peppers, cucumbers) in beds following legumes.
+- Year 3: Roots and brassicas (carrots, radishes, kale); add compost; then repeat cycle.
+Tip: Avoid planting the same family in the same spot in consecutive years to reduce disease.
+
+🏥 Disease Prevention & Management Guide
+
+Common diseases for your crops in the Northeast region:
+
+**Lettuce**:
+
+  Downy Mildew:
+    Risk Level in Northeast: 🟠 High
+    Symptoms: Yellow angular spots on upper leaf surface
+    Prevention:
+      • Plant in full sun with good air flow
+      • Avoid overhead watering
+      • Space plants adequately
+    Risk Factors: Cool moist weather, High humidity
+
+  Bottom Rot:
+    Risk Level in Northeast: 🟡 Moderate
+    Symptoms: Brown rot on lower leaves touching soil
+    Prevention:
+      • Avoid overwatering
+      • Mulch to prevent soil splash
+      • Improve drainage
+    Risk Factors: Excess moisture, Poor drainage
+
+**General Disease Prevention Tips**:
+  ✓ Water at base of plants, avoid wetting foliage
+  ✓ Ensure proper plant spacing for air circulation
+  ✓ Mulch to prevent soil splash onto leaves
+  ✓ Remove diseased plant material immediately
+  ✓ Practice crop rotation (3-4 year cycle)
+  ✓ Sanitize tools between plants
+  ✓ Choose disease-resistant varieties when available
+  ✓ Don't work in garden when plants are wet
+  ✓ Remove debris and weeds that harbor diseases
+  ✓ Monitor plants weekly for early detection
+
+**When to Act**:
+  • Inspect plants weekly, especially after rain
+  • Catch diseases early when treatment is most effective
+  • Remove infected leaves/plants promptly
+  • Apply organic treatments at first sign of issues
+  • Contact extension office if unsure about identification
+
+🌡️ Climate Change Outlook (Mid-Century: 2050s)
+
+Projected Changes for Northeast (compared to 1980-2010 baseline):
+
+**Temperature:**
+  2030s: +1.5°C (+2.7°F)
+  2050s: +2.5°C (+4.5°F)
+  2080s: +4.0°C (+7.2°F)
+
+**Precipitation:** 10% increase by 2050s
+
+**Growing Season:** +20 days by 2050s
+
+**Extreme Heat Days:** +15 days above 90°F (32°C) by 2050s
+
+**Key Trends:**
+  • Warming
+  • Increased Precipitation
+  • More Extreme Precipitation
+  • More Extreme Heat
+
+**Adaptation Strategies:**
+
+Recommended Actions:
+  1. Mulch heavily to keep roots cool
+  2. Shift spring planting 1-2 weeks earlier
+  3. Install overflow drainage
+  4. Increase air circulation between plants
+  5. Protect soil with permanent mulch or cover crops
+  6. Install rain gardens to manage excess water
+  7. Use misting systems during extreme heat
+  8. Select heat-tolerant varieties
+
+Climate-Adapted Crops to Consider:
+  • Armenian cucumber
+  • Cherry tomatoes (heat-set varieties)
+  • Container gardens
+  • Deep-rooted crops
+  • Disease-resistant tomatoes
+  • Drought-tolerant beans
+  • Eggplant
+  • Flood-tolerant vegetables
+  • Heat-tolerant lettuce
+  • Okra
+
+Learn More:
+- Climate Toolbox: https://climatetoolbox.org/tool/future-climate-dashboard
+- USDA Climate Hubs: https://www.climatehubs.usda.gov/
+- New York Climate Assessment: Search at your state's resources
+
+**Note:** Projections are based on moderate emissions scenario (RCP 4.5). Actual changes depend on global emissions trajectory.
+
+📊 New York Climate Assessment Highlights
+
+Source: New York State Climate Impacts Assessment (2024)
+URL: https://nysclimateimpacts.org/
+
+Key Findings for Agriculture:
+  • Growing season extended by 2-3 weeks since 1970
+  • Average annual temperature increased 2.4°F since 1970
+  • More intense precipitation events
+  • Earlier spring onset affecting frost dates
+  • Increased pest and disease pressure
+
+State-Specific Recommendations:
+  1. Select crop varieties adapted to warmer, wetter conditions
+  2. Implement improved drainage systems
+  3. Plan for earlier planting and extended fall season
+  4. Monitor for new pests and diseases migrating north
+  5. Invest in irrigation for summer dry spells despite increased annual rainfall
+
+Full Agriculture Chapter: https://nysclimateimpacts.org/wp-content/uploads/2024/02/Assessment-ch3-agriculture-01-31-24.pdf
+
+
+
+🔧 Regional Climate Tools for Northeast
+
+Specialized tools and resources for your region:
+
+**Northeast Regional Climate Center**
+  Weather data, climate tools, and regional analysis
+  URL: https://www.nrcc.cornell.edu/
+  Available Tools: Applied Climate Information System (ACIS), Moisture maps, Growing degree days
+
+**Cornell Climate Smart Farming**
+  Agriculture-focused climate tools
+  URL: https://climatesmartfarming.org/
+  Available Tools: Water deficit calculator, Cover crop scheduler, Climate change visualization
+
+
+
+🌊 Coastal Flood Risk Assessment
+
+Risk Level: Moderate Risk (5-10 miles from coast)
+Located in coastal region - may be affected by sea level rise and storm surge
+
+Recommended Actions:
+  • Consider raised beds or containers for flexibility
+  • Monitor NOAA sea level rise projections for your area
+  • Check local flood maps
+  • Prepare for increased coastal storm intensity
+
+Resources:
+  • NOAA Sea Level Rise Viewer: https://coast.noaa.gov/slr/
+  • FEMA Flood Map Service: https://msc.fema.gov/portal/home
+
+**Note:** This is a preliminary assessment. Check detailed maps for your specific location.
+
+📚 Learning Resources & Educational Materials
+
+Curated resources to help you succeed:
+
+**Getting Started** (Essential for New Gardeners):
+📘 "Vegetable Gardening for Beginners" - Old Farmer's Almanac
+     https://www.almanac.com/vegetable-gardening-for-beginners
+ | Rating: 4.7★
+📹 "How to Start a Garden - Complete Beginner Guide" - Epic Gardening
+     https://www.youtube.com/watch?v=jKMcv3SqMY8
+     Duration: 15 min | Rating: 4.8★
+📹 "Raised Bed Gardening 101" - MIGardener
+     https://www.youtube.com/watch?v=dK0WwBd8hDk
+     Duration: 22 min | Rating: 4.9★
+
+**Resources for Your Crops**:
+
+  Lettuce:
+  📄 "Growing Lettuce and Salad Greens" - Old Farmer's Almanac
+     https://www.almanac.com/plant/lettuce
+ | Rating: 4.6★
+
+**Essential Topics**:
+
+  Watering:
+  📄 "Watering Vegetable Gardens" - Oregon State Extension
+     https://extension.oregonstate.edu/gardening/vegetables/watering-vegetable-gardens
+ | Rating: 4.7★
+
+  Soil:
+  📄 "Understanding Soil Health" - Penn State Extension
+     https://extension.psu.edu/understanding-soil-health
+ | Rating: 4.6★
+
+  Pests Diseases:
+  📘 "Integrated Pest Management for Home Gardens" - Penn State Extension
+     https://extension.psu.edu/integrated-pest-management-for-home-gardeners
+ | Rating: 4.8★
+
+**Climate Resilience**:
+📄 "Climate Change and Your Garden" - Union of Concerned Scientists
+     https://www.ucsusa.org/resources/climate-change-and-your-garden
+ | Rating: 4.7★
+📹 "Drought-Tolerant Vegetables" - Epic Gardening
+     https://www.youtube.com/watch?v=mQiZ3g0vTLk
+     Duration: 12 min | Rating: 4.6★
+
+**Local Extension Office Resources**:
+  📍 Find your local extension office for regional advice:
+     • Cornell Extension (NY): https://cce.cornell.edu/localoffices
+     • Penn State Extension: https://extension.psu.edu/
+     • USDA Extension Search: https://www.nifa.usda.gov/land-grant-colleges-and-universities-partner-website-directory
+
+**Resource Update Notice**:
+  ℹ️ Resources last verified: October 2024
+  ℹ️ Links and content may change - always verify current information
+  ℹ️ Ratings based on community feedback and educational quality
+
+
+======================================================================
+END OF PLAN
+======================================================================
