@@ -223,7 +223,7 @@ def recommend_plants(
     # If we have very few results, add crops from extended database
     if len(results) < 10:
         extended_crops = generate_extended_crop_recommendations(
-            user_input, climate, sunlight, method, size, experience, crop_interests, preferences
+            sunlight, method, size, experience, crop_interests, preferences
         )
         # Add extended crops that aren't already in results
         existing_names = {p.name.lower() for p in results}
@@ -237,7 +237,7 @@ def recommend_plants(
 
 
 def generate_extended_crop_recommendations(
-    user_input, climate, sunlight, method, size, experience, crop_interests, preferences
+    sunlight, method, size, experience, crop_interests, preferences
 ) -> List[Plant]:
     """Generate recommendations from the extended 270+ crop database"""
     recommendations = []
@@ -257,18 +257,39 @@ def generate_extended_crop_recommendations(
     
     # Get relevant families based on user interests
     target_families = []
-    for interest in crop_interests:
-        target_families.extend(interest_to_family.get(interest, []))
     
-    # If no specific interests, include all families
+    # Check if user selected "I don't know - suggest crops for me"
+    if CropInterest.SUGGEST in crop_interests:
+        # Provide diverse beginner-friendly recommendations
+        if experience == Experience.BEGINNER:
+            # Prioritize easy, fast-growing crops for beginners
+            target_families = [
+                CropFamily.LAMIACEAE,  # Herbs (basil, mint)
+                CropFamily.ASTERACEAE,  # Lettuce, greens
+                CropFamily.BRASSICACEAE,  # Radishes, kale
+                CropFamily.FABACEAE,  # Beans, peas
+            ]
+        else:
+            # Include all families for variety
+            target_families = list(CropFamily)
+    else:
+        # Use specific interests
+        for interest in crop_interests:
+            target_families.extend(interest_to_family.get(interest, []))
+    
+    # If still no specific interests, include beginner-friendly families
     if not target_families:
-        target_families = list(CropFamily)
+        target_families = [
+            CropFamily.LAMIACEAE,
+            CropFamily.ASTERACEAE,
+            CropFamily.BRASSICACEAE,
+            CropFamily.FABACEAE,
+        ]
     
     # Generate Plant objects for crops in target families
     for crop_key, family in CROP_FAMILIES.items():
         if family in target_families:
             crop_name = crop_key.replace("_", " ").title()
-            
             # Skip if already in main PLANTS list
             if any(p.name.lower() == crop_name.lower() for p in PLANTS):
                 continue
@@ -294,15 +315,32 @@ def generate_extended_crop_recommendations(
             else:
                 categories = [CropInterest.LEAFY_GREENS]  # Default
             
+            # Determine suitable methods based on crop type
+            suitable_methods = [GardeningMethod.RAISED_BEDS, GardeningMethod.IN_GROUND]
+            
+            # Herbs and small crops work well in containers and indoors
+            if family in [CropFamily.LAMIACEAE, CropFamily.ASTERACEAE]:
+                suitable_methods.extend([GardeningMethod.CONTAINERS, GardeningMethod.INDOOR, GardeningMethod.VERTICAL])
+            
+            # Skip large trees/shrubs for small spaces or indoor growing
+            if family in [CropFamily.ROSACEAE, CropFamily.RUTACEAE, CropFamily.JUGLANDACEAE]:
+                if size == SpaceSize.SMALL or method == GardeningMethod.INDOOR:
+                    continue  # Skip trees for small/indoor spaces
+                suitable_methods = [GardeningMethod.IN_GROUND]
+            
+            # Check if this crop is suitable for the user's method
+            if method not in suitable_methods:
+                continue
+            
             # Create Plant object with sensible defaults
             plant = Plant(
                 name=crop_name,
                 categories=categories,
                 light=[Sunlight.FULL_SUN, Sunlight.PARTIAL_SUN],  # Most crops
-                methods=[GardeningMethod.RAISED_BEDS, GardeningMethod.IN_GROUND],
-                sizes=[SpaceSize.MEDIUM, SpaceSize.LARGE, SpaceSize.VERY_LARGE],
-                experience=[Experience.NOVICE, Experience.INTERMEDIATE, Experience.ADVANCED],
-                notes=f"{family.value} family crop",
+                methods=suitable_methods,
+                sizes=[SpaceSize.SMALL, SpaceSize.MEDIUM, SpaceSize.LARGE, SpaceSize.VERY_LARGE],
+                experience=[Experience.BEGINNER, Experience.NOVICE, Experience.INTERMEDIATE, Experience.ADVANCED],
+                notes=f"{family.value} family crop - easy to grow",
                 regions_supported=["Northeast", "Midwest", "South", "West"]
             )
             recommendations.append(plant)
