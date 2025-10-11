@@ -89,7 +89,7 @@ python -m agi_agent.cli
 
 The CLI will prompt for the following inputs:
 
-- Location: Address or coordinates (lat/lon). Address is geocoded via OpenStreetMap Nominatim.
+- Location: Address or coordinates (lat/lon). Address is geocoded via Google Maps Geocoding API (with OpenStreetMap fallback).
 - Gardening Method: `Raised Beds`, `Container Gardening`, `In-ground Gardening`, `Vertical Gardening`, `Indoor Gardening`, `Rooftop Gardening`.
 - Space Size: `Small`, `Medium`, `Large`, or `Very Large`.
 - Sunlight: `Full Sun`, `Partial Sun`, `Partial Shade`, `Shade`, or `Artificial Light Only`.

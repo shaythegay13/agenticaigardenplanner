@@ -1,15 +1,18 @@
 import requests
+import os
 from typing import Optional, Tuple, Dict, Any, List
 from datetime import date
 from statistics import median
 from .models import LocationInput, ClimateData
 
-USER_AGENT = "Cascade-Gardening-Planner/0.1 (contact: example@example.com)"
+# Google Maps API key from environment
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
 
 
 def geocode_location(location: LocationInput) -> Tuple[float, float]:
     """
-    Resolve latitude/longitude from address or pass-through coordinates using Nominatim (OpenStreetMap).
+    Resolve latitude/longitude from address or pass-through coordinates using Google Maps Geocoding API.
+    Falls back to OpenStreetMap if Google API key is not available.
     """
     if location.has_coordinates():
         return location.latitude, location.longitude
@@ -17,9 +20,34 @@ def geocode_location(location: LocationInput) -> Tuple[float, float]:
     if not location.address:
         raise ValueError("Either coordinates or an address must be provided.")
 
+    # Try Google Maps Geocoding API first
+    if GOOGLE_MAPS_API_KEY:
+        try:
+            url = "https://maps.googleapis.com/maps/api/geocode/json"
+            params = {
+                "address": location.address,
+                "key": GOOGLE_MAPS_API_KEY
+            }
+            resp = requests.get(url, params=params, timeout=20)
+            resp.raise_for_status()
+            data = resp.json()
+            
+            if data.get("status") == "OK" and data.get("results"):
+                result = data["results"][0]
+                lat = result["geometry"]["location"]["lat"]
+                lon = result["geometry"]["location"]["lng"]
+                return float(lat), float(lon)
+            elif data.get("status") == "ZERO_RESULTS":
+                raise ValueError(f"Address not found: {location.address}")
+            else:
+                raise ValueError(f"Geocoding error: {data.get('status')}")
+        except Exception as e:
+            print(f"Google Maps geocoding failed: {e}, falling back to OpenStreetMap")
+    
+    # Fallback to OpenStreetMap Nominatim (free, no API key required)
     url = "https://nominatim.openstreetmap.org/search"
     params = {"q": location.address, "format": "json", "limit": 1}
-    headers = {"User-Agent": USER_AGENT}
+    headers = {"User-Agent": "Cascade-Gardening-Planner/0.1"}
     resp = requests.get(url, params=params, headers=headers, timeout=20)
     resp.raise_for_status()
     data = resp.json()
@@ -31,10 +59,43 @@ def geocode_location(location: LocationInput) -> Tuple[float, float]:
 
 
 def reverse_geocode(lat: float, lon: float) -> Dict[str, Optional[str]]:
-    """Reverse geocode lat/lon to city/state/country using Nominatim."""
+    """
+    Reverse geocode lat/lon to city/state/country using Google Maps Geocoding API.
+    Falls back to OpenStreetMap if Google API key is not available.
+    """
+    # Try Google Maps Reverse Geocoding API first
+    if GOOGLE_MAPS_API_KEY:
+        try:
+            url = "https://maps.googleapis.com/maps/api/geocode/json"
+            params = {
+                "latlng": f"{lat},{lon}",
+                "key": GOOGLE_MAPS_API_KEY
+            }
+            resp = requests.get(url, params=params, timeout=20)
+            resp.raise_for_status()
+            data = resp.json()
+            
+            if data.get("status") == "OK" and data.get("results"):
+                # Parse address components from first result
+                result = data["results"][0]
+                components = {c["types"][0]: c["long_name"] for c in result.get("address_components", [])}
+                
+                return {
+                    "city": (components.get("locality") or 
+                            components.get("sublocality") or 
+                            components.get("administrative_area_level_3")),
+                    "state": components.get("administrative_area_level_1"),
+                    "country": components.get("country"),
+                    "country_code": next((c["short_name"] for c in result.get("address_components", []) 
+                                        if "country" in c["types"]), None),
+                }
+        except Exception as e:
+            print(f"Google Maps reverse geocoding failed: {e}, falling back to OpenStreetMap")
+    
+    # Fallback to OpenStreetMap Nominatim
     url = "https://nominatim.openstreetmap.org/reverse"
     params = {"lat": lat, "lon": lon, "format": "json", "zoom": 10, "addressdetails": 1}
-    headers = {"User-Agent": USER_AGENT}
+    headers = {"User-Agent": "Cascade-Gardening-Planner/0.1"}
     resp = requests.get(url, params=params, headers=headers, timeout=20)
     resp.raise_for_status()
     data = resp.json()

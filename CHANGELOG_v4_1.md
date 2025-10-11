@@ -2,6 +2,27 @@
 
 ## Release Date: 2025-10-11
 
+## 🔄 Latest Updates (v4.1.1)
+
+### Geocoding Migration
+- **Switched to Google Maps Geocoding API** for address resolution
+- **Replaced OpenStreetMap Nominatim** with Google Maps for consistency
+- **Graceful fallback** to OpenStreetMap if Google API key not available
+- **Better accuracy** for international addresses
+- **Faster response times** using Google's infrastructure
+
+### API Endpoints
+- **Added** `/api/v1/garden-plan/generate` endpoint
+- **Maintained** `/api/plan` for backward compatibility
+- Both endpoints use shared logic
+
+### Bug Fixes
+- **Fixed** `requirements.txt` duplicate dependencies
+- **Removed** unused AI libraries (torch, transformers, langchain)
+- **Resolved** Render deployment issues
+
+---
+
 ## 🌟 Major Features
 
 ### Google Cloud APIs Integration
