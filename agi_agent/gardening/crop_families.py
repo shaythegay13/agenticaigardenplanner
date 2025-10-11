@@ -430,6 +430,43 @@ FAMILY_DISEASES: Dict[CropFamily, List[str]] = {
         "Cercospora Leaf Spot", "Downy Mildew", "Powdery Mildew",
         "Root Rot", "Damping Off", "Leaf Miners"
     ],
+    CropFamily.ROSACEAE: [
+        "Fire Blight", "Apple Scab", "Powdery Mildew",
+        "Brown Rot", "Cedar Apple Rust", "Black Knot",
+        "Leaf Curl", "Bacterial Canker", "Crown Gall"
+    ],
+    CropFamily.BERRIES: [
+        "Gray Mold (Botrytis)", "Anthracnose", "Powdery Mildew",
+        "Verticillium Wilt", "Phytophthora Root Rot", "Leaf Spot",
+        "Cane Blight", "Orange Rust", "Mummy Berry"
+    ],
+    CropFamily.RUTACEAE: [
+        "Citrus Canker", "Citrus Greening (HLB)", "Citrus Black Spot",
+        "Melanose", "Alternaria Brown Spot", "Phytophthora Root Rot",
+        "Sooty Mold", "Citrus Scab"
+    ],
+    CropFamily.VITACEAE: [
+        "Powdery Mildew", "Downy Mildew", "Black Rot",
+        "Botrytis Bunch Rot", "Anthracnose", "Pierce's Disease",
+        "Crown Gall", "Phomopsis Cane and Leaf Spot"
+    ],
+    CropFamily.TROPICAL_FRUIT: [
+        "Anthracnose", "Fusarium Wilt", "Root Rot",
+        "Leaf Spot", "Fruit Rot", "Bacterial Soft Rot",
+        "Powdery Mildew", "Cercospora Leaf Spot"
+    ],
+    CropFamily.JUGLANDACEAE: [
+        "Walnut Blight", "Anthracnose", "Crown Rot",
+        "Thousand Cankers Disease", "Phytophthora Root Rot", "Leaf Blotch"
+    ],
+    CropFamily.ANACARDIACEAE: [
+        "Anthracnose", "Powdery Mildew", "Bacterial Black Spot",
+        "Verticillium Wilt", "Root Rot", "Sooty Mold"
+    ],
+    CropFamily.LAMIACEAE: [
+        "Powdery Mildew", "Downy Mildew", "Root Rot",
+        "Fusarium Wilt", "Botrytis Gray Mold", "Bacterial Leaf Spot"
+    ],
 }
 
 # Companion planting by family
