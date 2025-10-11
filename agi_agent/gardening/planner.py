@@ -49,6 +49,14 @@ from .crop_varieties import (  # v4.0 Phase 2
     generate_variety_guide,
     get_varieties_for_crop,
 )
+from .google_enhanced_data import (  # v4.1 Google APIs Integration
+    EnhancedEnvironmentalData,
+    generate_environmental_summary,
+    analyze_air_quality_impact,
+    analyze_solar_exposure,
+    analyze_pollen_levels,
+    analyze_elevation_effects,
+)
 
 
 def _layout_suggestions(method: GardeningMethod, size: SpaceSize, sunlight: Sunlight) -> str:
@@ -162,10 +170,47 @@ def _map_crop_to_water_use(interests: List) -> CropWaterUse:
         return CropWaterUse.VEGETABLES  # Default
 
 
-def generate_plan(user: UserInput, climate: ClimateData, vision_insights: Optional[Dict[str, Any]] = None) -> str:
+def generate_plan(
+    user: UserInput, 
+    climate: ClimateData, 
+    vision_insights: Optional[Dict[str, Any]] = None,
+    enhanced_data: Optional[EnhancedEnvironmentalData] = None
+) -> str:
+    # Analyze enhanced environmental data if available
+    air_quality_analysis = None
+    solar_analysis = None
+    pollen_analysis = None
+    elevation_analysis = None
+    environmental_summary = ""
+    
+    if enhanced_data:
+        air_quality_analysis = analyze_air_quality_impact(enhanced_data.air_quality)
+        solar_analysis = analyze_solar_exposure(enhanced_data.solar)
+        pollen_analysis = analyze_pollen_levels(enhanced_data.pollen)
+        elevation_analysis = analyze_elevation_effects(
+            enhanced_data.elevation,
+            climate.latitude
+        )
+        environmental_summary = generate_environmental_summary(enhanced_data)
+    
+    # Override sunlight if we have precise solar data
+    effective_sunlight = user.sunlight
+    if solar_analysis and solar_analysis["sunlight_category"] != "unknown":
+        # Map solar category to Sunlight enum
+        solar_to_sunlight = {
+            "full_sun": Sunlight.FULL_SUN,
+            "partial_sun": Sunlight.PARTIAL_SUN,
+            "partial_shade": Sunlight.PARTIAL_SHADE,
+            "shade": Sunlight.SHADE,
+        }
+        effective_sunlight = solar_to_sunlight.get(
+            solar_analysis["sunlight_category"],
+            user.sunlight
+        )
+    
     plants = recommend_plants(
         interests=user.goals.crops,
-        sunlight=user.sunlight,
+        sunlight=effective_sunlight,  # Use solar-enhanced sunlight
         method=user.method,
         size=user.size,
         experience=user.experience,
@@ -173,8 +218,14 @@ def generate_plan(user: UserInput, climate: ClimateData, vision_insights: Option
         us_region=climate.us_region,
         state=climate.state,
     )
+    
+    # Add air quality note if pollution is high
+    air_quality_note = ""
+    if air_quality_analysis and air_quality_analysis["filter_pollution_tolerant"]:
+        air_quality_note = "\n⚠️  Note: High air pollution detected. Prioritizing pollution-tolerant varieties and recommending thorough washing of leafy greens before consumption.\n"
 
     plant_list = "\n".join([f"- {p.name}: {p.notes}" for p in plants[:10]]) or "- No matches; consider adjusting constraints."
+    plant_list += air_quality_note
     
     # Extract crop names for v3.1 features
     crop_names = [p.name for p in plants[:10]]
@@ -332,17 +383,27 @@ def generate_plan(user: UserInput, climate: ClimateData, vision_insights: Option
                 except Exception as e:
                     variety_guides += f"\nNote: Variety guide for {crop_name} unavailable: {e}\n"
     
+    # Add solar data note if available
+    sunlight_note = ""
+    if solar_analysis and solar_analysis["summer_hours"]:
+        sunlight_note = f" (Solar Analysis: {solar_analysis['summer_hours']:.1f}h summer, {solar_analysis['winter_hours']:.1f}h winter)"
+    
+    # Add elevation adjustment note if available
+    elevation_note = ""
+    if elevation_analysis and elevation_analysis["elevation_meters"]:
+        elevation_note = f" | Elevation: {int(elevation_analysis['elevation_meters'])}m (Temp adjustment: {elevation_analysis['temperature_adjustment']:.1f}°F)"
+    
     plan = (
         f"{'=' * 70}\n"
-        f"CUSTOMIZED GARDENING PLAN v4.0\n"
+        f"CUSTOMIZED GARDENING PLAN v4.1 (Google APIs Enhanced)\n"
         f"{'=' * 70}\n\n"
         f"Location: {climate.city or ''} {climate.state or ''} {climate.country or ''} ({climate.latitude:.4f}, {climate.longitude:.4f}) | TZ: {climate.timezone}\n"
-        f"Region: {climate.us_region or 'N/A'} | USDA Zone: {climate.usda_zone or 'Unknown'}\n"
+        f"Region: {climate.us_region or 'N/A'} | USDA Zone: {climate.usda_zone or 'Unknown'}{elevation_note}\n"
         f"Frost Window: Last Spring {climate.frost_last_spring or 'N/A'} | First Fall {climate.frost_first_fall or 'N/A'}\n\n"
         f"Your Garden Profile:\n"
         f"  Method: {user.method}\n"
         f"  Space Size: {user.size}\n"
-        f"  Sunlight: {user.sunlight}\n"
+        f"  Sunlight: {user.sunlight}{sunlight_note}\n"
         f"  Soil Type: {user.soil_type}\n"
         f"  Experience: {user.experience}\n"
         f"  Goals: {[c.value for c in user.goals.crops]}\n"
@@ -351,6 +412,7 @@ def generate_plan(user: UserInput, climate: ClimateData, vision_insights: Option
         + enhanced_zone_info
         + drought_adapted_recs
         + climate_hub_section
+        + environmental_summary
         + "\n\n" + ("=" * 70)
         + "\nPLANNING RECOMMENDATIONS\n"
         + ("=" * 70) + "\n\n"

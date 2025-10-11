@@ -6,7 +6,7 @@ FastAPI backend for Lovable frontend integration
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict
 import os
 
 from agi_agent.gardening.models import (
@@ -16,11 +16,20 @@ from agi_agent.gardening.models import (
 from agi_agent.gardening.climate import fetch_simple_forecast, geocode_location
 from agi_agent.gardening.planner import generate_plan
 from agi_agent.gardening.crop_varieties import VARIETY_DATABASE
+from agi_agent.gardening.google_enhanced_data import (
+    EnhancedEnvironmentalData,
+    AirQualityData,
+    SolarData,
+    WeatherData,
+    PollenData,
+    ElevationData,
+    AerialViewData,
+)
 
 app = FastAPI(
     title="AI Garden Planner API",
-    description="REST API for personalized garden planning with 100+ crops",
-    version="4.0.2",
+    description="REST API for personalized garden planning with 100+ crops and Google APIs environmental data",
+    version="4.1.0",
 )
 
 app.add_middleware(
@@ -42,13 +51,28 @@ class PlanRequest(BaseModel):
     experience: str
     crop_interests: List[str]
     preferences: List[str] = []
+    # Enhanced Google API data (optional)
+    air_quality: Optional[Dict] = None
+    solar_data: Optional[Dict] = None
+    weather_data: Optional[Dict] = None
+    pollen_data: Optional[Dict] = None
+    elevation_data: Optional[Dict] = None
+    aerial_view: Optional[Dict] = None
 
 @app.get("/")
 async def root():
     return {
         "status": "online",
         "service": "AI Garden Planner API",
-        "version": "4.0.2",
+        "version": "4.1.0",
+        "features": [
+            "100+ crop varieties",
+            "Google APIs environmental data",
+            "Air quality analysis",
+            "Solar exposure mapping",
+            "Pollen tracking",
+            "Elevation-based adjustments"
+        ],
         "docs": "/docs"
     }
 
@@ -143,8 +167,31 @@ async def generate_garden_plan(request: PlanRequest):
         # Get climate data
         climate = fetch_simple_forecast(location.latitude, location.longitude)
         
-        # Generate plan
-        plan_text = generate_plan(user_input, climate)
+        # Build enhanced environmental data if provided
+        enhanced_data = None
+        if any([request.air_quality, request.solar_data, request.weather_data, 
+                request.pollen_data, request.elevation_data, request.aerial_view]):
+            try:
+                enhanced_data = EnhancedEnvironmentalData(
+                    location={
+                        "latitude": location.latitude,
+                        "longitude": location.longitude,
+                        "address": location.address
+                    },
+                    air_quality=AirQualityData(**request.air_quality) if request.air_quality else None,
+                    solar=SolarData(**request.solar_data) if request.solar_data else None,
+                    weather=WeatherData(**request.weather_data) if request.weather_data else None,
+                    pollen=PollenData(**request.pollen_data) if request.pollen_data else None,
+                    elevation=ElevationData(**request.elevation_data) if request.elevation_data else None,
+                    aerial_view=AerialViewData(**request.aerial_view) if request.aerial_view else None,
+                    timestamp=""
+                )
+            except Exception as e:
+                print(f"Warning: Could not parse enhanced data: {e}")
+                enhanced_data = None
+        
+        # Generate plan with enhanced data
+        plan_text = generate_plan(user_input, climate, enhanced_data=enhanced_data)
         
         return {
             "success": True,
