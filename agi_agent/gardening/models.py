@@ -10,6 +10,7 @@ class GardeningMethod(str, Enum):
     VERTICAL = "Vertical Gardening"
     INDOOR = "Indoor Gardening"
     ROOFTOP = "Rooftop Gardening"
+    HYDROPONIC = "Hydroponic Gardening"
 
 
 class SpaceSize(str, Enum):
@@ -22,6 +23,10 @@ class SpaceSize(str, Enum):
 class Sunlight(str, Enum):
     FULL_SUN = "Full Sun (6+ hours direct sunlight)"
     PARTIAL_SUN = "Partial Sun (4-6 hours direct sunlight)"
+    LIMITED_SUN = "Limited Sun (2-4 hours direct sunlight)"
+    NO_SUN = "No Sun (shade only)"
+    ARTIFICIAL_LIGHTS = "Artificial Lights (grow lights)"
+    # Legacy options for backward compatibility
     PARTIAL_SHADE = "Partial Shade (2-4 hours direct sunlight)"
     SHADE = "Shade (less than 2 hours direct sunlight)"
     ARTIFICIAL_ONLY = "Artificial Light Only (grow lights)"
@@ -57,6 +62,25 @@ class Preference(str, Enum):
     PEST_RESISTANT = "Pest Resistant"
     FAST_GROWING = "Fast Growing"
     YEAR_ROUND = "Year-Round Growing"
+
+
+class GrowingLocation(str, Enum):
+    INDOORS = "Indoors"
+    OUTDOORS = "Outdoors"
+    BOTH = "Both"
+
+
+class Season(str, Enum):
+    SPRING = "Spring"
+    SUMMER = "Summer"
+    FALL = "Fall"
+    WINTER = "Winter"
+
+
+class TimeCommitment(str, Enum):
+    MINIMAL = "Minimal (check weekly)"
+    MODERATE = "Moderate (few times per week)"
+    DEDICATED = "Dedicated (daily care)"
 
 
 class LocationInput(BaseModel):

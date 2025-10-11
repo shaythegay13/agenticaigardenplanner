@@ -12,6 +12,7 @@ import os
 from agi_agent.gardening.models import (
     UserInput, LocationInput, GardeningMethod, SpaceSize, Sunlight,
     Experience, UserGoals, CropInterest, Preference, SoilType,
+    GrowingLocation, Season, TimeCommitment,
 )
 from agi_agent.gardening.climate import fetch_simple_forecast, geocode_location
 from agi_agent.gardening.planner import generate_plan
@@ -42,17 +43,41 @@ app.add_middleware(
 )
 
 class PlanRequest(BaseModel):
+    # Question 1: Location (required)
     address: Optional[str] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
-    method: str
-    size: str
-    sunlight: str
-    soil_type: str = "Medium (Loam, mixed)"
-    experience: str
-    crop_interests: List[str]
-    preferences: List[str] = []
-    # Enhanced Google API data (optional)
+    
+    # Question 2: Gardening method (required)
+    method: str  # Container, Raised Beds, In-ground, Vertical, Indoor, Rooftop, Hydroponic
+    
+    # Question 3: Space size (required)
+    size: str  # Small, Medium, Large, Very Large
+    
+    # Question 4: Growing location (required)
+    growing_location: str = "Outdoors"  # Indoors, Outdoors, Both
+    sunlight: str = "Full Sun (6+ hours direct sunlight)"  # Full Sun, Partial Sun, Limited Sun, No Sun, Artificial Lights
+    soil_type: str = "Medium (Loam, mixed)"  # Auto-detected from location or user-specified
+    
+    # Question 5: Growing seasons (required)
+    seasons: List[str] = ["Spring", "Summer", "Fall"]  # Spring, Summer, Fall, Winter
+    
+    # Question 6: Time commitment (required)
+    time_commitment: str = "Moderate (few times per week)"  # Minimal, Moderate, Dedicated
+    
+    # Question 7: Experience level (required)
+    experience: str  # Beginner, Novice, Intermediate, Advanced
+    
+    # Question 8: Garden goals
+    crop_interests: List[str] = []  # Leafy greens, Tomatoes, etc., or ["I don't know - suggest crops for me"]
+    preferences: List[str] = []  # Drought resistant, Native plants, Low maintenance, Pest resistant, Fast growing
+    additional_notes: Optional[str] = None  # User's custom notes
+    
+    # Question 9 (Optional): Garden space image
+    garden_image_url: Optional[str] = None  # URL to uploaded image
+    garden_image_base64: Optional[str] = None  # Base64 encoded image
+    
+    # Enhanced Google API data (auto-fetched by frontend or backend)
     air_quality: Optional[Dict] = None
     solar_data: Optional[Dict] = None
     weather_data: Optional[Dict] = None
@@ -86,12 +111,28 @@ async def health():
 
 @app.get("/api/enums")
 async def get_enums():
-    """Get dropdown options for frontend forms"""
+    """Get dropdown options for frontend forms - all 9 questions"""
     return {
+        # Question 2: Gardening method
         "methods": [m.value for m in GardeningMethod],
+        
+        # Question 3: Space size
         "sizes": [s.value for s in SpaceSize],
+        
+        # Question 4: Growing location and sunlight
+        "growing_locations": [l.value for l in GrowingLocation],
         "sunlight": [s.value for s in Sunlight],
+        
+        # Question 5: Seasons
+        "seasons": [s.value for s in Season],
+        
+        # Question 6: Time commitment
+        "time_commitments": [t.value for t in TimeCommitment],
+        
+        # Question 7: Experience
         "experience": [e.value for e in Experience],
+        
+        # Question 8: Garden goals
         "crop_interests": [c.value for c in CropInterest],
         "preferences": [p.value for p in Preference],
     }
