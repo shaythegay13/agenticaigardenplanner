@@ -12,7 +12,6 @@ GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
 def geocode_location(location: LocationInput) -> Tuple[float, float]:
     """
     Resolve latitude/longitude from address or pass-through coordinates using Google Maps Geocoding API.
-    Falls back to OpenStreetMap if Google API key is not available.
     """
     if location.has_coordinates():
         return location.latitude, location.longitude
@@ -20,92 +19,94 @@ def geocode_location(location: LocationInput) -> Tuple[float, float]:
     if not location.address:
         raise ValueError("Either coordinates or an address must be provided.")
 
-    # Try Google Maps Geocoding API first
-    if GOOGLE_MAPS_API_KEY:
-        try:
-            url = "https://maps.googleapis.com/maps/api/geocode/json"
-            params = {
-                "address": location.address,
-                "key": GOOGLE_MAPS_API_KEY
-            }
-            resp = requests.get(url, params=params, timeout=20)
-            resp.raise_for_status()
-            data = resp.json()
-            
-            if data.get("status") == "OK" and data.get("results"):
-                result = data["results"][0]
-                lat = result["geometry"]["location"]["lat"]
-                lon = result["geometry"]["location"]["lng"]
-                return float(lat), float(lon)
-            elif data.get("status") == "ZERO_RESULTS":
-                raise ValueError(f"Address not found: {location.address}")
-            else:
-                raise ValueError(f"Geocoding error: {data.get('status')}")
-        except Exception as e:
-            print(f"Google Maps geocoding failed: {e}, falling back to OpenStreetMap")
+    # Check if API key is configured
+    if not GOOGLE_MAPS_API_KEY:
+        raise ValueError(
+            "GOOGLE_MAPS_API_KEY environment variable is not set. "
+            "Please configure the API key in your Render environment settings."
+        )
     
-    # Fallback to OpenStreetMap Nominatim (free, no API key required)
-    url = "https://nominatim.openstreetmap.org/search"
-    params = {"q": location.address, "format": "json", "limit": 1}
-    headers = {"User-Agent": "Cascade-Gardening-Planner/0.1"}
-    resp = requests.get(url, params=params, headers=headers, timeout=20)
-    resp.raise_for_status()
-    data = resp.json()
-    if not data:
-        raise ValueError("Address not found via geocoding.")
-    lat = float(data[0]["lat"])
-    lon = float(data[0]["lon"])
-    return lat, lon
+    # Use Google Maps Geocoding API
+    print(f"[GEOCODING] Using Google Maps API for address: {location.address}")
+    url = "https://maps.googleapis.com/maps/api/geocode/json"
+    params = {
+        "address": location.address,
+        "key": GOOGLE_MAPS_API_KEY
+    }
+    
+    try:
+        resp = requests.get(url, params=params, timeout=20)
+        resp.raise_for_status()
+        data = resp.json()
+        
+        print(f"[GEOCODING] Google Maps API status: {data.get('status')}")
+        
+        if data.get("status") == "OK" and data.get("results"):
+            result = data["results"][0]
+            lat = result["geometry"]["location"]["lat"]
+            lon = result["geometry"]["location"]["lng"]
+            print(f"[GEOCODING] Success: {lat}, {lon}")
+            return float(lat), float(lon)
+        elif data.get("status") == "ZERO_RESULTS":
+            raise ValueError(f"Address not found: {location.address}")
+        elif data.get("status") == "REQUEST_DENIED":
+            raise ValueError(f"Google Maps API request denied. Check your API key and enabled APIs.")
+        else:
+            raise ValueError(f"Geocoding error: {data.get('status')} - {data.get('error_message', 'Unknown error')}")
+    except requests.exceptions.RequestException as e:
+        raise ValueError(f"Failed to connect to Google Maps API: {str(e)}")
 
 
 def reverse_geocode(lat: float, lon: float) -> Dict[str, Optional[str]]:
     """
     Reverse geocode lat/lon to city/state/country using Google Maps Geocoding API.
-    Falls back to OpenStreetMap if Google API key is not available.
     """
-    # Try Google Maps Reverse Geocoding API first
-    if GOOGLE_MAPS_API_KEY:
-        try:
-            url = "https://maps.googleapis.com/maps/api/geocode/json"
-            params = {
-                "latlng": f"{lat},{lon}",
-                "key": GOOGLE_MAPS_API_KEY
-            }
-            resp = requests.get(url, params=params, timeout=20)
-            resp.raise_for_status()
-            data = resp.json()
-            
-            if data.get("status") == "OK" and data.get("results"):
-                # Parse address components from first result
-                result = data["results"][0]
-                components = {c["types"][0]: c["long_name"] for c in result.get("address_components", [])}
-                
-                return {
-                    "city": (components.get("locality") or 
-                            components.get("sublocality") or 
-                            components.get("administrative_area_level_3")),
-                    "state": components.get("administrative_area_level_1"),
-                    "country": components.get("country"),
-                    "country_code": next((c["short_name"] for c in result.get("address_components", []) 
-                                        if "country" in c["types"]), None),
-                }
-        except Exception as e:
-            print(f"Google Maps reverse geocoding failed: {e}, falling back to OpenStreetMap")
+    # Check if API key is configured
+    if not GOOGLE_MAPS_API_KEY:
+        raise ValueError(
+            "GOOGLE_MAPS_API_KEY environment variable is not set. "
+            "Please configure the API key in your Render environment settings."
+        )
     
-    # Fallback to OpenStreetMap Nominatim
-    url = "https://nominatim.openstreetmap.org/reverse"
-    params = {"lat": lat, "lon": lon, "format": "json", "zoom": 10, "addressdetails": 1}
-    headers = {"User-Agent": "Cascade-Gardening-Planner/0.1"}
-    resp = requests.get(url, params=params, headers=headers, timeout=20)
-    resp.raise_for_status()
-    data = resp.json()
-    addr = data.get("address", {})
-    return {
-        "city": addr.get("city") or addr.get("town") or addr.get("village"),
-        "state": addr.get("state"),
-        "country": addr.get("country"),
-        "country_code": addr.get("country_code"),
+    # Use Google Maps Reverse Geocoding API
+    print(f"[REVERSE GEOCODING] Using Google Maps API for coordinates: {lat}, {lon}")
+    url = "https://maps.googleapis.com/maps/api/geocode/json"
+    params = {
+        "latlng": f"{lat},{lon}",
+        "key": GOOGLE_MAPS_API_KEY
     }
+    
+    try:
+        resp = requests.get(url, params=params, timeout=20)
+        resp.raise_for_status()
+        data = resp.json()
+        
+        print(f"[REVERSE GEOCODING] Google Maps API status: {data.get('status')}")
+        
+        if data.get("status") == "OK" and data.get("results"):
+            # Parse address components from first result
+            result = data["results"][0]
+            components = {c["types"][0]: c["long_name"] for c in result.get("address_components", [])}
+            
+            location_data = {
+                "city": (components.get("locality") or 
+                        components.get("sublocality") or 
+                        components.get("administrative_area_level_3")),
+                "state": components.get("administrative_area_level_1"),
+                "country": components.get("country"),
+                "country_code": next((c["short_name"] for c in result.get("address_components", []) 
+                                    if "country" in c["types"]), None),
+            }
+            print(f"[REVERSE GEOCODING] Success: {location_data}")
+            return location_data
+        elif data.get("status") == "ZERO_RESULTS":
+            raise ValueError(f"No address found for coordinates: {lat}, {lon}")
+        elif data.get("status") == "REQUEST_DENIED":
+            raise ValueError(f"Google Maps API request denied. Check your API key and enabled APIs.")
+        else:
+            raise ValueError(f"Reverse geocoding error: {data.get('status')} - {data.get('error_message', 'Unknown error')}")
+    except requests.exceptions.RequestException as e:
+        raise ValueError(f"Failed to connect to Google Maps API: {str(e)}")
 
 
 def infer_us_region(state: Optional[str]) -> Optional[str]:
