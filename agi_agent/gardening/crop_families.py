@@ -392,80 +392,230 @@ CROP_FAMILIES: Dict[str, CropFamily] = {
     "canola_seed": CropFamily.BRASSICACEAE,
 }
 
-# Common diseases by family
+# Common diseases by family - Comprehensive database for 270+ crops
 FAMILY_DISEASES: Dict[CropFamily, List[str]] = {
     CropFamily.SOLANACEAE: [
-        "Early Blight", "Late Blight", "Septoria Leaf Spot",
-        "Verticillium Wilt", "Fusarium Wilt", "Bacterial Spot",
-        "Tomato Mosaic Virus", "Blossom End Rot"
+        # Tomatoes, Peppers, Eggplant, Potatoes, Tomatillo, Goji Berry
+        "Early Blight (Alternaria solani)", "Late Blight (Phytophthora infestans)", 
+        "Septoria Leaf Spot", "Verticillium Wilt", "Fusarium Wilt",
+        "Bacterial Spot", "Bacterial Speck", "Bacterial Canker",
+        "Tomato Mosaic Virus (ToMV)", "Tobacco Mosaic Virus (TMV)",
+        "Tomato Spotted Wilt Virus (TSWV)", "Blossom End Rot",
+        "Powdery Mildew", "Gray Mold (Botrytis)", "Anthracnose",
+        "Southern Blight", "Damping Off", "Root-Knot Nematodes",
+        "Potato Scab", "Blackleg", "Hollow Heart", "Leaf Roll Virus"
     ],
     CropFamily.BRASSICACEAE: [
-        "Clubroot", "Black Rot", "Downy Mildew",
-        "Powdery Mildew", "Cabbage Worm", "Flea Beetles",
-        "White Rust", "Alternaria Leaf Spot"
+        # Cabbage, Broccoli, Kale, Radish, Turnip, Arugula, Bok Choy, Kohlrabi
+        "Clubroot (Plasmodiophora brassicae)", "Black Rot (Xanthomonas campestris)",
+        "Downy Mildew (Peronospora parasitica)", "Powdery Mildew",
+        "White Rust (Albugo candida)", "Alternaria Leaf Spot",
+        "Bacterial Soft Rot", "Black Leg (Phoma lingam)",
+        "Fusarium Yellows", "Verticillium Wilt",
+        "Cabbage Yellows", "Ring Spot", "Wirestem",
+        "Damping Off", "Root Maggot Damage", "Flea Beetle Damage",
+        "Cabbage Looper Damage", "Imported Cabbageworm",
+        "Diamondback Moth", "Aphid-transmitted Viruses"
     ],
     CropFamily.CUCURBITACEAE: [
-        "Powdery Mildew", "Downy Mildew", "Anthracnose",
-        "Bacterial Wilt", "Cucumber Mosaic Virus", "Fusarium Wilt",
-        "Gummy Stem Blight", "Angular Leaf Spot"
+        # Cucumbers, Squash, Melons, Pumpkins, Watermelon, Zucchini
+        "Powdery Mildew (Podosphaera xanthii)", "Downy Mildew (Pseudoperonospora cubensis)",
+        "Anthracnose (Colletotrichum spp.)", "Bacterial Wilt (Erwinia tracheiphila)",
+        "Cucumber Mosaic Virus (CMV)", "Watermelon Mosaic Virus",
+        "Zucchini Yellow Mosaic Virus", "Fusarium Wilt",
+        "Gummy Stem Blight (Didymella bryoniae)", "Angular Leaf Spot",
+        "Alternaria Leaf Blight", "Phytophthora Blight",
+        "Scab (Cladosporium cucumerinum)", "Belly Rot",
+        "Blossom End Rot", "Pythium Root Rot", "Verticillium Wilt",
+        "Target Spot", "Cercospora Leaf Spot"
     ],
     CropFamily.FABACEAE: [
-        "Bean Rust", "Anthracnose", "Bacterial Blight",
-        "Powdery Mildew", "Root Rot", "Mosaic Virus",
-        "White Mold", "Fusarium Wilt"
+        # Beans, Peas, Lentils, Chickpeas, Soybeans, Peanuts, All Legumes
+        "Bean Rust (Uromyces appendiculatus)", "Anthracnose (Colletotrichum lindemuthianum)",
+        "Bacterial Blight (Pseudomonas syringae)", "Halo Blight",
+        "Common Bacterial Blight", "Powdery Mildew (Erysiphe polygoni)",
+        "Downy Mildew", "Root Rot (Rhizoctonia, Fusarium, Pythium)",
+        "Bean Common Mosaic Virus (BCMV)", "Bean Yellow Mosaic Virus",
+        "White Mold (Sclerotinia sclerotiorum)", "Gray Mold (Botrytis)",
+        "Fusarium Wilt", "Verticillium Wilt", "Ascochyta Blight",
+        "Septoria Leaf Spot", "Cercospora Leaf Spot",
+        "Damping Off", "Seed Rot", "Pod Rot",
+        "Peanut Leaf Spot", "Southern Blight", "Root-Knot Nematodes"
     ],
     CropFamily.APIACEAE: [
-        "Carrot Rust Fly", "Leaf Blight", "Cercospora Leaf Spot",
-        "Powdery Mildew", "Aster Yellows", "Bacterial Soft Rot"
+        # Carrots, Celery, Parsley, Cilantro, Fennel, Parsnip, Dill
+        "Carrot Rust Fly Damage", "Leaf Blight (Alternaria dauci)",
+        "Cercospora Leaf Spot (Cercospora carotae)", "Powdery Mildew",
+        "Aster Yellows (Phytoplasma)", "Bacterial Soft Rot",
+        "Cavity Spot", "Black Rot", "Sclerotinia Rot",
+        "Pythium Root Rot", "Rhizoctonia Root Rot",
+        "Carrot Motley Dwarf Virus", "Celery Mosaic Virus",
+        "Septoria Leaf Spot", "Early Blight", "Late Blight",
+        "Damping Off", "Crown Rot", "Storage Rot"
     ],
     CropFamily.ALLIACEAE: [
-        "Onion Smut", "Downy Mildew", "Purple Blotch",
-        "Botrytis Leaf Blight", "White Rot", "Fusarium Basal Rot"
+        # Onions, Garlic, Leeks, Chives, Shallots
+        "Onion Smut (Urocystis cepulae)", "Downy Mildew (Peronospora destructor)",
+        "Purple Blotch (Alternaria porri)", "Botrytis Leaf Blight",
+        "Botrytis Neck Rot", "White Rot (Sclerotium cepivorum)",
+        "Fusarium Basal Rot", "Pink Root (Phoma terrestris)",
+        "Bacterial Soft Rot", "Sour Skin (Burkholderia cepacia)",
+        "Onion Yellow Dwarf Virus", "Iris Yellow Spot Virus",
+        "Rust (Puccinia allii)", "Black Mold", "Blue Mold",
+        "Stemphylium Leaf Blight", "Thrips Damage"
     ],
     CropFamily.ASTERACEAE: [
-        "Downy Mildew", "Bottom Rot", "Tipburn",
-        "Lettuce Mosaic Virus", "Septoria Leaf Spot", "Powdery Mildew"
+        # Lettuce, Sunflowers, Artichokes, Endive, Radicchio
+        "Downy Mildew (Bremia lactucae)", "Bottom Rot (Rhizoctonia solani)",
+        "Tipburn (Physiological)", "Lettuce Mosaic Virus (LMV)",
+        "Septoria Leaf Spot", "Powdery Mildew", "Anthracnose",
+        "Sclerotinia Drop (White Mold)", "Gray Mold (Botrytis)",
+        "Bacterial Leaf Spot", "Corky Root Rot",
+        "Fusarium Wilt", "Verticillium Wilt", "Big Vein Virus",
+        "Lettuce Dieback", "Aster Yellows", "Damping Off",
+        "Root Aphid Damage", "Sunflower Rust", "Sunflower Downy Mildew"
     ],
     CropFamily.CHENOPODIACEAE: [
-        "Cercospora Leaf Spot", "Downy Mildew", "Powdery Mildew",
-        "Root Rot", "Damping Off", "Leaf Miners"
+        # Beets, Swiss Chard, Spinach, Quinoa
+        "Cercospora Leaf Spot (Cercospora beticola)", "Downy Mildew",
+        "Powdery Mildew", "Root Rot (Rhizoctonia, Pythium, Phytophthora)",
+        "Damping Off", "Leaf Miners (Pegomya hyoscyami)",
+        "Beet Curly Top Virus", "Beet Mosaic Virus",
+        "Fusarium Yellows", "Verticillium Wilt",
+        "Bacterial Leaf Spot", "Anthracnose",
+        "Scab (Streptomyces scabies)", "Black Root",
+        "Spinach Blight", "White Rust", "Alternaria Leaf Spot"
     ],
     CropFamily.ROSACEAE: [
-        "Fire Blight", "Apple Scab", "Powdery Mildew",
-        "Brown Rot", "Cedar Apple Rust", "Black Knot",
-        "Leaf Curl", "Bacterial Canker", "Crown Gall"
+        # Apples, Pears, Peaches, Plums, Cherries, Strawberries, Almonds, Nectarines, Apricots, Quinces
+        "Fire Blight (Erwinia amylovora)", "Apple Scab (Venturia inaequalis)",
+        "Powdery Mildew (Podosphaera leucotricha)", "Brown Rot (Monilinia spp.)",
+        "Cedar Apple Rust (Gymnosporangium juniperi-virginianae)", "Black Knot (Apiosporina morbosa)",
+        "Peach Leaf Curl (Taphrina deformans)", "Bacterial Canker (Pseudomonas syringae)",
+        "Crown Gall (Agrobacterium tumefaciens)", "Bitter Rot",
+        "Sooty Blotch and Flyspeck", "White Rot", "Black Rot",
+        "Alternaria Leaf Blotch", "Frogeye Leaf Spot", "Brooks Fruit Spot",
+        "Phytophthora Root Rot", "Armillaria Root Rot (Oak Root Fungus)",
+        "Verticillium Wilt", "Bacterial Spot", "Shot Hole Disease",
+        "Coryneum Blight", "Cytospora Canker", "Perennial Canker",
+        "Silver Leaf (Chondrostereum purpureum)", "Replant Disease",
+        "Apple Mosaic Virus", "Plum Pox Virus (Sharka)", "Prune Dwarf Virus"
     ],
     CropFamily.BERRIES: [
-        "Gray Mold (Botrytis)", "Anthracnose", "Powdery Mildew",
-        "Verticillium Wilt", "Phytophthora Root Rot", "Leaf Spot",
-        "Cane Blight", "Orange Rust", "Mummy Berry"
+        # Strawberries, Blueberries, Raspberries, Blackberries, Cranberries, Gooseberries, Currants, Elderberries
+        "Gray Mold (Botrytis cinerea)", "Anthracnose (Colletotrichum spp.)",
+        "Powdery Mildew (Sphaerotheca macularis)", "Verticillium Wilt",
+        "Phytophthora Root Rot", "Leaf Spot (Mycosphaerella fragariae)",
+        "Cane Blight (Leptosphaeria coniothyrium)", "Orange Rust (Gymnoconia nitens)",
+        "Mummy Berry (Monilinia vaccinii-corymbosi)", "Spur Blight",
+        "Cane and Leaf Rust", "Yellow Rust", "Late Leaf Rust",
+        "Septoria Leaf Spot", "Angular Leaf Spot", "Leaf Scorch",
+        "Red Stele (Phytophthora fragariae)", "Black Root Rot",
+        "Crown Rot", "Leather Rot", "Fruit Rot",
+        "Strawberry Mottle Virus", "Raspberry Bushy Dwarf Virus",
+        "Blueberry Shock Virus", "Tomato Ringspot Virus",
+        "Tobacco Ringspot Virus", "Blueberry Stem Canker",
+        "Fusicoccum Canker", "Godronia Canker", "Phomopsis Canker"
     ],
     CropFamily.RUTACEAE: [
-        "Citrus Canker", "Citrus Greening (HLB)", "Citrus Black Spot",
-        "Melanose", "Alternaria Brown Spot", "Phytophthora Root Rot",
-        "Sooty Mold", "Citrus Scab"
+        # Oranges, Lemons, Limes, Grapefruit, Tangerines, Kumquats, Clementines
+        "Citrus Canker (Xanthomonas citri)", "Citrus Greening (Huanglongbing/HLB)",
+        "Citrus Black Spot (Phyllosticta citricarpa)", "Melanose (Diaporthe citri)",
+        "Alternaria Brown Spot (Alternaria alternata)", "Phytophthora Root Rot",
+        "Phytophthora Gummosis", "Sooty Mold", "Citrus Scab (Elsinoe fawcettii)",
+        "Greasy Spot (Mycosphaerella citri)", "Septoria Spot",
+        "Anthracnose (Colletotrichum gloeosporioides)", "Brown Rot (Phytophthora spp.)",
+        "Botrytis Rot", "Penicillium Rot", "Diplodia Stem-End Rot",
+        "Tristeza Virus (CTV)", "Psorosis Virus", "Exocortis Viroid",
+        "Stubborn Disease (Spiroplasma citri)", "Armillaria Root Rot",
+        "Foot Rot", "Dry Root Rot", "Citrus Blast"
     ],
     CropFamily.VITACEAE: [
-        "Powdery Mildew", "Downy Mildew", "Black Rot",
-        "Botrytis Bunch Rot", "Anthracnose", "Pierce's Disease",
-        "Crown Gall", "Phomopsis Cane and Leaf Spot"
+        # Grapes
+        "Powdery Mildew (Uncinula necator)", "Downy Mildew (Plasmopara viticola)",
+        "Black Rot (Guignardia bidwellii)", "Botrytis Bunch Rot (Gray Mold)",
+        "Anthracnose (Elsinoe ampelina)", "Pierce's Disease (Xylella fastidiosa)",
+        "Crown Gall (Agrobacterium vitis)", "Phomopsis Cane and Leaf Spot",
+        "Eutypa Dieback (Eutypa lata)", "Esca (Black Measles)",
+        "Botryosphaeria Dieback", "Armillaria Root Rot",
+        "Phytophthora Root and Crown Rot", "Dead Arm Disease",
+        "Grapevine Leafroll Virus", "Fanleaf Virus", "Corky Bark Virus",
+        "Ripe Rot", "Bitter Rot", "Sour Rot", "Summer Bunch Rot"
     ],
     CropFamily.TROPICAL_FRUIT: [
-        "Anthracnose", "Fusarium Wilt", "Root Rot",
-        "Leaf Spot", "Fruit Rot", "Bacterial Soft Rot",
-        "Powdery Mildew", "Cercospora Leaf Spot"
+        # Papaya, Pineapple, Dragon Fruit, Mango, Banana, Avocado, Guava, Kiwi, Fig, Pomegranate
+        "Anthracnose (Colletotrichum spp.)", "Fusarium Wilt", "Root Rot (Phytophthora, Pythium)",
+        "Leaf Spot (Cercospora, Pseudocercospora)", "Fruit Rot", "Bacterial Soft Rot",
+        "Powdery Mildew", "Cercospora Leaf Spot", "Black Spot",
+        "Papaya Ringspot Virus", "Banana Bunchy Top Virus", "Banana Streak Virus",
+        "Panama Disease (Fusarium oxysporum f.sp. cubense)", "Black Sigatoka",
+        "Yellow Sigatoka", "Moko Disease", "Avocado Root Rot (Phytophthora cinnamomi)",
+        "Laurel Wilt (Raffaelea lauricola)", "Stem End Rot", "Body Rot",
+        "Mango Malformation", "Bacterial Black Spot", "Sooty Mold",
+        "Pink Disease", "Dieback", "Gummosis", "Fruit Fly Damage"
     ],
     CropFamily.JUGLANDACEAE: [
-        "Walnut Blight", "Anthracnose", "Crown Rot",
-        "Thousand Cankers Disease", "Phytophthora Root Rot", "Leaf Blotch"
+        # Walnuts, Pecans, Hickory, Hazelnuts
+        "Walnut Blight (Xanthomonas arboricola)", "Anthracnose (Gnomonia leptostyla)",
+        "Crown Rot (Phytophthora spp.)", "Thousand Cankers Disease (Geosmithia morbida)",
+        "Phytophthora Root Rot", "Leaf Blotch (Marssonina juglandis)",
+        "Armillaria Root Rot", "Botryosphaeria Canker", "Branch Wilt",
+        "Pecan Scab (Fusicladium effusum)", "Downy Spot", "Brown Leaf Spot",
+        "Vein Spot", "Liver Spot", "Zonate Leaf Spot",
+        "Bunch Disease", "Shuck and Kernel Rot", "Crown Gall",
+        "Walnut Black Line Disease", "Cherry Leaf Roll Virus"
     ],
     CropFamily.ANACARDIACEAE: [
-        "Anthracnose", "Powdery Mildew", "Bacterial Black Spot",
-        "Verticillium Wilt", "Root Rot", "Sooty Mold"
+        # Mango, Cashew, Pistachio
+        "Anthracnose (Colletotrichum gloeosporioides)", "Powdery Mildew (Oidium mangiferae)",
+        "Bacterial Black Spot (Xanthomonas campestris)", "Verticillium Wilt",
+        "Root Rot (Phytophthora, Armillaria)", "Sooty Mold",
+        "Mango Malformation", "Stem End Rot", "Dieback (Lasiodiplodia theobromae)",
+        "Alternaria Leaf Spot", "Cercospora Leaf Spot", "Red Rust",
+        "Cashew Gummosis", "Pistachio Verticillium Wilt", "Botryosphaeria Panicle and Shoot Blight",
+        "Septoria Leaf Spot", "Phytophthora Blight", "Bacterial Canker"
     ],
     CropFamily.LAMIACEAE: [
-        "Powdery Mildew", "Downy Mildew", "Root Rot",
-        "Fusarium Wilt", "Botrytis Gray Mold", "Bacterial Leaf Spot"
+        # Basil, Mint, Oregano, Thyme, Sage, Rosemary, Lavender, Lemon Balm
+        "Powdery Mildew (Erysiphe spp.)", "Downy Mildew (Peronospora belbahrii)",
+        "Root Rot (Rhizoctonia, Pythium, Fusarium)", "Fusarium Wilt",
+        "Botrytis Gray Mold", "Bacterial Leaf Spot (Pseudomonas cichorii)",
+        "Cercospora Leaf Spot", "Septoria Leaf Spot", "Alternaria Leaf Spot",
+        "Damping Off", "Crown and Stem Rot", "Southern Blight",
+        "Verticillium Wilt", "Anthracnose", "Rust (Puccinia menthae)",
+        "Mint Rust", "Basil Mosaic Virus", "Alfalfa Mosaic Virus"
+    ],
+    CropFamily.POACEAE: [
+        # Corn, Wheat, Rice, Oats, Barley, Rye, Millet, Sorghum, All Grains
+        "Corn Smut (Ustilago maydis)", "Northern Corn Leaf Blight (Exserohilum turcicum)",
+        "Southern Corn Leaf Blight (Bipolaris maydis)", "Gray Leaf Spot",
+        "Common Rust (Puccinia sorghi)", "Southern Rust", "Anthracnose",
+        "Fusarium Ear Rot", "Gibberella Ear Rot", "Diplodia Ear Rot",
+        "Aspergillus Ear Rot", "Goss's Bacterial Wilt", "Stewart's Wilt",
+        "Maize Dwarf Mosaic Virus", "Wheat Rust (Stem, Leaf, Stripe)",
+        "Wheat Scab (Fusarium Head Blight)", "Powdery Mildew", "Septoria Tritici Blotch",
+        "Tan Spot", "Barley Yellow Dwarf Virus", "Take-All (Gaeumannomyces graminis)",
+        "Rice Blast (Magnaporthe oryzae)", "Bacterial Leaf Blight", "Sheath Blight",
+        "Brown Spot", "Bakanae Disease", "False Smut", "Tungro Virus"
+    ],
+    CropFamily.MUSACEAE: [
+        # Bananas, Plantains
+        "Panama Disease (Fusarium Wilt TR4)", "Black Sigatoka (Mycosphaerella fijiensis)",
+        "Yellow Sigatoka", "Banana Bunchy Top Virus", "Banana Streak Virus",
+        "Moko Disease (Bacterial Wilt)", "Anthracnose", "Crown Rot",
+        "Cigar End Rot", "Finger Rot", "Freckle", "Cordana Leaf Spot"
+    ],
+    CropFamily.LAURACEAE: [
+        # Avocado
+        "Phytophthora Root Rot (Phytophthora cinnamomi)", "Laurel Wilt (Raffaelea lauricola)",
+        "Anthracnose (Colletotrichum gloeosporioides)", "Cercospora Spot",
+        "Stem End Rot", "Body Rot", "Dothiorella Canker", "Verticillium Wilt",
+        "Avocado Sunblotch Viroid", "Armillaria Root Rot"
+    ],
+    CropFamily.PROTEACEAE: [
+        # Macadamia
+        "Phytophthora Root Rot", "Husk Spot (Pseudocercospora macadamiae)",
+        "Anthracnose", "Raceme Blight", "Trunk Canker", "Botrytis Blossom Blight"
     ],
 }
 
