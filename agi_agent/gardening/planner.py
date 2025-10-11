@@ -230,11 +230,12 @@ def generate_plan(
     if air_quality_analysis and air_quality_analysis["filter_pollution_tolerant"]:
         air_quality_note = "\n⚠️  Note: High air pollution detected. Prioritizing pollution-tolerant varieties and recommending thorough washing of leafy greens before consumption.\n"
 
-    plant_list = "\n".join([f"- {p.name}: {p.notes}" for p in plants[:10]]) or "- No matches; consider adjusting constraints."
+    # Use all recommended plants (15-20 for diversity)
+    plant_list = "\n".join([f"- {p.name}: {p.notes}" for p in plants]) or "- No matches; consider adjusting constraints."
     plant_list += air_quality_note
     
-    # Extract crop names for v3.1 features
-    crop_names = [p.name for p in plants[:10]]
+    # Extract crop names for v3.1 features (use all plants)
+    crop_names = [p.name for p in plants]
     
     # v3.1 Feature 1: Companion Planting
     companion_guide = generate_companion_planting_guide(crop_names)
