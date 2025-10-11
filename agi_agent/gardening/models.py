@@ -49,6 +49,8 @@ class CropInterest(str, Enum):
     ONIONS_GARLIC = "Onions and Garlic"
     BEANS_PEAS = "Beans and Peas"
     SQUASH_CUCUMBERS = "Squash and Cucumbers"
+    BERRIES = "Berries (strawberries, blueberries, raspberries)"
+    FRUIT_TREES = "Fruit Trees (apples, pears, citrus)"
     SUGGEST = "I don't know - suggest crops for me"
 
 
