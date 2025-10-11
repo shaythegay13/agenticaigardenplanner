@@ -1,5 +1,6 @@
 from typing import List, Dict, Any, Optional
 from .models import Sunlight, GardeningMethod, SpaceSize, Experience, CropInterest, Preference
+from .crop_families import CROP_FAMILIES, CropFamily
 
 
 class Plant:
@@ -218,4 +219,92 @@ def recommend_plants(
         return -s  # negative for ascending sort
 
     results.sort(key=score)
+    
+    # If we have very few results, add crops from extended database
+    if len(results) < 10:
+        extended_crops = generate_extended_crop_recommendations(
+            user_input, climate, sunlight, method, size, experience, crop_interests, preferences
+        )
+        # Add extended crops that aren't already in results
+        existing_names = {p.name.lower() for p in results}
+        for crop in extended_crops:
+            if crop.name.lower() not in existing_names:
+                results.append(crop)
+                if len(results) >= 15:  # Cap at 15 total recommendations
+                    break
+    
     return results
+
+
+def generate_extended_crop_recommendations(
+    user_input, climate, sunlight, method, size, experience, crop_interests, preferences
+) -> List[Plant]:
+    """Generate recommendations from the extended 270+ crop database"""
+    recommendations = []
+    
+    # Map crop interests to families
+    interest_to_family = {
+        CropInterest.TOMATOES: [CropFamily.SOLANACEAE],
+        CropInterest.PEPPERS: [CropFamily.SOLANACEAE],
+        CropInterest.LEAFY_GREENS: [CropFamily.ASTERACEAE, CropFamily.BRASSICACEAE, CropFamily.CHENOPODIACEAE],
+        CropInterest.HERBS: [CropFamily.LAMIACEAE, CropFamily.APIACEAE],
+        CropInterest.ROOT_VEGETABLES: [CropFamily.APIACEAE, CropFamily.BRASSICACEAE],
+        CropInterest.SQUASH_CUCUMBERS: [CropFamily.CUCURBITACEAE],
+        CropInterest.BEANS_PEAS: [CropFamily.FABACEAE],
+        CropInterest.BERRIES: [CropFamily.BERRIES, CropFamily.ROSACEAE],
+        CropInterest.FRUIT_TREES: [CropFamily.ROSACEAE, CropFamily.RUTACEAE],
+    }
+    
+    # Get relevant families based on user interests
+    target_families = []
+    for interest in crop_interests:
+        target_families.extend(interest_to_family.get(interest, []))
+    
+    # If no specific interests, include all families
+    if not target_families:
+        target_families = list(CropFamily)
+    
+    # Generate Plant objects for crops in target families
+    for crop_key, family in CROP_FAMILIES.items():
+        if family in target_families:
+            crop_name = crop_key.replace("_", " ").title()
+            
+            # Skip if already in main PLANTS list
+            if any(p.name.lower() == crop_name.lower() for p in PLANTS):
+                continue
+            
+            # Determine categories based on family
+            categories = []
+            if family == CropFamily.SOLANACEAE:
+                categories = [CropInterest.TOMATOES, CropInterest.PEPPERS]
+            elif family in [CropFamily.ASTERACEAE, CropFamily.BRASSICACEAE, CropFamily.CHENOPODIACEAE]:
+                categories = [CropInterest.LEAFY_GREENS]
+            elif family in [CropFamily.LAMIACEAE, CropFamily.APIACEAE]:
+                categories = [CropInterest.HERBS]
+            elif family == CropFamily.APIACEAE:
+                categories = [CropInterest.ROOT_VEGETABLES]
+            elif family == CropFamily.CUCURBITACEAE:
+                categories = [CropInterest.SQUASH_CUCUMBERS]
+            elif family == CropFamily.FABACEAE:
+                categories = [CropInterest.BEANS_PEAS]
+            elif family in [CropFamily.BERRIES, CropFamily.ROSACEAE]:
+                categories = [CropInterest.BERRIES]
+            elif family in [CropFamily.RUTACEAE, CropFamily.TROPICAL_FRUIT]:
+                categories = [CropInterest.FRUIT_TREES]
+            else:
+                categories = [CropInterest.LEAFY_GREENS]  # Default
+            
+            # Create Plant object with sensible defaults
+            plant = Plant(
+                name=crop_name,
+                categories=categories,
+                light=[Sunlight.FULL_SUN, Sunlight.PARTIAL_SUN],  # Most crops
+                methods=[GardeningMethod.RAISED_BEDS, GardeningMethod.IN_GROUND],
+                sizes=[SpaceSize.MEDIUM, SpaceSize.LARGE, SpaceSize.VERY_LARGE],
+                experience=[Experience.NOVICE, Experience.INTERMEDIATE, Experience.ADVANCED],
+                notes=f"{family.value} family crop",
+                regions_supported=["Northeast", "Midwest", "South", "West"]
+            )
+            recommendations.append(plant)
+    
+    return recommendations[:20]  # Return top 20
