@@ -220,20 +220,23 @@ def recommend_plants(
 
     results.sort(key=score)
     
-    # If we have very few results, add crops from extended database
-    if len(results) < 10:
-        extended_crops = generate_extended_crop_recommendations(
-            sunlight, method, size, experience, interests, preferences
-        )
-        # Add extended crops that aren't already in results
-        existing_names = {p.name.lower() for p in results}
-        for crop in extended_crops:
-            if crop.name.lower() not in existing_names:
-                results.append(crop)
-                if len(results) >= 15:  # Cap at 15 total recommendations
-                    break
+    # ALWAYS add diverse crops from extended database for cultural diversity
+    # Goal: Provide vegetables, fruits, herbs, grains, nuts, legumes, etc.
+    extended_crops = generate_extended_crop_recommendations(
+        sunlight, method, size, experience, interests, preferences
+    )
     
-    return results
+    # Add extended crops that aren't already in results
+    existing_names = {p.name.lower() for p in results}
+    for crop in extended_crops:
+        if crop.name.lower() not in existing_names:
+            results.append(crop)
+    
+    # Ensure diversity: limit duplicates from same category
+    results = ensure_crop_diversity(results)
+    
+    # Return 15-20 recommendations for variety
+    return results[:20]
 
 
 def generate_extended_crop_recommendations(
@@ -260,31 +263,53 @@ def generate_extended_crop_recommendations(
     
     # Check if user selected "I don't know - suggest crops for me"
     if CropInterest.SUGGEST in crop_interests:
-        # Provide diverse beginner-friendly recommendations
-        if experience == Experience.BEGINNER:
-            # Prioritize easy, fast-growing crops for beginners
-            target_families = [
-                CropFamily.LAMIACEAE,  # Herbs (basil, mint)
-                CropFamily.ASTERACEAE,  # Lettuce, greens
-                CropFamily.BRASSICACEAE,  # Radishes, kale
-                CropFamily.FABACEAE,  # Beans, peas
-            ]
-        else:
-            # Include all families for variety
-            target_families = list(CropFamily)
-    else:
-        # Use specific interests
-        for interest in crop_interests:
-            target_families.extend(interest_to_family.get(interest, []))
-    
-    # If still no specific interests, include beginner-friendly families
-    if not target_families:
+        # Provide DIVERSE recommendations across ALL categories
+        # Goal: Cultural diversity with vegetables, fruits, herbs, grains, nuts, legumes
         target_families = [
+            # Herbs (always include)
             CropFamily.LAMIACEAE,
+            # Leafy Greens
             CropFamily.ASTERACEAE,
             CropFamily.BRASSICACEAE,
+            CropFamily.CHENOPODIACEAE,
+            # Legumes
             CropFamily.FABACEAE,
+            # Vegetables
+            CropFamily.SOLANACEAE,
+            CropFamily.CUCURBITACEAE,
+            CropFamily.APIACEAE,
+            CropFamily.ALLIACEAE,
+            # Fruits
+            CropFamily.BERRIES,
+            CropFamily.ROSACEAE,
+            CropFamily.RUTACEAE,
+            CropFamily.TROPICAL_FRUIT,
+            # Grains
+            CropFamily.POACEAE,
+            # Nuts
+            CropFamily.JUGLANDACEAE,
+            CropFamily.ANACARDIACEAE,
         ]
+    else:
+        # Use specific interests but ALWAYS add herbs and variety
+        for interest in crop_interests:
+            target_families.extend(interest_to_family.get(interest, []))
+        
+        # Always include herbs for diversity
+        if CropFamily.LAMIACEAE not in target_families:
+            target_families.append(CropFamily.LAMIACEAE)
+        
+        # Add fruits if not specified
+        if not any(f in target_families for f in [CropFamily.BERRIES, CropFamily.ROSACEAE, CropFamily.RUTACEAE]):
+            target_families.extend([CropFamily.BERRIES, CropFamily.ROSACEAE])
+        
+        # Add legumes if not specified
+        if CropFamily.FABACEAE not in target_families:
+            target_families.append(CropFamily.FABACEAE)
+    
+    # If still no specific interests, include ALL families for maximum diversity
+    if not target_families:
+        target_families = list(CropFamily)
     
     # Generate Plant objects for crops in target families
     for crop_key, family in CROP_FAMILIES.items():
@@ -345,4 +370,72 @@ def generate_extended_crop_recommendations(
             )
             recommendations.append(plant)
     
-    return recommendations[:20]  # Return top 20
+    # Ensure diversity across families
+    diverse_recommendations = []
+    family_counts = {}
+    
+    for plant in recommendations:
+        # Get family from plant name
+        plant_key = plant.name.lower().replace(" ", "_")
+        if plant_key in CROP_FAMILIES:
+            plant_family = CROP_FAMILIES[plant_key]
+            family_counts[plant_family] = family_counts.get(plant_family, 0) + 1
+            
+            # Limit to 3 crops per family for diversity
+            if family_counts[plant_family] <= 3:
+                diverse_recommendations.append(plant)
+        else:
+            diverse_recommendations.append(plant)
+    
+    return diverse_recommendations[:30]  # Return up to 30 for variety
+
+
+def ensure_crop_diversity(plants: List[Plant]) -> List[Plant]:
+    """
+    Ensure diverse crop recommendations across categories
+    Goal: Vegetables, Fruits, Herbs, Grains, Nuts, Legumes
+    """
+    from collections import defaultdict
+    
+    # Group by category
+    by_category = defaultdict(list)
+    for plant in plants:
+        for category in plant.categories:
+            by_category[category].append(plant)
+    
+    # Build diverse list: 2-4 from each category
+    diverse_plants = []
+    seen_names = set()
+    
+    # Priority order for cultural diversity
+    category_priority = [
+        CropInterest.HERBS,           # Always include herbs
+        CropInterest.LEAFY_GREENS,    # Greens
+        CropInterest.TOMATOES,        # Popular vegetables
+        CropInterest.PEPPERS,
+        CropInterest.BEANS_PEAS,      # Legumes
+        CropInterest.ROOT_VEGETABLES,
+        CropInterest.SQUASH_CUCUMBERS,
+        CropInterest.BERRIES,         # Fruits
+        CropInterest.FRUIT_TREES,
+        CropInterest.ONIONS_GARLIC,
+        CropInterest.MICROGREENS,
+    ]
+    
+    # Add 2-4 from each category
+    for category in category_priority:
+        if category in by_category:
+            count = 0
+            for plant in by_category[category]:
+                if plant.name not in seen_names and count < 4:
+                    diverse_plants.append(plant)
+                    seen_names.add(plant.name)
+                    count += 1
+    
+    # Add any remaining unique plants
+    for plant in plants:
+        if plant.name not in seen_names and len(diverse_plants) < 30:
+            diverse_plants.append(plant)
+            seen_names.add(plant.name)
+    
+    return diverse_plants
