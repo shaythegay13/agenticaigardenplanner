@@ -105,9 +105,8 @@ async def list_crops():
     ]
     return {"total_crops": len(crops), "crops": sorted(crops, key=lambda x: x["name"])}
 
-@app.post("/api/plan")
-async def generate_garden_plan(request: PlanRequest):
-    """Generate personalized garden plan"""
+async def _generate_garden_plan_logic(request: PlanRequest):
+    """Shared logic for generating garden plans"""
     try:
         # Build location
         location = LocationInput(
@@ -210,6 +209,16 @@ async def generate_garden_plan(request: PlanRequest):
             status_code=500, 
             detail=f"Error generating plan: {str(e)}\n{traceback.format_exc()}"
         )
+
+@app.post("/api/plan")
+async def generate_garden_plan(request: PlanRequest):
+    """Generate personalized garden plan (legacy endpoint)"""
+    return await _generate_garden_plan_logic(request)
+
+@app.post("/api/v1/garden-plan/generate")
+async def generate_garden_plan_v1(request: PlanRequest):
+    """Generate personalized garden plan (v1 endpoint)"""
+    return await _generate_garden_plan_logic(request)
 
 if __name__ == "__main__":
     import uvicorn
