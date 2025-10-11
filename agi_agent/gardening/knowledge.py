@@ -223,7 +223,7 @@ def recommend_plants(
     # If we have very few results, add crops from extended database
     if len(results) < 10:
         extended_crops = generate_extended_crop_recommendations(
-            sunlight, method, size, experience, crop_interests, preferences
+            sunlight, method, size, experience, interests, preferences
         )
         # Add extended crops that aren't already in results
         existing_names = {p.name.lower() for p in results}
