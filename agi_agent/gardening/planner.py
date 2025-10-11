@@ -49,6 +49,12 @@ from .crop_varieties import (  # v4.0 Phase 2
     generate_variety_guide,
     get_varieties_for_crop,
 )
+from .crop_families import (  # v4.2 Extended Crop Database (245+ crops)
+    get_crop_family,
+    get_family_diseases,
+    get_companion_recommendations,
+    CROP_FAMILIES,
+)
 from .google_enhanced_data import (  # v4.1 Google APIs Integration
     EnhancedEnvironmentalData,
     generate_environmental_summary,

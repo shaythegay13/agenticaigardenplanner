@@ -16,6 +16,7 @@ from agi_agent.gardening.models import (
 from agi_agent.gardening.climate import fetch_simple_forecast, geocode_location
 from agi_agent.gardening.planner import generate_plan
 from agi_agent.gardening.crop_varieties import VARIETY_DATABASE
+from agi_agent.gardening.crop_families import CROP_FAMILIES
 from agi_agent.gardening.google_enhanced_data import (
     EnhancedEnvironmentalData,
     AirQualityData,
@@ -28,8 +29,8 @@ from agi_agent.gardening.google_enhanced_data import (
 
 app = FastAPI(
     title="AI Garden Planner API",
-    description="REST API for personalized garden planning with 100+ crops and Google APIs environmental data",
-    version="4.1.0",
+    description="REST API for personalized garden planning with 270+ crops and Google APIs environmental data",
+    version="4.2.0",
 )
 
 app.add_middleware(
@@ -64,14 +65,17 @@ async def root():
     return {
         "status": "online",
         "service": "AI Garden Planner API",
-        "version": "4.1.0",
+        "version": "4.2.0",
         "features": [
-            "100+ crop varieties",
+            "270+ crops (fruits, vegetables, nuts, grains, legumes, rice)",
+            "100+ detailed crop varieties",
             "Google APIs environmental data",
             "Air quality analysis",
             "Solar exposure mapping",
             "Pollen tracking",
-            "Elevation-based adjustments"
+            "Elevation-based adjustments",
+            "Family-based disease prevention",
+            "Intelligent companion planting"
         ],
         "docs": "/docs"
     }
@@ -94,16 +98,38 @@ async def get_enums():
 
 @app.get("/api/crops")
 async def list_crops():
-    """Get all 100 crops"""
-    crops = [
+    """Get all 270+ crops"""
+    # Detailed crops with varieties
+    detailed_crops = [
         {
             "name": k.replace("_", " ").title(),
             "key": k,
-            "variety_count": len(v)
+            "variety_count": len(v),
+            "has_detailed_info": True
         }
         for k, v in VARIETY_DATABASE.items()
     ]
-    return {"total_crops": len(crops), "crops": sorted(crops, key=lambda x: x["name"])}
+    
+    # Extended crops from family database
+    extended_crops = [
+        {
+            "name": k.replace("_", " ").title(),
+            "key": k,
+            "variety_count": 0,
+            "has_detailed_info": False,
+            "family": v.value
+        }
+        for k, v in CROP_FAMILIES.items()
+        if k not in VARIETY_DATABASE
+    ]
+    
+    all_crops = detailed_crops + extended_crops
+    return {
+        "total_crops": len(all_crops),
+        "detailed_crops": len(detailed_crops),
+        "extended_crops": len(extended_crops),
+        "crops": sorted(all_crops, key=lambda x: x["name"])
+    }
 
 async def _generate_garden_plan_logic(request: PlanRequest):
     """Shared logic for generating garden plans"""
