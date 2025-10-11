@@ -18,6 +18,11 @@ from agi_agent.gardening.climate import fetch_simple_forecast, geocode_location
 from agi_agent.gardening.planner import generate_plan
 from agi_agent.gardening.crop_varieties import VARIETY_DATABASE
 from agi_agent.gardening.crop_families import CROP_FAMILIES
+from agi_agent.gardening.disease_identifier import (
+    identify_disease_from_image,
+    DiseaseIdentificationRequest,
+    DiseaseIdentificationResponse,
+)
 from agi_agent.gardening.google_enhanced_data import (
     EnhancedEnvironmentalData,
     AirQualityData,
@@ -94,6 +99,8 @@ async def root():
         "features": [
             "270+ crops (fruits, vegetables, nuts, grains, legumes, rice)",
             "100+ detailed crop varieties",
+            "300+ disease database with identification",
+            "Photo-based disease identifier",
             "Google APIs environmental data",
             "Air quality analysis",
             "Solar exposure mapping",
@@ -102,6 +109,12 @@ async def root():
             "Family-based disease prevention",
             "Intelligent companion planting"
         ],
+        "endpoints": {
+            "garden_plan": "/api/v1/garden-plan/generate",
+            "disease_identifier": "/api/v1/disease/identify",
+            "crop_list": "/api/crops",
+            "enums": "/api/enums"
+        },
         "docs": "/docs"
     }
 
@@ -286,6 +299,41 @@ async def generate_garden_plan(request: PlanRequest):
 async def generate_garden_plan_v1(request: PlanRequest):
     """Generate personalized garden plan (v1 endpoint)"""
     return await _generate_garden_plan_logic(request)
+
+@app.post("/api/v1/disease/identify", response_model=DiseaseIdentificationResponse)
+async def identify_disease(request: DiseaseIdentificationRequest):
+    """
+    Identify plant disease from image and/or symptoms
+    
+    Analyzes plant images and symptoms against comprehensive 300+ disease database.
+    Returns potential disease matches with confidence levels, symptoms, prevention, and treatment.
+    
+    Request body:
+    - image_base64: Base64 encoded image of diseased plant (optional)
+    - image_url: URL to image (optional)
+    - crop_name: Name of the crop (optional, improves accuracy)
+    - symptoms: List of observed symptoms (optional)
+    - location: Location for regional disease context (optional)
+    
+    Returns:
+    - List of potential disease matches with confidence levels
+    - Detailed symptoms, prevention, and treatment for each match
+    - General recommendations
+    """
+    try:
+        result = identify_disease_from_image(
+            image_data=request.image_base64 or request.image_url,
+            crop_name=request.crop_name,
+            symptoms=request.symptoms,
+            location=request.location
+        )
+        return result
+    except Exception as e:
+        import traceback
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error identifying disease: {str(e)}\n{traceback.format_exc()}"
+        )
 
 if __name__ == "__main__":
     import uvicorn
