@@ -1737,6 +1737,262 @@ CROP_TIMING_DATABASE: Dict[str, CropTiming] = {
         succession_plant=False,
         notes="Thai ginger"
     ),
+    
+    # ROOT VEGETABLES - Additional
+    "beets": CropTiming(
+        name="Beets",
+        days_to_harvest=55,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Direct seed, tolerates light frost"
+    ),
+    "carrots": CropTiming(
+        name="Carrots",
+        days_to_harvest=70,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August"],
+        harvest_months=["June", "July", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Direct seed in loose soil"
+    ),
+    "potatoes": CropTiming(
+        name="Potatoes",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Plant seed potatoes 2-4 weeks before last frost"
+    ),
+    
+    # TREE FRUITS
+    "apples": CropTiming(
+        name="Apples",
+        days_to_harvest=1460,  # 4 years to first harvest
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["August", "September", "October"],
+        succession_plant=False,
+        notes="Perennial tree, plant bare root or container"
+    ),
+    "cherries": CropTiming(
+        name="Cherries",
+        days_to_harvest=1095,  # 3 years to first harvest
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial tree, needs chill hours"
+    ),
+    "peaches": CropTiming(
+        name="Peaches",
+        days_to_harvest=1095,  # 3 years
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial tree, prune annually"
+    ),
+    "pears": CropTiming(
+        name="Pears",
+        days_to_harvest=1460,  # 4 years
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["August", "September", "October"],
+        succession_plant=False,
+        notes="Perennial tree, needs cross-pollination"
+    ),
+    "plums": CropTiming(
+        name="Plums",
+        days_to_harvest=1095,  # 3 years
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Perennial tree"
+    ),
+    
+    # BERRIES
+    "blueberries": CropTiming(
+        name="Blueberries",
+        days_to_harvest=730,  # 2 years
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial shrub, needs acidic soil pH 4.5-5.5"
+    ),
+    "blackberries": CropTiming(
+        name="Blackberries",
+        days_to_harvest=365,  # 1 year
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial canes, prune after fruiting"
+    ),
+    
+    # NUTS
+    "almonds": CropTiming(
+        name="Almonds",
+        days_to_harvest=1825,  # 5 years
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["August", "September", "October"],
+        succession_plant=False,
+        notes="Perennial tree, needs warm climate"
+    ),
+    "chestnuts": CropTiming(
+        name="Chestnuts",
+        days_to_harvest=1825,  # 5 years
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["September", "October", "November"],
+        succession_plant=False,
+        notes="Perennial tree, needs cross-pollination"
+    ),
+    "cashews": CropTiming(
+        name="Cashews",
+        days_to_harvest=1095,  # 3 years
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["March", "April", "May"],
+        succession_plant=False,
+        notes="Tropical tree, needs warm climate year-round"
+    ),
+    
+    # TROPICAL FRUITS
+    "bananas": CropTiming(
+        name="Bananas",
+        days_to_harvest=365,  # 1 year
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round in tropics"],
+        succession_plant=False,
+        notes="Tropical perennial, needs frost-free climate"
+    ),
+    "mangoes": CropTiming(
+        name="Mangoes",
+        days_to_harvest=1460,  # 4 years
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Tropical tree, needs warm climate"
+    ),
+    "papayas": CropTiming(
+        name="Papayas",
+        days_to_harvest=270,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round in tropics"],
+        succession_plant=False,
+        notes="Tropical, fast-growing, frost-sensitive"
+    ),
+    "avocados": CropTiming(
+        name="Avocados",
+        days_to_harvest=1460,  # 4 years
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round depending on variety"],
+        succession_plant=False,
+        notes="Subtropical tree, frost-sensitive"
+    ),
+    "pineapples": CropTiming(
+        name="Pineapples",
+        days_to_harvest=540,  # 18 months
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round in tropics"],
+        succession_plant=False,
+        notes="Tropical perennial, plant crowns"
+    ),
+    
+    # LEGUMES - Additional
+    "black_eyed_peas": CropTiming(
+        name="Black-Eyed Peas",
+        days_to_harvest=75,
+        planting_season=["Spring", "Summer"],
+        planting_months=["May", "June", "July"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Heat-loving, drought-tolerant"
+    ),
+    "broad_bean": CropTiming(
+        name="Broad Bean (Fava)",
+        days_to_harvest=90,
+        planting_season=["Fall", "Spring"],
+        planting_months=["October", "November", "March"],
+        harvest_months=["May", "June"],
+        succession_plant=False,
+        notes="Cool season crop, frost-tolerant"
+    ),
+    
+    # CITRUS
+    "lemons": CropTiming(
+        name="Lemons",
+        days_to_harvest=1095,  # 3 years
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Subtropical tree, can fruit year-round"
+    ),
+    "limes": CropTiming(
+        name="Limes",
+        days_to_harvest=1095,  # 3 years
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical tree, frost-sensitive"
+    ),
+    "oranges": CropTiming(
+        name="Oranges",
+        days_to_harvest=1095,  # 3 years
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["December", "January", "February", "March"],
+        succession_plant=False,
+        notes="Subtropical tree, winter harvest"
+    ),
+    
+    # HERBS - Additional
+    "chervil": CropTiming(
+        name="Chervil",
+        days_to_harvest=40,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["May", "June", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Cool season herb, bolts in heat"
+    ),
+    
+    # GRAINS - Additional
+    "bulgur": CropTiming(
+        name="Bulgur (Wheat)",
+        days_to_harvest=120,
+        planting_season=["Fall", "Spring"],
+        planting_months=["October", "November", "March"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Winter or spring wheat variety"
+    ),
+    "artichokes": CropTiming(
+        name="Artichokes",
+        days_to_harvest=180,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["May", "June", "July"],
+        succession_plant=False,
+        notes="Perennial in mild climates, annual elsewhere"
+    ),
 }
 
 
@@ -1778,6 +2034,3 @@ def format_crop_timing(crop_name: str) -> str:
         info += f"  • Notes: {timing.notes}\n"
     
     return info
-
-# Additional timing data will be added for remaining 220+ crops
-# This includes: more vegetables, herbs, fruits, nuts, grains, tropical crops, etc.
