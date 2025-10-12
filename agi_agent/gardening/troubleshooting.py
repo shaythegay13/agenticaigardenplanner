@@ -491,16 +491,264 @@ COMMON_MISTAKES = {
 }
 
 
+def get_crop_family_from_name(crop: str) -> Optional[str]:
+    """Get crop family for troubleshooting purposes"""
+    from .crop_families import CROP_FAMILIES, CropFamily
+    crop_key = crop.lower().replace(" ", "_")
+    family = CROP_FAMILIES.get(crop_key)
+    if family:
+        return family.value
+    return None
+
+
+# Family-based troubleshooting (applies to all crops in family)
+FAMILY_TROUBLESHOOTING = {
+    "Nightshades": {
+        "blossom_end_rot": {
+            "symptoms": "Dark, sunken spots on bottom of fruit",
+            "cause": "Calcium deficiency due to inconsistent watering",
+            "solution": "Water consistently. Mulch to retain moisture. Add calcium.",
+            "prevention": "Maintain consistent soil moisture. Avoid over-fertilizing with nitrogen."
+        },
+        "early_blight": {
+            "symptoms": "Brown spots with concentric rings on lower leaves",
+            "cause": "Fungal disease, spreads in wet conditions",
+            "solution": "Remove affected leaves. Apply copper fungicide. Improve air circulation.",
+            "prevention": "Mulch to prevent soil splash. Water at base. Rotate crops."
+        },
+        "aphids": {
+            "symptoms": "Tiny insects on new growth, sticky residue",
+            "cause": "Aphid infestation",
+            "solution": "Spray with water. Apply insecticidal soap. Release ladybugs.",
+            "prevention": "Encourage beneficial insects. Avoid over-fertilizing."
+        }
+    },
+    "Brassicas": {
+        "cabbage_worms": {
+            "symptoms": "Green caterpillars, holes in leaves",
+            "cause": "Cabbage worm larvae",
+            "solution": "Hand-pick. Apply Bt spray. Use row covers.",
+            "prevention": "Use row covers from planting. Check daily for eggs."
+        },
+        "clubroot": {
+            "symptoms": "Swollen, distorted roots, stunted growth",
+            "cause": "Soil-borne disease, persists for years",
+            "solution": "Remove and destroy plants. Don't compost. Lime soil to pH 7.2.",
+            "prevention": "Rotate crops. Test soil. Choose resistant varieties."
+        },
+        "flea_beetles": {
+            "symptoms": "Tiny holes in leaves, small jumping beetles",
+            "cause": "Flea beetle feeding",
+            "solution": "Use row covers. Apply neem oil. Trap with sticky traps.",
+            "prevention": "Use row covers. Plant later to avoid peak populations."
+        }
+    },
+    "Cucurbits": {
+        "powdery_mildew": {
+            "symptoms": "White powdery coating on leaves",
+            "cause": "Fungal disease in humid conditions",
+            "solution": "Remove affected leaves. Spray with milk solution. Apply sulfur.",
+            "prevention": "Provide good air circulation. Water at base. Choose resistant varieties."
+        },
+        "cucumber_beetles": {
+            "symptoms": "Yellow/green striped beetles, wilting",
+            "cause": "Cucumber beetle feeding and disease transmission",
+            "solution": "Hand-pick beetles. Use row covers. Apply neem oil.",
+            "prevention": "Use row covers. Plant trap crops. Rotate crops."
+        },
+        "poor_pollination": {
+            "symptoms": "Fruits abort or develop poorly",
+            "cause": "Lack of pollinators",
+            "solution": "Hand-pollinate flowers. Encourage bees.",
+            "prevention": "Plant pollinator flowers. Avoid pesticides during flowering."
+        }
+    },
+    "Legumes": {
+        "rust": {
+            "symptoms": "Orange-brown pustules on leaves",
+            "cause": "Fungal disease in wet conditions",
+            "solution": "Remove affected leaves. Avoid overhead watering. Apply sulfur.",
+            "prevention": "Water at base. Provide good air circulation. Rotate crops."
+        },
+        "mexican_bean_beetles": {
+            "symptoms": "Copper-colored beetles, skeletonized leaves",
+            "cause": "Mexican bean beetle feeding",
+            "solution": "Hand-pick beetles and larvae. Apply neem oil.",
+            "prevention": "Check undersides of leaves. Plant early."
+        },
+        "no_pods": {
+            "symptoms": "Flowers but no pod development",
+            "cause": "Too much nitrogen or heat stress",
+            "solution": "Reduce nitrogen. Wait for cooler weather.",
+            "prevention": "Avoid high-nitrogen fertilizers. Plant in appropriate season."
+        }
+    },
+    "Alliums": {
+        "thrips": {
+            "symptoms": "Silver streaks on leaves, distorted growth",
+            "cause": "Thrips feeding",
+            "solution": "Spray with water. Apply insecticidal soap. Use reflective mulch.",
+            "prevention": "Remove debris. Use row covers. Encourage predators."
+        },
+        "white_rot": {
+            "symptoms": "White fungal growth at base, yellowing leaves",
+            "cause": "Soil-borne fungal disease",
+            "solution": "Remove and destroy plants. Don't plant alliums there for 8+ years.",
+            "prevention": "Rotate crops. Avoid overhead watering. Use disease-free sets."
+        },
+        "small_bulbs": {
+            "symptoms": "Bulbs remain small",
+            "cause": "Planted too late, poor soil, or harvested too early",
+            "solution": "Harvest and use. Plant earlier next time.",
+            "prevention": "Plant at correct time. Fertilize regularly. Harvest when tops fall."
+        }
+    },
+    "Umbellifers": {
+        "carrot_rust_fly": {
+            "symptoms": "Tunnels in roots, stunted growth",
+            "cause": "Carrot rust fly larvae",
+            "solution": "Harvest early. Use row covers for next planting.",
+            "prevention": "Use row covers. Rotate location. Plant in late spring."
+        },
+        "forked_roots": {
+            "symptoms": "Roots split into multiple parts",
+            "cause": "Rocks, hard soil, or fresh manure",
+            "solution": "Harvest and use. Improve soil for next planting.",
+            "prevention": "Remove rocks. Use well-aged compost. Loosen soil deeply."
+        },
+        "leaf_blight": {
+            "symptoms": "Brown spots on leaves, yellowing",
+            "cause": "Fungal disease in wet conditions",
+            "solution": "Remove affected leaves. Improve air circulation.",
+            "prevention": "Space properly. Water at base. Rotate crops."
+        }
+    },
+    "Composites": {
+        "bolting": {
+            "symptoms": "Sends up flower stalk, leaves turn bitter",
+            "cause": "Heat stress, long days",
+            "solution": "Harvest immediately. Plant heat-tolerant varieties.",
+            "prevention": "Plant in cool seasons. Provide shade. Choose slow-bolt varieties."
+        },
+        "tip_burn": {
+            "symptoms": "Brown, crispy leaf edges",
+            "cause": "Calcium deficiency, inconsistent watering",
+            "solution": "Improve watering consistency. Ensure good air circulation.",
+            "prevention": "Water regularly. Don't overcrowd. Add calcium to soil."
+        },
+        "aphids": {
+            "symptoms": "Tiny insects, sticky residue",
+            "cause": "Aphid infestation",
+            "solution": "Spray with water. Apply insecticidal soap.",
+            "prevention": "Encourage beneficial insects. Avoid over-fertilizing."
+        }
+    },
+    "Chenopods": {
+        "leaf_miners": {
+            "symptoms": "Squiggly trails in leaves",
+            "cause": "Leaf miner larvae tunneling",
+            "solution": "Remove affected leaves. Use row covers.",
+            "prevention": "Use row covers from planting. Remove affected leaves promptly."
+        },
+        "bolting": {
+            "symptoms": "Sends up flower stalk",
+            "cause": "Heat stress or long days",
+            "solution": "Harvest immediately.",
+            "prevention": "Plant in cool season. Choose slow-bolt varieties."
+        },
+        "poor_germination": {
+            "symptoms": "Seeds don't sprout well",
+            "cause": "Soil crust or old seeds",
+            "solution": "Keep soil moist. Cover with vermiculite.",
+            "prevention": "Soak seeds overnight. Keep soil moist."
+        }
+    },
+    "Grasses": {
+        "corn_earworms": {
+            "symptoms": "Worms in ears, damaged kernels",
+            "cause": "Corn earworm larvae",
+            "solution": "Cut off damaged tips. Apply mineral oil to silk.",
+            "prevention": "Apply mineral oil after pollination. Plant early varieties."
+        },
+        "smut": {
+            "symptoms": "Large gray galls on ears or tassels",
+            "cause": "Fungal disease",
+            "solution": "Remove and destroy galls before they open.",
+            "prevention": "Rotate crops. Remove infected plants. Choose resistant varieties."
+        },
+        "poor_pollination": {
+            "symptoms": "Ears with missing kernels",
+            "cause": "Poor wind pollination",
+            "solution": "Hand-pollinate remaining ears.",
+            "prevention": "Plant in blocks (4x4 minimum) not rows."
+        }
+    },
+    "Rose Family": {
+        "gray_mold": {
+            "symptoms": "Gray fuzzy mold on fruit",
+            "cause": "Botrytis fungus in wet conditions",
+            "solution": "Remove affected fruit. Improve air circulation.",
+            "prevention": "Mulch with straw. Water at base. Space properly."
+        },
+        "japanese_beetles": {
+            "symptoms": "Skeletonized leaves, beetles present",
+            "cause": "Japanese beetle feeding",
+            "solution": "Hand-pick beetles. Use traps away from plants.",
+            "prevention": "Check daily. Use row covers. Treat lawn for grubs."
+        },
+        "fire_blight": {
+            "symptoms": "Blackened, scorched-looking branches",
+            "cause": "Bacterial disease",
+            "solution": "Prune 12 inches below infection. Sterilize pruners.",
+            "prevention": "Avoid over-fertilizing. Choose resistant varieties."
+        }
+    },
+    "Mint Family": {
+        "powdery_mildew": {
+            "symptoms": "White powder on leaves",
+            "cause": "Fungal disease in humid conditions",
+            "solution": "Improve air circulation. Remove affected leaves.",
+            "prevention": "Space properly. Water at base. Prune regularly."
+        },
+        "leggy_growth": {
+            "symptoms": "Tall, spindly stems with few leaves",
+            "cause": "Insufficient light or not pinching back",
+            "solution": "Pinch back growing tips. Move to sunnier location.",
+            "prevention": "Provide full sun. Pinch tips regularly. Harvest frequently."
+        },
+        "root_rot": {
+            "symptoms": "Wilting despite wet soil, brown roots",
+            "cause": "Overwatering, poor drainage",
+            "solution": "Reduce watering. Improve drainage. May need to replant.",
+            "prevention": "Ensure good drainage. Don't overwater."
+        }
+    }
+}
+
+
 def get_troubleshooting_info(crop: str, problem: str) -> Optional[Dict]:
     """Get troubleshooting information for a specific crop problem"""
     crop_key = crop.lower().replace(" ", "_")
+    
+    # First check crop-specific problems
     crop_problems = TROUBLESHOOTING_DATABASE.get(crop_key, {})
-    return crop_problems.get(problem.lower().replace(" ", "_"))
+    specific_problem = crop_problems.get(problem.lower().replace(" ", "_"))
+    if specific_problem:
+        return specific_problem
+    
+    # Fall back to family-based problems
+    family = get_crop_family_from_name(crop)
+    if family and family in FAMILY_TROUBLESHOOTING:
+        family_problems = FAMILY_TROUBLESHOOTING[family]
+        return family_problems.get(problem.lower().replace(" ", "_"))
+    
+    return None
 
 
 def generate_troubleshooting_guide(crops: List[str]) -> str:
     """
     Generate troubleshooting guide for selected crops.
+    Uses both crop-specific and family-based troubleshooting.
     
     Args:
         crops: List of crop names
@@ -513,24 +761,44 @@ def generate_troubleshooting_guide(crops: List[str]) -> str:
     guide += "="*70 + "\n\n"
     guide += "Common problems and solutions for your crops:\n\n"
     
-    # Show problems for crops that have troubleshooting data
-    crops_with_problems = []
-    for crop in crops[:5]:  # Top 5 crops
-        crop_key = crop.lower().replace(" ", "_")
-        if crop_key in TROUBLESHOOTING_DATABASE:
-            crops_with_problems.append((crop, TROUBLESHOOTING_DATABASE[crop_key]))
+    # Group crops by family for efficient display
+    family_groups = {}
+    for crop in crops[:8]:  # Top 8 crops
+        family = get_crop_family_from_name(crop)
+        if family:
+            if family not in family_groups:
+                family_groups[family] = []
+            family_groups[family].append(crop)
     
-    if crops_with_problems:
-        for crop, problems in crops_with_problems:
-            guide += f"**{crop.upper()} - Common Problems:**\n\n"
+    # Show family-based problems
+    for family, family_crops in family_groups.items():
+        if family in FAMILY_TROUBLESHOOTING:
+            crops_list = ", ".join(family_crops)
+            guide += f"**{family.upper()} ({crops_list}):**\n\n"
             
-            for problem_name, problem_info in list(problems.items())[:3]:  # Top 3 problems per crop
+            family_problems = FAMILY_TROUBLESHOOTING[family]
+            for problem_name, problem_info in list(family_problems.items())[:3]:  # Top 3 per family
                 problem_title = problem_name.replace("_", " ").title()
                 guide += f"**{problem_title}**\n"
                 guide += f"• Symptoms: {problem_info['symptoms']}\n"
                 guide += f"• Cause: {problem_info['cause']}\n"
                 guide += f"• Solution: {problem_info['solution']}\n"
                 guide += f"• Prevention: {problem_info['prevention']}\n\n"
+            
+            guide += "-"*70 + "\n\n"
+    
+    # Show crop-specific problems if available
+    for crop in crops[:5]:
+        crop_key = crop.lower().replace(" ", "_")
+        if crop_key in TROUBLESHOOTING_DATABASE:
+            guide += f"**{crop.upper()} - Specific Issues:**\n\n"
+            problems = TROUBLESHOOTING_DATABASE[crop_key]
+            
+            for problem_name, problem_info in list(problems.items())[:2]:  # Top 2 specific
+                problem_title = problem_name.replace("_", " ").title()
+                guide += f"**{problem_title}**\n"
+                guide += f"• Symptoms: {problem_info['symptoms']}\n"
+                guide += f"• Solution: {problem_info['solution']}\n\n"
             
             guide += "-"*70 + "\n\n"
     
