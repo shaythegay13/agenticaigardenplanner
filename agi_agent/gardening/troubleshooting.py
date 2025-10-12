@@ -181,6 +181,215 @@ TROUBLESHOOTING_DATABASE = {
         }
     },
     
+    # BROCCOLI/CAULIFLOWER
+    "broccoli": {
+        "small_heads": {
+            "symptoms": "Heads remain small, button prematurely",
+            "cause": "Heat stress, inconsistent watering, or transplant shock",
+            "solution": "Harvest small heads. Plant earlier next time for cool weather.",
+            "prevention": "Plant in cool season. Provide consistent water. Transplant carefully."
+        },
+        "hollow_stems": {
+            "symptoms": "Stems are hollow inside",
+            "cause": "Boron deficiency or rapid growth",
+            "solution": "Add borax (1 tbsp per 100 sq ft). Harvest and use.",
+            "prevention": "Test soil. Add compost. Avoid over-fertilizing."
+        },
+        "cabbage_worms": {
+            "symptoms": "Green caterpillars, holes in leaves and heads",
+            "cause": "Cabbage worm larvae",
+            "solution": "Hand-pick. Apply Bt spray. Use row covers.",
+            "prevention": "Use row covers from planting. Check daily for eggs on undersides."
+        }
+    },
+    
+    "cauliflower": {
+        "purple_heads": {
+            "symptoms": "Heads turn purple instead of white",
+            "cause": "Sun exposure or cold stress",
+            "solution": "Harvest and use - still edible. Tie leaves over head next time.",
+            "prevention": "Blanch heads by tying outer leaves over developing head."
+        },
+        "loose_curds": {
+            "symptoms": "Head doesn't form tight, compact curds",
+            "cause": "Temperature stress or inconsistent watering",
+            "solution": "Harvest and use. Improve growing conditions.",
+            "prevention": "Plant in cool season. Water consistently. Choose heat-tolerant varieties."
+        }
+    },
+    
+    # MELONS
+    "melon": {
+        "poor_fruit_set": {
+            "symptoms": "Flowers but no fruit development",
+            "cause": "Poor pollination or only male flowers",
+            "solution": "Hand-pollinate. Be patient - female flowers come later.",
+            "prevention": "Plant pollinator flowers nearby. Avoid pesticides during flowering."
+        },
+        "cracking": {
+            "symptoms": "Melons split open",
+            "cause": "Irregular watering, especially near ripening",
+            "solution": "Harvest cracked melons immediately. Improve watering consistency.",
+            "prevention": "Reduce watering as melons ripen. Maintain consistent moisture."
+        },
+        "lack_of_sweetness": {
+            "symptoms": "Melons taste bland",
+            "cause": "Harvested too early, insufficient sun, or overwatering",
+            "solution": "Let melons ripen longer. Check for slip (stem separates easily).",
+            "prevention": "Wait for full ripeness. Reduce water as fruit ripens. Ensure full sun."
+        }
+    },
+    
+    # STRAWBERRIES
+    "strawberry": {
+        "gray_mold": {
+            "symptoms": "Gray fuzzy mold on berries",
+            "cause": "Botrytis fungus in wet conditions",
+            "solution": "Remove affected berries. Improve air circulation. Apply fungicide.",
+            "prevention": "Mulch with straw. Water at base. Space plants properly."
+        },
+        "no_fruit": {
+            "symptoms": "Plants grow but don't produce berries",
+            "cause": "Too much nitrogen, wrong variety for climate, or too young",
+            "solution": "Reduce nitrogen. Ensure variety matches climate. Be patient with June-bearers.",
+            "prevention": "Use balanced fertilizer. Choose appropriate variety. First year plants produce lightly."
+        }
+    },
+    
+    # RASPBERRIES/BLACKBERRIES
+    "raspberry": {
+        "crumbly_berries": {
+            "symptoms": "Berries fall apart when picked",
+            "cause": "Virus infection or stink bug damage",
+            "solution": "Remove infected canes. Control stink bugs.",
+            "prevention": "Buy certified disease-free plants. Monitor for stink bugs."
+        },
+        "cane_blight": {
+            "symptoms": "Canes die back, purple lesions",
+            "cause": "Fungal disease entering through wounds",
+            "solution": "Prune out infected canes. Sterilize pruners between cuts.",
+            "prevention": "Prune carefully. Remove old canes after fruiting. Improve air circulation."
+        }
+    },
+    
+    # CORN
+    "corn": {
+        "poor_pollination": {
+            "symptoms": "Ears with missing kernels",
+            "cause": "Poor pollination from wind or heat",
+            "solution": "Hand-pollinate remaining ears. Plant in blocks next time.",
+            "prevention": "Plant in blocks (4x4 minimum) not rows. Shake tassels to distribute pollen."
+        },
+        "corn_earworms": {
+            "symptoms": "Worms in ear tips, damaged kernels",
+            "cause": "Corn earworm larvae",
+            "solution": "Cut off damaged tips. Apply mineral oil to silk. Use Bt.",
+            "prevention": "Apply drops of mineral oil to silk after pollination. Plant early varieties."
+        }
+    },
+    
+    # POTATOES
+    "potato": {
+        "scab": {
+            "symptoms": "Rough, corky patches on skin",
+            "cause": "Bacterial disease in alkaline soil",
+            "solution": "Harvest and use - still edible. Peel before cooking.",
+            "prevention": "Lower soil pH to 5.0-5.5. Avoid fresh manure. Rotate crops."
+        },
+        "hollow_heart": {
+            "symptoms": "Hollow cavity in center of tuber",
+            "cause": "Rapid growth from excess water/fertilizer",
+            "solution": "Harvest and use - still edible.",
+            "prevention": "Avoid over-fertilizing. Water consistently, not excessively."
+        },
+        "colorado_potato_beetles": {
+            "symptoms": "Orange and black striped beetles, defoliation",
+            "cause": "Colorado potato beetle infestation",
+            "solution": "Hand-pick beetles and larvae. Apply neem oil. Use row covers.",
+            "prevention": "Mulch heavily. Check daily. Rotate planting location."
+        }
+    },
+    
+    # BEETS
+    "beet": {
+        "poor_germination": {
+            "symptoms": "Seeds don't sprout well",
+            "cause": "Soil crust, old seeds, or cold soil",
+            "solution": "Keep soil moist. Cover with vermiculite instead of soil.",
+            "prevention": "Soak seeds overnight. Keep soil moist. Plant when soil is 50°F+."
+        },
+        "zoning": {
+            "symptoms": "White rings inside beet",
+            "cause": "Temperature fluctuations during growth",
+            "solution": "Harvest and use - still edible.",
+            "prevention": "Plant in stable weather. Mulch to moderate soil temperature."
+        }
+    },
+    
+    # PEAS
+    "peas": {
+        "powdery_mildew": {
+            "symptoms": "White powder on leaves, especially late season",
+            "cause": "Fungal disease in warm, humid conditions",
+            "solution": "Harvest remaining peas. Remove plants. Plant earlier next year.",
+            "prevention": "Plant early for cool weather. Choose resistant varieties. Provide air circulation."
+        },
+        "pea_weevils": {
+            "symptoms": "Round holes in peas, small beetles",
+            "cause": "Pea weevil damage",
+            "solution": "Harvest early. Freeze peas to kill larvae.",
+            "prevention": "Plant early. Use row covers. Till soil in fall."
+        }
+    },
+    
+    # SPINACH
+    "spinach": {
+        "bolting": {
+            "symptoms": "Sends up flower stalk, leaves turn bitter",
+            "cause": "Heat and long days",
+            "solution": "Harvest immediately. Plant heat-tolerant varieties for summer.",
+            "prevention": "Plant in cool seasons. Provide shade in warm weather. Choose slow-bolt varieties."
+        },
+        "leaf_miners": {
+            "symptoms": "Squiggly trails in leaves",
+            "cause": "Leaf miner larvae tunneling in leaves",
+            "solution": "Remove affected leaves. Use row covers.",
+            "prevention": "Use row covers from planting. Remove affected leaves promptly."
+        }
+    },
+    
+    # GARLIC/ONIONS (additional)
+    "garlic": {
+        "small_bulbs": {
+            "symptoms": "Bulbs remain small",
+            "cause": "Planted too late, harvested too early, or poor soil",
+            "solution": "Harvest and use. Plant earlier next fall.",
+            "prevention": "Plant in October. Fertilize in spring. Harvest when half the leaves are brown."
+        },
+        "rust": {
+            "symptoms": "Orange pustules on leaves",
+            "cause": "Fungal disease in wet conditions",
+            "solution": "Remove affected leaves. Improve air circulation.",
+            "prevention": "Space properly. Avoid overhead watering. Choose resistant varieties."
+        }
+    },
+    
+    # HERBS
+    "herbs": {
+        "leggy_growth": {
+            "symptoms": "Tall, spindly stems with few leaves",
+            "cause": "Insufficient light or not pinching back",
+            "solution": "Pinch back growing tips. Move to sunnier location.",
+            "prevention": "Provide full sun. Pinch tips regularly. Harvest frequently."
+        },
+        "flowering": {
+            "symptoms": "Plants send up flower stalks",
+            "cause": "Natural lifecycle or stress",
+            "solution": "Pinch off flowers immediately for basil. Let other herbs flower.",
+            "prevention": "Pinch basil flowers immediately. Other herbs can flower (attracts pollinators)."
+        }
+    },
+    
     # GENERAL PROBLEMS
     "general": {
         "damping_off": {
@@ -260,6 +469,24 @@ COMMON_MISTAKES = {
         "consequence": "Reduced production, poor quality, pest attraction",
         "solution": "Harvest regularly at peak ripeness.",
         "tip": "Frequent harvesting encourages more production!"
+    },
+    "not_hardening_off": {
+        "mistake": "Transplanting seedlings directly from indoors to garden",
+        "consequence": "Transplant shock, sunburn, stunted growth, death",
+        "solution": "Gradually acclimate plants over 7-10 days.",
+        "tip": "Hardening off is crucial! Start with 1 hour outside, increase daily."
+    },
+    "wrong_variety_for_climate": {
+        "mistake": "Planting varieties not suited to your climate",
+        "consequence": "Poor growth, no fruit set, disease susceptibility",
+        "solution": "Choose varieties rated for your hardiness zone and day length.",
+        "tip": "Check seed packets for 'days to maturity' - ensure it fits your growing season."
+    },
+    "planting_in_same_spot": {
+        "mistake": "Not rotating crops or planting same family repeatedly",
+        "consequence": "Disease buildup, pest problems, soil depletion",
+        "solution": "Rotate crop families. Wait 2-3 years before replanting same family.",
+        "tip": "Keep a garden map! Track what you planted where each year."
     }
 }
 
