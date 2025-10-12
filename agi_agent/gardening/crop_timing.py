@@ -370,6 +370,1373 @@ CROP_TIMING_DATABASE: Dict[str, CropTiming] = {
         succession_plant=False,
         notes="Drought-tolerant grain"
     ),
+    
+    # PHASE 2: MORE VEGETABLES (20 crops)
+    "tomatillo": CropTiming(
+        name="Tomatillo",
+        days_to_harvest=75,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        indoor_start_weeks=6,
+        notes="Similar to tomatoes, needs support"
+    ),
+    "okra": CropTiming(
+        name="Okra",
+        days_to_harvest=60,
+        planting_season=["Spring", "Summer"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Heat-loving, very productive"
+    ),
+    "asparagus": CropTiming(
+        name="Asparagus",
+        days_to_harvest=730,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["April", "May"],
+        succession_plant=False,
+        notes="Perennial, harvest year 3+"
+    ),
+    "artichoke": CropTiming(
+        name="Artichoke",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        indoor_start_weeks=8,
+        notes="Perennial in warm climates"
+    ),
+    "brussels_sprouts": CropTiming(
+        name="Brussels Sprouts",
+        days_to_harvest=90,
+        planting_season=["Spring", "Summer"],
+        planting_months=["March", "April", "July"],
+        harvest_months=["October", "November", "December"],
+        succession_plant=False,
+        indoor_start_weeks=4,
+        notes="Cold-hardy, improves with frost"
+    ),
+    "kohlrabi": CropTiming(
+        name="Kohlrabi",
+        days_to_harvest=55,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Fast-growing brassica"
+    ),
+    "turnip": CropTiming(
+        name="Turnip",
+        days_to_harvest=50,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Harvest greens and roots"
+    ),
+    "rutabaga": CropTiming(
+        name="Rutabaga",
+        days_to_harvest=90,
+        planting_season=["Summer"],
+        planting_months=["June", "July"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Cold-hardy root vegetable"
+    ),
+    "parsnip": CropTiming(
+        name="Parsnip",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Sweetens after frost"
+    ),
+    "celery": CropTiming(
+        name="Celery",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        indoor_start_weeks=10,
+        notes="Needs consistent moisture"
+    ),
+    "swiss_chard": CropTiming(
+        name="Swiss Chard",
+        days_to_harvest=55,
+        planting_season=["Spring", "Summer"],
+        planting_months=["March", "April", "May", "June"],
+        harvest_months=["June", "July", "August", "September"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Heat-tolerant leafy green"
+    ),
+    "collard_greens": CropTiming(
+        name="Collard Greens",
+        days_to_harvest=60,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August"],
+        harvest_months=["June", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Very cold-hardy"
+    ),
+    "mustard_greens": CropTiming(
+        name="Mustard Greens",
+        days_to_harvest=40,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Spicy greens"
+    ),
+    "bok_choy": CropTiming(
+        name="Bok Choy",
+        days_to_harvest=45,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Asian green, quick-growing"
+    ),
+    "napa_cabbage": CropTiming(
+        name="Napa Cabbage",
+        days_to_harvest=70,
+        planting_season=["Fall"],
+        planting_months=["July", "August"],
+        harvest_months=["September", "October", "November"],
+        succession_plant=False,
+        notes="Chinese cabbage"
+    ),
+    "endive": CropTiming(
+        name="Endive",
+        days_to_harvest=85,
+        planting_season=["Summer", "Fall"],
+        planting_months=["July", "August"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Bitter salad green"
+    ),
+    "radicchio": CropTiming(
+        name="Radicchio",
+        days_to_harvest=85,
+        planting_season=["Summer"],
+        planting_months=["July", "August"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Italian chicory"
+    ),
+    "watercress": CropTiming(
+        name="Watercress",
+        days_to_harvest=50,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["May", "June", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Aquatic green, needs water"
+    ),
+    "rhubarb": CropTiming(
+        name="Rhubarb",
+        days_to_harvest=730,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["April", "May", "June"],
+        succession_plant=False,
+        notes="Perennial, harvest year 2+"
+    ),
+    "horseradish": CropTiming(
+        name="Horseradish",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Perennial root, very invasive"
+    ),
+    
+    # PHASE 3: ALL HERBS (30 crops)
+    "oregano": CropTiming(
+        name="Oregano",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August", "September"],
+        succession_plant=False,
+        indoor_start_weeks=6,
+        notes="Perennial herb, drought-tolerant"
+    ),
+    "thyme": CropTiming(
+        name="Thyme",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August", "September"],
+        succession_plant=False,
+        indoor_start_weeks=6,
+        notes="Perennial herb, low-growing"
+    ),
+    "rosemary": CropTiming(
+        name="Rosemary",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        indoor_start_weeks=8,
+        notes="Perennial shrub, tender in cold"
+    ),
+    "sage": CropTiming(
+        name="Sage",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August", "September"],
+        succession_plant=False,
+        indoor_start_weeks=6,
+        notes="Perennial herb, cold-hardy"
+    ),
+    "dill": CropTiming(
+        name="Dill",
+        days_to_harvest=70,
+        planting_season=["Spring", "Summer"],
+        planting_months=["April", "May", "June"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Annual, bolts in heat"
+    ),
+    "chives": CropTiming(
+        name="Chives",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["May", "June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial, very cold-hardy"
+    ),
+    "tarragon": CropTiming(
+        name="Tarragon",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial, French variety best"
+    ),
+    "marjoram": CropTiming(
+        name="Marjoram",
+        days_to_harvest=70,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        indoor_start_weeks=6,
+        notes="Similar to oregano, tender"
+    ),
+    "lavender": CropTiming(
+        name="Lavender",
+        days_to_harvest=365,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial, needs good drainage"
+    ),
+    "lemon_balm": CropTiming(
+        name="Lemon Balm",
+        days_to_harvest=70,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial, can be invasive"
+    ),
+    "chamomile": CropTiming(
+        name="Chamomile",
+        days_to_harvest=60,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Annual, self-seeds readily"
+    ),
+    "stevia": CropTiming(
+        name="Stevia",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        indoor_start_weeks=8,
+        notes="Tender perennial, natural sweetener"
+    ),
+    "catnip": CropTiming(
+        name="Catnip",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial, attracts cats"
+    ),
+    "lemongrass": CropTiming(
+        name="Lemongrass",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Tropical grass, tender"
+    ),
+    "bay_leaf": CropTiming(
+        name="Bay Leaf",
+        days_to_harvest=730,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Perennial tree, container-friendly"
+    ),
+    "sorrel": CropTiming(
+        name="Sorrel",
+        days_to_harvest=60,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Perennial, lemony flavor"
+    ),
+    "borage": CropTiming(
+        name="Borage",
+        days_to_harvest=60,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Annual, edible flowers"
+    ),
+    "anise": CropTiming(
+        name="Anise",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Annual, licorice flavor"
+    ),
+    "caraway": CropTiming(
+        name="Caraway",
+        days_to_harvest=120,
+        planting_season=["Spring", "Fall"],
+        planting_months=["April", "September"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Biennial, seeds in year 2"
+    ),
+    "coriander": CropTiming(
+        name="Coriander",
+        days_to_harvest=100,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Cilantro seeds, let bolt"
+    ),
+    
+    # PHASE 4: FRUITS & BERRIES (40 crops)
+    "blackberry": CropTiming(
+        name="Blackberry",
+        days_to_harvest=365,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perennial canes, produces year 2+"
+    ),
+    "gooseberry": CropTiming(
+        name="Gooseberry",
+        days_to_harvest=730,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial shrub, cold-hardy"
+    ),
+    "currant": CropTiming(
+        name="Currant",
+        days_to_harvest=730,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial shrub, red/black varieties"
+    ),
+    "elderberry": CropTiming(
+        name="Elderberry",
+        days_to_harvest=730,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Perennial shrub, medicinal"
+    ),
+    "cranberry": CropTiming(
+        name="Cranberry",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Perennial, needs acidic bog conditions"
+    ),
+    "grape": CropTiming(
+        name="Grape",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["August", "September", "October"],
+        succession_plant=False,
+        notes="Perennial vine, produces year 3+"
+    ),
+    "kiwi": CropTiming(
+        name="Kiwi",
+        days_to_harvest=1825,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Perennial vine, needs male/female"
+    ),
+    "fig": CropTiming(
+        name="Fig",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Perennial tree, warm climates"
+    ),
+    "apple": CropTiming(
+        name="Apple",
+        days_to_harvest=1825,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["August", "September", "October"],
+        succession_plant=False,
+        notes="Perennial tree, produces year 5+"
+    ),
+    "pear": CropTiming(
+        name="Pear",
+        days_to_harvest=1825,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October", "November"],
+        harvest_months=["August", "September", "October"],
+        succession_plant=False,
+        notes="Perennial tree, produces year 5+"
+    ),
+    "cherry": CropTiming(
+        name="Cherry",
+        days_to_harvest=1460,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial tree, sweet/sour varieties"
+    ),
+    "plum": CropTiming(
+        name="Plum",
+        days_to_harvest=1460,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Perennial tree, produces year 4+"
+    ),
+    "peach": CropTiming(
+        name="Peach",
+        days_to_harvest=1460,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Perennial tree, needs chill hours"
+    ),
+    "apricot": CropTiming(
+        name="Apricot",
+        days_to_harvest=1460,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial tree, early bloomer"
+    ),
+    "nectarine": CropTiming(
+        name="Nectarine",
+        days_to_harvest=1460,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Perennial tree, smooth peach"
+    ),
+    "persimmon": CropTiming(
+        name="Persimmon",
+        days_to_harvest=1825,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Perennial tree, astringent/non-astringent"
+    ),
+    "pomegranate": CropTiming(
+        name="Pomegranate",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Perennial shrub/tree, warm climates"
+    ),
+    "quince": CropTiming(
+        name="Quince",
+        days_to_harvest=1460,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Perennial tree, cooking fruit"
+    ),
+    "mulberry": CropTiming(
+        name="Mulberry",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Perennial tree, very productive"
+    ),
+    "pawpaw": CropTiming(
+        name="Pawpaw",
+        days_to_harvest=1825,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Native tree, tropical flavor"
+    ),
+    "melon": CropTiming(
+        name="Melon",
+        days_to_harvest=80,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Cantaloupe, honeydew varieties"
+    ),
+    "cantaloupe": CropTiming(
+        name="Cantaloupe",
+        days_to_harvest=80,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Warm-season melon"
+    ),
+    "honeydew": CropTiming(
+        name="Honeydew",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Needs longer season than cantaloupe"
+    ),
+    "goji_berry": CropTiming(
+        name="Goji Berry",
+        days_to_harvest=730,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Perennial shrub, superfood"
+    ),
+    "huckleberry": CropTiming(
+        name="Huckleberry",
+        days_to_harvest=730,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Perennial shrub, native"
+    ),
+    "serviceberry": CropTiming(
+        name="Serviceberry",
+        days_to_harvest=1095,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Native shrub/tree, ornamental"
+    ),
+    "aronia": CropTiming(
+        name="Aronia",
+        days_to_harvest=730,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Chokeberry, superfood"
+    ),
+    "sea_buckthorn": CropTiming(
+        name="Sea Buckthorn",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Perennial shrub, vitamin C rich"
+    ),
+    "jujube": CropTiming(
+        name="Jujube",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Chinese date, drought-tolerant"
+    ),
+    "passion_fruit": CropTiming(
+        name="Passion Fruit",
+        days_to_harvest=365,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Tropical vine, tender"
+    ),
+    
+    # PHASE 5: GRAINS & MORE LEGUMES (30 crops)
+    "rice": CropTiming(
+        name="Rice",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Needs flooded conditions"
+    ),
+    "barley": CropTiming(
+        name="Barley",
+        days_to_harvest=90,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Cool-season grain"
+    ),
+    "oats": CropTiming(
+        name="Oats",
+        days_to_harvest=90,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "September"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Cool-season grain, cover crop"
+    ),
+    "rye": CropTiming(
+        name="Rye",
+        days_to_harvest=120,
+        planting_season=["Fall"],
+        planting_months=["September", "October"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Winter grain, cover crop"
+    ),
+    "millet": CropTiming(
+        name="Millet",
+        days_to_harvest=75,
+        planting_season=["Spring", "Summer"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Drought-tolerant grain"
+    ),
+    "sorghum": CropTiming(
+        name="Sorghum",
+        days_to_harvest=100,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Drought-tolerant grain"
+    ),
+    "amaranth": CropTiming(
+        name="Amaranth",
+        days_to_harvest=100,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Grain and greens"
+    ),
+    "buckwheat": CropTiming(
+        name="Buckwheat",
+        days_to_harvest=70,
+        planting_season=["Spring", "Summer"],
+        planting_months=["May", "June", "July"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Fast grain, cover crop"
+    ),
+    "lentils": CropTiming(
+        name="Lentils",
+        days_to_harvest=100,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Cool-season legume"
+    ),
+    "chickpeas": CropTiming(
+        name="Chickpeas",
+        days_to_harvest=100,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["July", "August"],
+        succession_plant=False,
+        notes="Garbanzo beans, warm-season"
+    ),
+    "soybeans": CropTiming(
+        name="Soybeans",
+        days_to_harvest=100,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Edamame when young"
+    ),
+    "fava_beans": CropTiming(
+        name="Fava Beans",
+        days_to_harvest=80,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["June", "July"],
+        succession_plant=False,
+        notes="Broad beans, cool-season"
+    ),
+    "lima_beans": CropTiming(
+        name="Lima Beans",
+        days_to_harvest=75,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Warm-season, butter beans"
+    ),
+    "black_beans": CropTiming(
+        name="Black Beans",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Dry beans"
+    ),
+    "pinto_beans": CropTiming(
+        name="Pinto Beans",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Dry beans"
+    ),
+    "kidney_beans": CropTiming(
+        name="Kidney Beans",
+        days_to_harvest=95,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Dry beans"
+    ),
+    "navy_beans": CropTiming(
+        name="Navy Beans",
+        days_to_harvest=85,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Small white beans"
+    ),
+    "adzuki_beans": CropTiming(
+        name="Adzuki Beans",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Asian red beans"
+    ),
+    "mung_beans": CropTiming(
+        name="Mung Beans",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Sprouting beans"
+    ),
+    "cowpeas": CropTiming(
+        name="Cowpeas",
+        days_to_harvest=75,
+        planting_season=["Spring", "Summer"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Black-eyed peas, heat-tolerant"
+    ),
+    
+    # PHASE 6: NUTS & TROPICAL FRUITS (30 crops)
+    "almond": CropTiming(
+        name="Almond",
+        days_to_harvest=1825,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Tree nut, warm climates"
+    ),
+    "walnut": CropTiming(
+        name="Walnut",
+        days_to_harvest=2555,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Large tree, produces year 7+"
+    ),
+    "pecan": CropTiming(
+        name="Pecan",
+        days_to_harvest=2555,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Large tree, southern climates"
+    ),
+    "hazelnut": CropTiming(
+        name="Hazelnut",
+        days_to_harvest=1095,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "October"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Filbert, shrub/tree"
+    ),
+    "chestnut": CropTiming(
+        name="Chestnut",
+        days_to_harvest=1825,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Tree nut, blight-resistant varieties"
+    ),
+    "pistachio": CropTiming(
+        name="Pistachio",
+        days_to_harvest=2555,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Tree nut, arid climates"
+    ),
+    "cashew": CropTiming(
+        name="Cashew",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical tree, frost-sensitive"
+    ),
+    "macadamia": CropTiming(
+        name="Macadamia",
+        days_to_harvest=2190,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical tree, Hawaii/California"
+    ),
+    "pine_nut": CropTiming(
+        name="Pine Nut",
+        days_to_harvest=5475,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Pinyon pine, very long to produce"
+    ),
+    "peanut": CropTiming(
+        name="Peanut",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Ground nut, warm climates"
+    ),
+    "mango": CropTiming(
+        name="Mango",
+        days_to_harvest=1825,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Tropical tree, frost-sensitive"
+    ),
+    "papaya": CropTiming(
+        name="Papaya",
+        days_to_harvest=270,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical tree, fast-growing"
+    ),
+    "banana": CropTiming(
+        name="Banana",
+        days_to_harvest=270,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical plant, needs warmth"
+    ),
+    "pineapple": CropTiming(
+        name="Pineapple",
+        days_to_harvest=540,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical plant, 18 months to fruit"
+    ),
+    "avocado": CropTiming(
+        name="Avocado",
+        days_to_harvest=1460,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical tree, frost-sensitive"
+    ),
+    "guava": CropTiming(
+        name="Guava",
+        days_to_harvest=730,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical shrub/tree"
+    ),
+    "lychee": CropTiming(
+        name="Lychee",
+        days_to_harvest=1825,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["May", "June"],
+        succession_plant=False,
+        notes="Tropical tree, needs chill"
+    ),
+    "dragon_fruit": CropTiming(
+        name="Dragon Fruit",
+        days_to_harvest=365,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["Summer", "Fall"],
+        succession_plant=False,
+        notes="Cactus fruit, warm climates"
+    ),
+    "starfruit": CropTiming(
+        name="Starfruit",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Carambola, tropical tree"
+    ),
+    "coconut": CropTiming(
+        name="Coconut",
+        days_to_harvest=2190,
+        planting_season=["Spring"],
+        planting_months=["Year-round"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical palm, coastal"
+    ),
+    "date": CropTiming(
+        name="Date",
+        days_to_harvest=1825,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Date palm, arid climates"
+    ),
+    "orange": CropTiming(
+        name="Orange",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["December", "January", "February"],
+        succession_plant=False,
+        notes="Citrus tree, warm climates"
+    ),
+    "lemon": CropTiming(
+        name="Lemon",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Citrus tree, warm climates"
+    ),
+    "lime": CropTiming(
+        name="Lime",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Citrus tree, warm climates"
+    ),
+    "grapefruit": CropTiming(
+        name="Grapefruit",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["December", "January", "February"],
+        succession_plant=False,
+        notes="Citrus tree, warm climates"
+    ),
+    "tangerine": CropTiming(
+        name="Tangerine",
+        days_to_harvest=1095,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["November", "December", "January"],
+        succession_plant=False,
+        notes="Mandarin citrus, warm climates"
+    ),
+    
+    # PHASE 7: ASIAN & SPECIALTY VEGETABLES (40 crops)
+    "daikon": CropTiming(
+        name="Daikon",
+        days_to_harvest=60,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October", "November"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Japanese radish, large"
+    ),
+    "mizuna": CropTiming(
+        name="Mizuna",
+        days_to_harvest=40,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Japanese mustard green"
+    ),
+    "tatsoi": CropTiming(
+        name="Tatsoi",
+        days_to_harvest=45,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Asian spoon mustard"
+    ),
+    "gai_lan": CropTiming(
+        name="Gai Lan",
+        days_to_harvest=60,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Chinese broccoli"
+    ),
+    "yu_choy": CropTiming(
+        name="Yu Choy",
+        days_to_harvest=50,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Chinese flowering cabbage"
+    ),
+    "komatsuna": CropTiming(
+        name="Komatsuna",
+        days_to_harvest=40,
+        planting_season=["Spring", "Fall"],
+        planting_months=["March", "April", "August", "September"],
+        harvest_months=["May", "June", "October"],
+        succession_plant=True,
+        succession_interval_days=14,
+        notes="Japanese mustard spinach"
+    ),
+    "shiso": CropTiming(
+        name="Shiso",
+        days_to_harvest=70,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["June", "July", "August"],
+        succession_plant=False,
+        notes="Perilla, Japanese herb"
+    ),
+    "edamame": CropTiming(
+        name="Edamame",
+        days_to_harvest=80,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Young soybeans"
+    ),
+    "bitter_melon": CropTiming(
+        name="Bitter Melon",
+        days_to_harvest=60,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=False,
+        notes="Asian gourd, medicinal"
+    ),
+    "winter_melon": CropTiming(
+        name="Winter Melon",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Large Asian squash"
+    ),
+    "luffa": CropTiming(
+        name="Luffa",
+        days_to_harvest=150,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Sponge gourd, edible when young"
+    ),
+    "yard_long_beans": CropTiming(
+        name="Yard Long Beans",
+        days_to_harvest=75,
+        planting_season=["Spring", "Summer"],
+        planting_months=["May", "June"],
+        harvest_months=["July", "August", "September"],
+        succession_plant=True,
+        succession_interval_days=21,
+        notes="Asparagus beans, heat-loving"
+    ),
+    "winged_beans": CropTiming(
+        name="Winged Beans",
+        days_to_harvest=90,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["August", "September"],
+        succession_plant=False,
+        notes="Tropical legume"
+    ),
+    "lotus_root": CropTiming(
+        name="Lotus Root",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        notes="Aquatic vegetable"
+    ),
+    "water_chestnut": CropTiming(
+        name="Water Chestnut",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Aquatic vegetable"
+    ),
+    "taro": CropTiming(
+        name="Taro",
+        days_to_harvest=210,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Tropical root, needs moisture"
+    ),
+    "yam": CropTiming(
+        name="Yam",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Tropical tuber"
+    ),
+    "cassava": CropTiming(
+        name="Cassava",
+        days_to_harvest=270,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["Year-round"],
+        succession_plant=False,
+        notes="Tropical root, drought-tolerant"
+    ),
+    "jicama": CropTiming(
+        name="Jicama",
+        days_to_harvest=150,
+        planting_season=["Spring"],
+        planting_months=["May", "June"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Mexican yam bean"
+    ),
+    "sunchoke": CropTiming(
+        name="Sunchoke",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Jerusalem artichoke, invasive"
+    ),
+    "celeriac": CropTiming(
+        name="Celeriac",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["September", "October"],
+        succession_plant=False,
+        indoor_start_weeks=10,
+        notes="Celery root"
+    ),
+    "salsify": CropTiming(
+        name="Salsify",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Oyster plant"
+    ),
+    "scorzonera": CropTiming(
+        name="Scorzonera",
+        days_to_harvest=120,
+        planting_season=["Spring"],
+        planting_months=["March", "April"],
+        harvest_months=["October", "November"],
+        succession_plant=False,
+        notes="Black salsify"
+    ),
+    "crosne": CropTiming(
+        name="Crosne",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["November", "December"],
+        succession_plant=False,
+        notes="Chinese artichoke"
+    ),
+    "oca": CropTiming(
+        name="Oca",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["November", "December"],
+        succession_plant=False,
+        notes="Andean tuber"
+    ),
+    "ulluco": CropTiming(
+        name="Ulluco",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["November", "December"],
+        succession_plant=False,
+        notes="Andean tuber"
+    ),
+    "mashua": CropTiming(
+        name="Mashua",
+        days_to_harvest=180,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["November", "December"],
+        succession_plant=False,
+        notes="Andean tuber"
+    ),
+    "yacon": CropTiming(
+        name="Yacon",
+        days_to_harvest=200,
+        planting_season=["Spring"],
+        planting_months=["April", "May"],
+        harvest_months=["November", "December"],
+        succession_plant=False,
+        notes="Andean root, sweet"
+    ),
+    "ginger": CropTiming(
+        name="Ginger",
+        days_to_harvest=240,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["October", "November", "December"],
+        succession_plant=False,
+        notes="Tropical rhizome"
+    ),
+    "turmeric": CropTiming(
+        name="Turmeric",
+        days_to_harvest=270,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["December", "January"],
+        succession_plant=False,
+        notes="Tropical rhizome, medicinal"
+    ),
+    "galangal": CropTiming(
+        name="Galangal",
+        days_to_harvest=270,
+        planting_season=["Spring"],
+        planting_months=["March", "April", "May"],
+        harvest_months=["December", "January"],
+        succession_plant=False,
+        notes="Thai ginger"
+    ),
 }
 
 
