@@ -2069,18 +2069,255 @@ COMPANION_DATABASE = {
         },
         reasons_to_avoid={}
     ),
+    
+    # MISSING COMMON VEGETABLES
+    "artichoke": CompanionInfo(
+        good_companions=["sunflowers", "tarragon", "peas"],
+        bad_companions=["none_known"],
+        benefits={
+            "sunflowers": "Attracts beneficial insects",
+            "tarragon": "General pest deterrent",
+            "peas": "Nitrogen fixation",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "chicory": CompanionInfo(
+        good_companions=["carrots", "lettuce", "onions"],
+        bad_companions=["none_known"],
+        benefits={
+            "carrots": "Compatible growth",
+            "lettuce": "Similar growing conditions",
+            "onions": "Pest deterrent",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    # MISSING LEGUMES
+    "black_eyed_peas": CompanionInfo(
+        good_companions=["corn", "squash", "cucumbers"],
+        bad_companions=["onions", "garlic"],
+        benefits={
+            "corn": "Nitrogen fixation",
+            "squash": "Ground cover",
+            "cucumbers": "Nitrogen benefits",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits growth",
+            "garlic": "Stunts beans",
+        }
+    ),
+    
+    "broad_bean": CompanionInfo(
+        good_companions=["potatoes", "corn", "cucumbers", "brassicas"],
+        bad_companions=["onions", "garlic", "fennel"],
+        benefits={
+            "potatoes": "Nitrogen fixation",
+            "corn": "Compatible growth",
+            "cucumbers": "Adds nitrogen",
+            "brassicas": "Nitrogen benefits brassicas",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits growth",
+            "garlic": "Stunts beans",
+            "fennel": "Allelopathic",
+        }
+    ),
+    
+    "black_turtle_bean": CompanionInfo(
+        good_companions=["corn", "squash", "cucumbers"],
+        bad_companions=["onions", "garlic", "fennel"],
+        benefits={
+            "corn": "Three Sisters - nitrogen fixation",
+            "squash": "Ground cover",
+            "cucumbers": "Nitrogen benefits",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits growth",
+            "garlic": "Stunts beans",
+            "fennel": "Allelopathic",
+        }
+    ),
+    
+    "cannellini_bean": CompanionInfo(
+        good_companions=["corn", "squash", "cucumbers"],
+        bad_companions=["onions", "garlic"],
+        benefits={
+            "corn": "Nitrogen fixation",
+            "squash": "Ground cover",
+            "cucumbers": "Nitrogen benefits",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits growth",
+            "garlic": "Stunts beans",
+        }
+    ),
+    
+    # MISSING NUTS
+    "cashews": CompanionInfo(
+        good_companions=["comfrey", "clover", "tropical_plants"],
+        bad_companions=["none_known"],
+        benefits={
+            "comfrey": "Nutrient accumulator",
+            "clover": "Ground cover, nitrogen",
+            "tropical_plants": "Similar conditions",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "chestnuts": CompanionInfo(
+        good_companions=["clover", "comfrey", "nasturtiums"],
+        bad_companions=["grass"],
+        benefits={
+            "clover": "Nitrogen fixation",
+            "comfrey": "Nutrient mining",
+            "nasturtiums": "Pest control",
+        },
+        reasons_to_avoid={
+            "grass": "Competition",
+        }
+    ),
+    
+    "black_walnut": CompanionInfo(
+        good_companions=["none_recommended"],
+        bad_companions=["most_plants"],
+        benefits={},
+        reasons_to_avoid={
+            "most_plants": "Juglone toxicity - even more toxic than English walnut",
+        }
+    ),
+    
+    "butternut": CompanionInfo(
+        good_companions=["none_recommended"],
+        bad_companions=["most_plants"],
+        benefits={},
+        reasons_to_avoid={
+            "most_plants": "Juglone toxicity similar to black walnut",
+        }
+    ),
+    
+    "brazil_nuts": CompanionInfo(
+        good_companions=["tropical_plants", "comfrey"],
+        bad_companions=["none_known"],
+        benefits={
+            "tropical_plants": "Similar rainforest conditions",
+            "comfrey": "Nutrient accumulator",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "pistachios": CompanionInfo(
+        good_companions=["clover", "comfrey"],
+        bad_companions=["grass"],
+        benefits={
+            "clover": "Ground cover, nitrogen",
+            "comfrey": "Nutrient mining",
+        },
+        reasons_to_avoid={
+            "grass": "Competition",
+        }
+    ),
+    
+    # MISSING TROPICAL FRUITS
+    "breadfruit": CompanionInfo(
+        good_companions=["sweet_potato", "beans", "tropical_plants"],
+        bad_companions=["none_known"],
+        benefits={
+            "sweet_potato": "Ground cover",
+            "beans": "Nitrogen fixation",
+            "tropical_plants": "Similar conditions",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "cherimoya": CompanionInfo(
+        good_companions=["comfrey", "nasturtiums", "clover"],
+        bad_companions=["none_known"],
+        benefits={
+            "comfrey": "Nutrient accumulator",
+            "nasturtiums": "Pest control",
+            "clover": "Ground cover",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "clementine": CompanionInfo(
+        good_companions=["nasturtiums", "yarrow", "dill"],
+        bad_companions=["none_known"],
+        benefits={
+            "nasturtiums": "Pest control",
+            "yarrow": "Beneficial insects",
+            "dill": "Attracts predators",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "coconut": CompanionInfo(
+        good_companions=["tropical_plants", "sweet_potato", "taro"],
+        bad_companions=["none_known"],
+        benefits={
+            "tropical_plants": "Similar conditions",
+            "sweet_potato": "Ground cover",
+            "taro": "Compatible tropical",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    # MISSING BERRIES
+    "bilberry": CompanionInfo(
+        good_companions=["azaleas", "blueberries", "rhododendrons"],
+        bad_companions=["vegetables"],
+        benefits={
+            "azaleas": "Similar acidic soil needs",
+            "blueberries": "Acid-loving companions",
+            "rhododendrons": "Compatible pH",
+        },
+        reasons_to_avoid={
+            "vegetables": "Different soil pH requirements",
+        }
+    ),
+    
+    "cape_gooseberry": CompanionInfo(
+        good_companions=["tomatoes", "peppers", "basil"],
+        bad_companions=["none_known"],
+        benefits={
+            "tomatoes": "Similar nightshade family",
+            "peppers": "Compatible growth",
+            "basil": "Pest deterrent",
+        },
+        reasons_to_avoid={}
+    ),
 }
+
+
+def get_generic_companion_info(crop_name: str) -> CompanionInfo:
+    """
+    Generate generic companion planting info for crops without specific data.
+    Based on common gardening principles.
+    """
+    return CompanionInfo(
+        good_companions=["comfrey", "clover", "nasturtiums", "marigolds"],
+        bad_companions=["none_known"],
+        benefits={
+            "comfrey": "Dynamic accumulator, improves soil",
+            "clover": "Nitrogen fixation, ground cover",
+            "nasturtiums": "General pest deterrent, trap crop",
+            "marigolds": "Nematode control, pest deterrent",
+        },
+        reasons_to_avoid={}
+    )
 
 
 def get_companion_info(crop: str) -> Optional[CompanionInfo]:
     """
     Get companion planting information for a crop.
+    Falls back to generic companion info if specific data not available.
     
     Args:
         crop: Crop name (case-insensitive)
     
     Returns:
-        CompanionInfo or None if not found
+        CompanionInfo (always returns data, uses generic fallback if needed)
     """
     crop_lower = crop.lower()
     
@@ -2103,7 +2340,8 @@ def get_companion_info(crop: str) -> Optional[CompanionInfo]:
     if any(h in crop_lower for h in herb_crops):
         return COMPANION_DATABASE["herbs"]
     
-    return None
+    # Fall back to generic companion info for all other crops
+    return get_generic_companion_info(crop)
 
 
 def get_companion_recommendations(crops: List[str]) -> Dict[str, Dict[str, List[Tuple[str, str]]]]:
