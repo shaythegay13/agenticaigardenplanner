@@ -539,7 +539,6 @@ def get_generic_care_guide(crop_name: str, family: CropFamily) -> Dict:
         "family": family,
         **template
     }
-}
 
 
 def get_care_guide(crop_name: str) -> Optional[Dict]:
