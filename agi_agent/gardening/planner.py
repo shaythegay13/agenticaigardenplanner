@@ -37,6 +37,12 @@ from .rotation_planner import (
     generate_rotation_plan,
     generate_soil_improvement_plan,
 )
+from .care_guides import (
+    generate_detailed_care_guide,
+    generate_maintenance_schedule,
+    generate_fertilization_guide,
+    generate_pruning_guide,
+)
 from .yield_estimator import (
     generate_yield_summary,
 )
@@ -258,6 +264,12 @@ def generate_plan(
     rotation_plan = generate_rotation_plan(crop_names, years=4)
     soil_improvement = generate_soil_improvement_plan(crop_names)
     
+    # v4.1 Feature: Detailed Care Instructions
+    detailed_care = generate_detailed_care_guide(crop_names)
+    maintenance_schedule = generate_maintenance_schedule(crop_names)
+    fertilization_guide = generate_fertilization_guide(crop_names)
+    pruning_guide = generate_pruning_guide(crop_names)
+    
     # v3.1 Feature 2: Yield Estimates
     # Map experience to resource skill level
     skill_level_map = {
@@ -460,6 +472,10 @@ def generate_plan(
         + cover_crop_guide
         + rotation_plan
         + soil_improvement
+        + detailed_care
+        + maintenance_schedule
+        + fertilization_guide
+        + pruning_guide
         + "\n\n"
         + disease_guide
         + future_climate_section
