@@ -12,6 +12,7 @@ from .seasonal_planning import (
     generate_cover_crop_recommendations,
     generate_succession_planting_guide,
 )
+from .crop_timing import get_crop_timing, format_crop_timing
 from .climate_adaptation import (
     get_usda_hardiness_zone_simple,
     fetch_drought_status_simple,
@@ -230,8 +231,17 @@ def generate_plan(
     if air_quality_analysis and air_quality_analysis["filter_pollution_tolerant"]:
         air_quality_note = "\n⚠️  Note: High air pollution detected. Prioritizing pollution-tolerant varieties and recommending thorough washing of leafy greens before consumption.\n"
 
-    # Use all recommended plants (15-20 for diversity)
-    plant_list = "\n".join([f"- {p.name}: {p.notes}" for p in plants]) or "- No matches; consider adjusting constraints."
+    # Use all recommended plants (15-20 for diversity) with timing info
+    plant_entries = []
+    for p in plants:
+        timing = get_crop_timing(p.name)
+        if timing:
+            entry = f"- {p.name}: {p.notes} | Plant: {', '.join(timing.planting_months[:3])} | Harvest: {timing.days_to_harvest} days"
+        else:
+            entry = f"- {p.name}: {p.notes}"
+        plant_entries.append(entry)
+    
+    plant_list = "\n".join(plant_entries) or "- No matches; consider adjusting constraints."
     plant_list += air_quality_note
     
     # Extract crop names for v3.1 features (use all plants)
