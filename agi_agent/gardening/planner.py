@@ -43,6 +43,12 @@ from .care_guides import (
     generate_fertilization_guide,
     generate_pruning_guide,
 )
+from .troubleshooting import (
+    generate_troubleshooting_guide,
+    generate_common_mistakes_guide,
+    generate_expert_tips,
+    generate_seasonal_tips,
+)
 from .yield_estimator import (
     generate_yield_summary,
 )
@@ -270,6 +276,23 @@ def generate_plan(
     fertilization_guide = generate_fertilization_guide(crop_names)
     pruning_guide = generate_pruning_guide(crop_names)
     
+    # v4.1 Feature: Expert Tips & Troubleshooting
+    troubleshooting_guide = generate_troubleshooting_guide(crop_names)
+    common_mistakes = generate_common_mistakes_guide()
+    expert_tips = generate_expert_tips(crop_names)
+    # Determine current season for seasonal tips
+    from datetime import date
+    month = date.today().month
+    if month in [3, 4, 5]:
+        current_season = "Spring"
+    elif month in [6, 7, 8]:
+        current_season = "Summer"
+    elif month in [9, 10, 11]:
+        current_season = "Fall"
+    else:
+        current_season = "Winter"
+    seasonal_tips = generate_seasonal_tips(current_season)
+    
     # v3.1 Feature 2: Yield Estimates
     # Map experience to resource skill level
     skill_level_map = {
@@ -476,6 +499,10 @@ def generate_plan(
         + maintenance_schedule
         + fertilization_guide
         + pruning_guide
+        + troubleshooting_guide
+        + common_mistakes
+        + expert_tips
+        + seasonal_tips
         + "\n\n"
         + disease_guide
         + future_climate_section
