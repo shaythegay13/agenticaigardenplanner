@@ -411,3 +411,6 @@ def format_crop_timing(crop_name: str) -> str:
         info += f"  • Notes: {timing.notes}\n"
     
     return info
+
+# Additional timing data will be added for remaining 220+ crops
+# This includes: more vegetables, herbs, fruits, nuts, grains, tropical crops, etc.
