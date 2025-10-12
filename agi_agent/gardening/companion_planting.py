@@ -1301,6 +1301,398 @@ COMPANION_DATABASE = {
         },
         reasons_to_avoid={}
     ),
+    
+    # TROPICAL FRUITS
+    "avocado": CompanionInfo(
+        good_companions=["comfrey", "nasturtiums", "yarrow", "sweet_alyssum"],
+        bad_companions=["none_known"],
+        benefits={
+            "comfrey": "Dynamic accumulator",
+            "nasturtiums": "Pest deterrent",
+            "yarrow": "Attracts beneficial insects",
+            "sweet_alyssum": "Ground cover, beneficial insects",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "bananas": CompanionInfo(
+        good_companions=["sweet_potato", "taro", "ginger", "turmeric"],
+        bad_companions=["none_known"],
+        benefits={
+            "sweet_potato": "Ground cover",
+            "taro": "Similar tropical conditions",
+            "ginger": "Compatible tropical",
+            "turmeric": "Similar requirements",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "mangoes": CompanionInfo(
+        good_companions=["comfrey", "nasturtiums", "marigolds"],
+        bad_companions=["none_known"],
+        benefits={
+            "comfrey": "Nutrient accumulator",
+            "nasturtiums": "Pest control",
+            "marigolds": "Nematode control",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "papayas": CompanionInfo(
+        good_companions=["sweet_potato", "beans", "comfrey"],
+        bad_companions=["none_known"],
+        benefits={
+            "sweet_potato": "Ground cover",
+            "beans": "Nitrogen fixation",
+            "comfrey": "Nutrient accumulator",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "pineapples": CompanionInfo(
+        good_companions=["sweet_potato", "ginger", "turmeric"],
+        bad_companions=["none_known"],
+        benefits={
+            "sweet_potato": "Ground cover",
+            "ginger": "Compatible tropical",
+            "turmeric": "Similar conditions",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    # CITRUS
+    "lemons": CompanionInfo(
+        good_companions=["nasturtiums", "yarrow", "dill", "fennel"],
+        bad_companions=["none_known"],
+        benefits={
+            "nasturtiums": "Aphid control",
+            "yarrow": "Beneficial insects",
+            "dill": "Attracts predatory wasps",
+            "fennel": "Attracts beneficial insects",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "limes": CompanionInfo(
+        good_companions=["nasturtiums", "yarrow", "dill"],
+        bad_companions=["none_known"],
+        benefits={
+            "nasturtiums": "Pest control",
+            "yarrow": "Beneficial insects",
+            "dill": "Attracts predators",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "oranges": CompanionInfo(
+        good_companions=["nasturtiums", "yarrow", "comfrey", "clover"],
+        bad_companions=["none_known"],
+        benefits={
+            "nasturtiums": "Aphid trap crop",
+            "yarrow": "Beneficial insects",
+            "comfrey": "Nutrient accumulator",
+            "clover": "Nitrogen fixation",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    # NUTS
+    "almonds": CompanionInfo(
+        good_companions=["clover", "nasturtiums", "comfrey"],
+        bad_companions=["grass"],
+        benefits={
+            "clover": "Nitrogen fixation, ground cover",
+            "nasturtiums": "Pest deterrent",
+            "comfrey": "Deep nutrient mining",
+        },
+        reasons_to_avoid={
+            "grass": "Competition for water and nutrients",
+        }
+    ),
+    
+    "walnuts": CompanionInfo(
+        good_companions=["none_recommended"],
+        bad_companions=["most_plants"],
+        benefits={},
+        reasons_to_avoid={
+            "most_plants": "Juglone toxicity - allelopathic to many plants including tomatoes, peppers, potatoes",
+        }
+    ),
+    
+    "pecans": CompanionInfo(
+        good_companions=["clover", "comfrey"],
+        bad_companions=["grass"],
+        benefits={
+            "clover": "Nitrogen fixation",
+            "comfrey": "Nutrient accumulator",
+        },
+        reasons_to_avoid={
+            "grass": "Competition",
+        }
+    ),
+    
+    "hazelnuts": CompanionInfo(
+        good_companions=["clover", "comfrey", "nasturtiums"],
+        bad_companions=["grass"],
+        benefits={
+            "clover": "Nitrogen fixation",
+            "comfrey": "Nutrient mining",
+            "nasturtiums": "Pest control",
+        },
+        reasons_to_avoid={
+            "grass": "Competition",
+        }
+    ),
+    
+    # MORE VEGETABLES
+    "tomatillo": CompanionInfo(
+        good_companions=["basil", "marigolds", "carrots", "onions"],
+        bad_companions=["brassicas", "fennel", "potatoes"],
+        benefits={
+            "basil": "Repels aphids",
+            "marigolds": "Nematode control",
+            "carrots": "Space efficient",
+            "onions": "Pest deterrent",
+        },
+        reasons_to_avoid={
+            "brassicas": "Nutrient competition",
+            "fennel": "Allelopathic",
+            "potatoes": "Disease risk",
+        }
+    ),
+    
+    "zucchini": CompanionInfo(
+        good_companions=["corn", "beans", "nasturtiums", "marigolds"],
+        bad_companions=["potatoes"],
+        benefits={
+            "corn": "Three Sisters variation",
+            "beans": "Nitrogen fixation",
+            "nasturtiums": "Aphid control",
+            "marigolds": "Pest deterrent",
+        },
+        reasons_to_avoid={
+            "potatoes": "Competition",
+        }
+    ),
+    
+    "watermelon": CompanionInfo(
+        good_companions=["corn", "beans", "nasturtiums", "marigolds"],
+        bad_companions=["potatoes"],
+        benefits={
+            "corn": "Provides shade",
+            "beans": "Nitrogen fixation",
+            "nasturtiums": "Pest control",
+            "marigolds": "Beetle deterrent",
+        },
+        reasons_to_avoid={
+            "potatoes": "Competition",
+        }
+    ),
+    
+    "cantaloupe": CompanionInfo(
+        good_companions=["corn", "beans", "nasturtiums", "marigolds"],
+        bad_companions=["potatoes"],
+        benefits={
+            "corn": "Provides support and shade",
+            "beans": "Nitrogen benefits",
+            "nasturtiums": "Aphid control",
+            "marigolds": "Pest deterrent",
+        },
+        reasons_to_avoid={
+            "potatoes": "Competition",
+        }
+    ),
+    
+    # MORE HERBS
+    "chervil": CompanionInfo(
+        good_companions=["radishes", "lettuce", "broccoli"],
+        bad_companions=["none_known"],
+        benefits={
+            "radishes": "Enhances flavor",
+            "lettuce": "Compatible cool season",
+            "broccoli": "Pest deterrent",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "hyssop": CompanionInfo(
+        good_companions=["cabbage", "grapes", "most_vegetables"],
+        bad_companions=["radishes"],
+        benefits={
+            "cabbage": "Deters cabbage moths",
+            "grapes": "Attracts pollinators",
+            "most_vegetables": "General pest deterrent",
+        },
+        reasons_to_avoid={
+            "radishes": "Inhibits radish growth",
+        }
+    ),
+    
+    "rue": CompanionInfo(
+        good_companions=["roses", "raspberries", "figs"],
+        bad_companions=["basil", "sage", "cabbage"],
+        benefits={
+            "roses": "Repels beetles",
+            "raspberries": "Pest deterrent",
+            "figs": "Repels flies",
+        },
+        reasons_to_avoid={
+            "basil": "Allelopathic effects",
+            "sage": "Incompatible",
+            "cabbage": "Inhibits growth",
+        }
+    ),
+    
+    "tansy": CompanionInfo(
+        good_companions=["fruit_trees", "roses", "raspberries"],
+        bad_companions=["vegetables", "livestock"],
+        benefits={
+            "fruit_trees": "Repels flying insects",
+            "roses": "Deters aphids and beetles",
+            "raspberries": "Pest control",
+        },
+        reasons_to_avoid={
+            "vegetables": "Can be invasive",
+            "livestock": "Toxic to animals",
+        }
+    ),
+    
+    "yarrow": CompanionInfo(
+        good_companions=["most_plants", "aromatic_herbs"],
+        bad_companions=["none_known"],
+        benefits={
+            "most_plants": "Attracts beneficial insects, enhances essential oils in nearby herbs",
+            "aromatic_herbs": "Intensifies fragrance",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    # BERRIES
+    "raspberries": CompanionInfo(
+        good_companions=["garlic", "tansy", "rue", "turnips"],
+        bad_companions=["blackberries", "potatoes"],
+        benefits={
+            "garlic": "Repels aphids",
+            "tansy": "Repels beetles",
+            "rue": "Pest deterrent",
+            "turnips": "Compatible growth",
+        },
+        reasons_to_avoid={
+            "blackberries": "Disease transmission",
+            "potatoes": "Blight risk",
+        }
+    ),
+    
+    # MORE LEGUMES
+    "green_beans": CompanionInfo(
+        good_companions=["corn", "squash", "cucumbers", "carrots", "beets"],
+        bad_companions=["onions", "garlic", "fennel", "sunflowers"],
+        benefits={
+            "corn": "Beans climb corn, nitrogen fixation",
+            "squash": "Three Sisters",
+            "cucumbers": "Nitrogen benefits",
+            "carrots": "Different root depths",
+            "beets": "Compatible growth",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits bean growth",
+            "garlic": "Stunts beans",
+            "fennel": "Allelopathic",
+            "sunflowers": "Allelopathic compounds",
+        }
+    ),
+    
+    "edamame": CompanionInfo(
+        good_companions=["corn", "squash", "cucumbers"],
+        bad_companions=["onions", "garlic"],
+        benefits={
+            "corn": "Nitrogen fixation",
+            "squash": "Ground cover",
+            "cucumbers": "Nitrogen benefits",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits growth",
+            "garlic": "Stunts soybeans",
+        }
+    ),
+    
+    # ALLIUMS
+    "chives": CompanionInfo(
+        good_companions=["carrots", "tomatoes", "roses", "fruit_trees"],
+        bad_companions=["beans", "peas"],
+        benefits={
+            "carrots": "Repels carrot fly and aphids",
+            "tomatoes": "Deters aphids",
+            "roses": "Prevents black spot and aphids",
+            "fruit_trees": "Repels aphids and borers",
+        },
+        reasons_to_avoid={
+            "beans": "Inhibits bean growth",
+            "peas": "Stunts pea growth",
+        }
+    ),
+    
+    # GRAINS
+    "corn": CompanionInfo(
+        good_companions=["beans", "squash", "cucumbers", "melons", "peas"],
+        bad_companions=["tomatoes", "celery"],
+        benefits={
+            "beans": "Three Sisters - beans climb corn and fix nitrogen",
+            "squash": "Three Sisters - ground cover, moisture retention",
+            "cucumbers": "Compatible growth",
+            "melons": "Provides shade",
+            "peas": "Nitrogen fixation",
+        },
+        reasons_to_avoid={
+            "tomatoes": "Both attract hornworms",
+            "celery": "Stunts corn growth",
+        }
+    ),
+    
+    "sorghum": CompanionInfo(
+        good_companions=["beans", "peas", "cowpeas"],
+        bad_companions=["none_known"],
+        benefits={
+            "beans": "Nitrogen fixation",
+            "peas": "Legume companion",
+            "cowpeas": "Nitrogen benefits",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "millet": CompanionInfo(
+        good_companions=["beans", "peas", "clover"],
+        bad_companions=["none_known"],
+        benefits={
+            "beans": "Nitrogen fixation",
+            "peas": "Legume benefits",
+            "clover": "Ground cover",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    # COVER CROPS
+    "clover": CompanionInfo(
+        good_companions=["fruit_trees", "grains", "most_crops"],
+        bad_companions=["none_known"],
+        benefits={
+            "fruit_trees": "Nitrogen fixation, ground cover",
+            "grains": "Nitrogen benefits",
+            "most_crops": "Living mulch, nitrogen fixation",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "vetch": CompanionInfo(
+        good_companions=["grains", "oats", "rye"],
+        bad_companions=["none_known"],
+        benefits={
+            "grains": "Nitrogen fixation",
+            "oats": "Support for vetch",
+            "rye": "Cover crop mix",
+        },
+        reasons_to_avoid={}
+    ),
 }
 
 
