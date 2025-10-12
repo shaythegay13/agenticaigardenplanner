@@ -75,11 +75,6 @@ A comprehensive, climate-aware garden planning system with visual layout generat
    pip install -r requirements.txt
    ```
 
-3. (Optional) Install in editable mode and expose CLI command:
-   ```bash
-   pip install -e .
-   ```
-
 ## Usage
 
 Start the interactive CLI from the project root:

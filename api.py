@@ -248,11 +248,11 @@ async def _generate_garden_plan_logic(request: PlanRequest):
         climate = fetch_simple_forecast(location.latitude, location.longitude)
         
         # Build enhanced environmental data if provided
-        enhanced_data = None
+        enhanced_weather_data = None
         if any([request.air_quality, request.solar_data, request.weather_data, 
                 request.pollen_data, request.elevation_data, request.aerial_view]):
             try:
-                enhanced_data = EnhancedEnvironmentalData(
+                enhanced_weather_data = EnhancedEnvironmentalData(
                     location={
                         "latitude": location.latitude,
                         "longitude": location.longitude,
@@ -268,10 +268,10 @@ async def _generate_garden_plan_logic(request: PlanRequest):
                 )
             except Exception as e:
                 print(f"Warning: Could not parse enhanced data: {e}")
-                enhanced_data = None
+                enhanced_weather_data = None
         
         # Generate plan with enhanced data
-        plan_text = generate_plan(user_input, climate, enhanced_data=enhanced_data)
+        plan_text = generate_plan(user_input, climate, enhanced_data=enhanced_weather_data)
         
         return {
             "success": True,
