@@ -617,6 +617,302 @@ COMPANION_DATABASE = {
         },
         reasons_to_avoid={}
     ),
+    
+    # ADDITIONAL COMMON VEGETABLES
+    "beets": CompanionInfo(
+        good_companions=["onions", "lettuce", "cabbage", "bush_beans", "garlic"],
+        bad_companions=["pole_beans", "mustard"],
+        benefits={
+            "onions": "Repels pests, different root depths",
+            "lettuce": "Shade tolerant, fills space",
+            "cabbage": "Compatible growth patterns",
+            "bush_beans": "Beans add nitrogen",
+            "garlic": "Repels aphids and beetles",
+        },
+        reasons_to_avoid={
+            "pole_beans": "Compete for nutrients",
+            "mustard": "Can stunt beet growth",
+        }
+    ),
+    
+    "arugula": CompanionInfo(
+        good_companions=["beets", "carrots", "lettuce", "spinach", "onions"],
+        bad_companions=["strawberries"],
+        benefits={
+            "beets": "Compatible cool season crops",
+            "carrots": "Different root depths",
+            "lettuce": "Similar growing conditions",
+            "spinach": "Cool season companions",
+            "onions": "Pest deterrent",
+        },
+        reasons_to_avoid={
+            "strawberries": "Competition for space",
+        }
+    ),
+    
+    "kale": CompanionInfo(
+        good_companions=["onions", "beets", "celery", "herbs", "potatoes"],
+        bad_companions=["tomatoes", "peppers", "strawberries"],
+        benefits={
+            "onions": "Repels cabbage worms",
+            "beets": "Compatible growth",
+            "celery": "Deters cabbage moths",
+            "herbs": "Aromatic pest deterrent",
+            "potatoes": "Compatible spacing",
+        },
+        reasons_to_avoid={
+            "tomatoes": "Compete for nutrients",
+            "peppers": "Different nutrient needs",
+            "strawberries": "Incompatible growth patterns",
+        }
+    ),
+    
+    "garlic": CompanionInfo(
+        good_companions=["tomatoes", "roses", "fruit_trees", "beets", "carrots"],
+        bad_companions=["beans", "peas", "asparagus", "sage"],
+        benefits={
+            "tomatoes": "Repels aphids and spider mites",
+            "roses": "Deters aphids and black spot",
+            "fruit_trees": "Repels borers and aphids",
+            "beets": "Pest deterrent",
+            "carrots": "Repels carrot fly",
+        },
+        reasons_to_avoid={
+            "beans": "Inhibits bean growth",
+            "peas": "Stunts pea growth",
+            "asparagus": "Stunts asparagus growth",
+            "sage": "Competes for resources",
+        }
+    ),
+    
+    "broccoli": CompanionInfo(
+        good_companions=["onions", "garlic", "beets", "celery", "herbs"],
+        bad_companions=["tomatoes", "peppers", "strawberries", "pole_beans"],
+        benefits={
+            "onions": "Repels cabbage worms",
+            "garlic": "Deters aphids",
+            "beets": "Compatible growth",
+            "celery": "Repels cabbage moths",
+            "herbs": "Aromatic pest control",
+        },
+        reasons_to_avoid={
+            "tomatoes": "Heavy feeders compete",
+            "peppers": "Different nutrient needs",
+            "strawberries": "Incompatible",
+            "pole_beans": "Shading issues",
+        }
+    ),
+    
+    "cauliflower": CompanionInfo(
+        good_companions=["onions", "celery", "beets", "herbs", "potatoes"],
+        bad_companions=["tomatoes", "strawberries", "peppers"],
+        benefits={
+            "onions": "Repels pests",
+            "celery": "Deters cabbage moths",
+            "beets": "Compatible growth",
+            "herbs": "Pest deterrent",
+            "potatoes": "Good spacing",
+        },
+        reasons_to_avoid={
+            "tomatoes": "Nutrient competition",
+            "strawberries": "Incompatible",
+            "peppers": "Different needs",
+        }
+    ),
+    
+    "cabbage": CompanionInfo(
+        good_companions=["onions", "celery", "beets", "herbs", "potatoes"],
+        bad_companions=["tomatoes", "peppers", "strawberries", "pole_beans"],
+        benefits={
+            "onions": "Repels cabbage worms",
+            "celery": "Deters cabbage moths",
+            "beets": "Compatible growth",
+            "herbs": "Aromatic pest control",
+            "potatoes": "Good companion",
+        },
+        reasons_to_avoid={
+            "tomatoes": "Heavy feeders compete",
+            "peppers": "Different needs",
+            "strawberries": "Incompatible",
+            "pole_beans": "Shading problems",
+        }
+    ),
+    
+    # FRUITS
+    "apples": CompanionInfo(
+        good_companions=["nasturtiums", "chives", "garlic", "comfrey", "clover"],
+        bad_companions=["grass", "potatoes"],
+        benefits={
+            "nasturtiums": "Trap crop for aphids",
+            "chives": "Deters aphids and scab",
+            "garlic": "Repels borers",
+            "comfrey": "Dynamic accumulator, mulch",
+            "clover": "Nitrogen fixation, ground cover",
+        },
+        reasons_to_avoid={
+            "grass": "Competes for water and nutrients",
+            "potatoes": "Increases blight risk",
+        }
+    ),
+    
+    "blueberries": CompanionInfo(
+        good_companions=["azaleas", "rhododendrons", "ferns", "thyme", "strawberries"],
+        bad_companions=["tomatoes", "peppers", "brassicas"],
+        benefits={
+            "azaleas": "Similar acidic soil needs",
+            "rhododendrons": "Acid-loving companions",
+            "ferns": "Shade-tolerant ground cover",
+            "thyme": "Ground cover, pest deterrent",
+            "strawberries": "Compatible acid-lovers",
+        },
+        reasons_to_avoid={
+            "tomatoes": "Different pH needs",
+            "peppers": "Different soil requirements",
+            "brassicas": "Incompatible pH",
+        }
+    ),
+    
+    "grapes": CompanionInfo(
+        good_companions=["basil", "oregano", "clover", "blackberries", "hyssop"],
+        bad_companions=["cabbage", "radishes"],
+        benefits={
+            "basil": "Repels flies and mosquitoes",
+            "oregano": "Pest deterrent",
+            "clover": "Nitrogen fixation",
+            "blackberries": "Compatible growth",
+            "hyssop": "Attracts pollinators",
+        },
+        reasons_to_avoid={
+            "cabbage": "Inhibits grape growth",
+            "radishes": "Competition",
+        }
+    ),
+    
+    # MORE HERBS
+    "parsley": CompanionInfo(
+        good_companions=["tomatoes", "asparagus", "carrots", "roses"],
+        bad_companions=["lettuce", "mint"],
+        benefits={
+            "tomatoes": "Attracts beneficial insects",
+            "asparagus": "Repels asparagus beetles",
+            "carrots": "Attracts beneficial wasps",
+            "roses": "Enhances rose health",
+        },
+        reasons_to_avoid={
+            "lettuce": "Competes for space",
+            "mint": "Too aggressive, competes",
+        }
+    ),
+    
+    "cilantro": CompanionInfo(
+        good_companions=["tomatoes", "peppers", "spinach", "anise"],
+        bad_companions=["fennel"],
+        benefits={
+            "tomatoes": "Repels aphids and spider mites",
+            "peppers": "Attracts beneficial insects",
+            "spinach": "Compatible growth",
+            "anise": "Enhances growth",
+        },
+        reasons_to_avoid={
+            "fennel": "Inhibits seed production",
+        }
+    ),
+    
+    "sage": CompanionInfo(
+        good_companions=["rosemary", "carrots", "cabbage", "tomatoes"],
+        bad_companions=["cucumbers", "onions", "rue"],
+        benefits={
+            "rosemary": "Compatible Mediterranean herbs",
+            "carrots": "Repels carrot fly",
+            "cabbage": "Deters cabbage moths",
+            "tomatoes": "Repels some pests",
+        },
+        reasons_to_avoid={
+            "cucumbers": "Inhibits growth",
+            "onions": "Competes for resources",
+            "rue": "Allelopathic effects",
+        }
+    ),
+    
+    "lavender": CompanionInfo(
+        good_companions=["roses", "fruit_trees", "vegetables", "herbs"],
+        bad_companions=["impatiens"],
+        benefits={
+            "roses": "Repels aphids",
+            "fruit_trees": "Attracts pollinators",
+            "vegetables": "General pest deterrent",
+            "herbs": "Compatible Mediterranean herbs",
+        },
+        reasons_to_avoid={
+            "impatiens": "Different water needs",
+        }
+    ),
+    
+    # LEGUMES
+    "lentils": CompanionInfo(
+        good_companions=["cucumbers", "corn", "potatoes", "radishes"],
+        bad_companions=["onions", "garlic"],
+        benefits={
+            "cucumbers": "Nitrogen fixation benefits cucumbers",
+            "corn": "Compatible growth",
+            "potatoes": "Lentils add nitrogen",
+            "radishes": "Pest deterrent",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits legume growth",
+            "garlic": "Stunts lentil growth",
+        }
+    ),
+    
+    "chickpeas": CompanionInfo(
+        good_companions=["corn", "cucumbers", "potatoes", "radishes"],
+        bad_companions=["onions", "garlic", "fennel"],
+        benefits={
+            "corn": "Compatible growth patterns",
+            "cucumbers": "Nitrogen fixation",
+            "potatoes": "Adds nitrogen to soil",
+            "radishes": "Pest control",
+        },
+        reasons_to_avoid={
+            "onions": "Inhibits growth",
+            "garlic": "Stunts chickpeas",
+            "fennel": "Allelopathic",
+        }
+    ),
+    
+    # GRAINS
+    "wheat": CompanionInfo(
+        good_companions=["clover", "peas", "beans"],
+        bad_companions=["none_known"],
+        benefits={
+            "clover": "Nitrogen fixation, ground cover",
+            "peas": "Nitrogen fixation",
+            "beans": "Legume benefits",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "oats": CompanionInfo(
+        good_companions=["peas", "vetch", "clover"],
+        bad_companions=["none_known"],
+        benefits={
+            "peas": "Nitrogen fixation, support",
+            "vetch": "Cover crop companion",
+            "clover": "Nitrogen fixation",
+        },
+        reasons_to_avoid={}
+    ),
+    
+    "barley": CompanionInfo(
+        good_companions=["peas", "beans", "clover"],
+        bad_companions=["none_known"],
+        benefits={
+            "peas": "Nitrogen fixation",
+            "beans": "Legume companion",
+            "clover": "Ground cover, nitrogen",
+        },
+        reasons_to_avoid={}
+    ),
 }
 
 
