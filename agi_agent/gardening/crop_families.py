@@ -26,6 +26,7 @@ class CropFamily(str, Enum):
     JUGLANDACEAE = "Walnut Family"  # Walnuts, pecans, hickory
     PROTEACEAE = "Protea Family"  # Macadamia
     LAMIACEAE = "Mint Family"  # Basil, mint, oregano, thyme
+    POLYGONACEAE = "Buckwheat Family"  # Buckwheat, rhubarb, sorrel
     TROPICAL_FRUIT = "Tropical Fruits"  # Papaya, pineapple, dragon fruit
     BERRIES = "Berry Fruits"  # Blueberries, raspberries, blackberries
 
