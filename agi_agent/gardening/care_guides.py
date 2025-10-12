@@ -230,6 +230,212 @@ CARE_DATABASE = {
             "Harvest green onions anytime for fresh use"
         ]
     },
+    
+    # BROCCOLI
+    "broccoli": {
+        "family": CropFamily.BRASSICACEAE,
+        "care_calendar": {
+            "week_1-2": "Transplant seedlings 18-24 inches apart. Water well after planting.",
+            "week_3-4": "Mulch around plants. Begin fertilization with nitrogen-rich fertilizer.",
+            "week_5-6": "Monitor for cabbage worms. Use row covers if needed.",
+            "week_7-8": "Continue fertilization every 2 weeks. Keep soil moist.",
+            "week_9-10": "Heads beginning to form. Maintain consistent watering.",
+            "week_11-12": "Harvest main head when tight and before flowers open.",
+            "week_13+": "Continue harvesting side shoots for 4-6 weeks after main head.",
+        },
+        "fertilization": "Feed every 2 weeks with nitrogen-rich fertilizer (blood meal or fish emulsion). Side-dress with compost.",
+        "watering": "1-2 inches per week. Consistent moisture essential for head formation.",
+        "pruning": "Remove yellowing lower leaves. Harvest main head to encourage side shoots.",
+        "support": "None needed.",
+        "common_tasks": [
+            "Check daily for cabbage worms and hand-pick",
+            "Use row covers to prevent cabbage moths",
+            "Harvest main head in morning when cool",
+            "Continue harvesting side shoots after main head"
+        ]
+    },
+    
+    # POTATOES
+    "potato": {
+        "family": CropFamily.SOLANACEAE,
+        "care_calendar": {
+            "week_1-2": "Plant seed potatoes 4 inches deep, 12 inches apart. Water well.",
+            "week_3-4": "Plants emerging. Begin hilling soil around stems when 6 inches tall.",
+            "week_5-6": "Continue hilling every 2 weeks. Keep soil moist but not waterlogged.",
+            "week_7-8": "Plants flowering. Stop hilling. Maintain consistent watering.",
+            "week_9-10": "Tubers forming. Reduce watering slightly.",
+            "week_11-12": "For new potatoes, harvest when flowers appear. For storage, wait until foliage dies.",
+            "week_13+": "Cure harvested potatoes in dark, cool place for 2 weeks before storage.",
+        },
+        "fertilization": "Apply balanced fertilizer at planting. Side-dress with compost when plants are 6 inches tall. Avoid high nitrogen after flowering.",
+        "watering": "1-2 inches per week. Consistent moisture prevents hollow heart and knobby tubers.",
+        "pruning": "Remove flowers to direct energy to tuber production (optional).",
+        "support": "None needed.",
+        "common_tasks": [
+            "Hill soil around plants every 2 weeks until flowering",
+            "Check for Colorado potato beetles daily",
+            "Mulch heavily to keep tubers covered and cool",
+            "Stop watering 2 weeks before harvest for storage potatoes"
+        ]
+    },
+    
+    # GARLIC
+    "garlic": {
+        "family": CropFamily.ALLIACEAE,
+        "care_calendar": {
+            "week_1-4": "Plant cloves in fall, 2 inches deep, 6 inches apart. Mulch heavily.",
+            "winter": "Mulch protects through winter. No care needed.",
+            "spring_week_1-4": "Remove mulch in spring. Begin fertilization when shoots appear.",
+            "spring_week_5-8": "Scapes appear on hardneck varieties. Cut and use in cooking.",
+            "spring_week_9-12": "Stop watering when lower leaves begin to brown.",
+            "harvest": "Harvest when 1/3 to 1/2 of leaves have browned. Cure for 2-3 weeks.",
+        },
+        "fertilization": "Apply nitrogen-rich fertilizer in early spring. Stop fertilizing 4 weeks before harvest.",
+        "watering": "1 inch per week during active growth. Stop watering 2-3 weeks before harvest.",
+        "pruning": "Remove scapes (flower stalks) on hardneck varieties to increase bulb size.",
+        "support": "None needed.",
+        "common_tasks": [
+            "Mulch heavily in fall and winter",
+            "Remove scapes when they curl (use in pesto)",
+            "Watch for yellowing leaves as harvest indicator",
+            "Cure bulbs in warm, dry, shaded area before storage"
+        ]
+    },
+    
+    # STRAWBERRIES
+    "strawberry": {
+        "family": CropFamily.ROSACEAE,
+        "care_calendar": {
+            "year_1_spring": "Plant crowns with roots spread. Crown should be at soil level. Water well.",
+            "year_1_summer": "Remove flowers first year to establish strong plants. Keep weeded.",
+            "year_1_fall": "Mulch with straw after first hard freeze.",
+            "year_2_spring": "Remove mulch when growth starts. Fertilize lightly.",
+            "year_2_summer": "Harvest berries in morning. Remove runners if desired.",
+            "year_2_fall": "Renovate June-bearing varieties after harvest. Mulch for winter.",
+        },
+        "fertilization": "Apply balanced fertilizer in early spring. Avoid high nitrogen which reduces fruiting.",
+        "watering": "1-2 inches per week. Drip irrigation ideal to keep fruit dry.",
+        "pruning": "Remove runners to maintain plant vigor. Renovate June-bearing beds after harvest.",
+        "support": "None needed.",
+        "common_tasks": [
+            "Remove flowers first year for stronger plants",
+            "Harvest berries every 2-3 days when ripe",
+            "Remove runners unless expanding bed",
+            "Mulch with straw to keep fruit clean and control weeds"
+        ]
+    },
+    
+    # ZUCCHINI
+    "zucchini": {
+        "family": CropFamily.CUCURBITACEAE,
+        "care_calendar": {
+            "week_1-2": "Direct sow or transplant after last frost. Space 3-4 feet apart.",
+            "week_3-4": "Mulch around plants. Begin fertilization.",
+            "week_5-6": "Flowers appearing. Hand-pollinate if needed. Monitor for squash bugs.",
+            "week_7-8": "Begin harvesting when 6-8 inches long. Check daily.",
+            "week_9+": "Continue harvesting. Remove oversize fruits to encourage production.",
+        },
+        "fertilization": "Feed every 2 weeks with balanced fertilizer. Side-dress with compost when flowering begins.",
+        "watering": "1-2 inches per week. Water at base to prevent powdery mildew.",
+        "pruning": "Remove damaged or diseased leaves. Harvest oversize fruits promptly.",
+        "support": "None needed for bush varieties. Trellis for vining types.",
+        "common_tasks": [
+            "Check daily for squash vine borers at base of plant",
+            "Harvest when 6-8 inches for best flavor",
+            "Hand-pollinate early morning if few bees present",
+            "Remove and destroy squash bug eggs on leaf undersides"
+        ]
+    },
+    
+    # BEETS
+    "beet": {
+        "family": CropFamily.CHENOPODIACEAE,
+        "care_calendar": {
+            "week_1-2": "Direct sow 1/2 inch deep. Keep soil moist for germination.",
+            "week_3-4": "Thin seedlings to 3-4 inches apart. Use thinnings in salads.",
+            "week_5-6": "Begin light fertilization. Keep soil moist.",
+            "week_7-8": "Roots sizing up. Maintain consistent watering.",
+            "week_9-10": "Begin harvesting when roots are 1-3 inches diameter.",
+        },
+        "fertilization": "Light feeding with balanced fertilizer every 3 weeks. Avoid high nitrogen.",
+        "watering": "1 inch per week. Consistent moisture prevents woody roots.",
+        "pruning": "Harvest greens when young for salads (optional).",
+        "support": "None needed.",
+        "common_tasks": [
+            "Thin seedlings early - each seed produces 2-3 plants",
+            "Harvest greens for salads when thinning",
+            "Pull roots when 1-3 inches for best tenderness",
+            "Succession plant every 2-3 weeks for continuous harvest"
+        ]
+    },
+    
+    # SPINACH
+    "spinach": {
+        "family": CropFamily.CHENOPODIACEAE,
+        "care_calendar": {
+            "week_1-2": "Direct sow in early spring or fall. Keep soil moist.",
+            "week_3-4": "Thin to 4-6 inches apart. Begin light fertilization.",
+            "week_5-6": "Begin harvesting outer leaves or wait for full rosette.",
+            "week_7-8": "Continue harvesting. Watch for bolting in warm weather.",
+        },
+        "fertilization": "Feed every 2 weeks with nitrogen-rich fertilizer (fish emulsion).",
+        "watering": "1 inch per week. Consistent moisture prevents bolting.",
+        "pruning": "Harvest outer leaves regularly to encourage continued growth.",
+        "support": "None needed.",
+        "common_tasks": [
+            "Harvest outer leaves when 3-4 inches long",
+            "Provide shade cloth in warm weather to delay bolting",
+            "Succession plant every 2 weeks in spring and fall",
+            "Watch for leaf miners and remove affected leaves"
+        ]
+    },
+    
+    # PEAS
+    "pea": {
+        "family": CropFamily.FABACEAE,
+        "care_calendar": {
+            "week_1-2": "Direct sow 1 inch deep as soon as soil can be worked. Install trellis.",
+            "week_3-4": "Seedlings emerging. Protect from birds with netting.",
+            "week_5-6": "Plants climbing. Guide tendrils to trellis.",
+            "week_7-8": "Flowering begins. Maintain consistent watering.",
+            "week_9-10": "Pods forming. Check daily for harvest readiness.",
+            "week_11-12": "Harvest snap peas when pods are full. Harvest snow peas when flat.",
+        },
+        "fertilization": "Light fertilization only - peas fix their own nitrogen. Compost at planting sufficient.",
+        "watering": "1 inch per week. Increase to 1.5 inches when flowering and podding.",
+        "pruning": "Pinch growing tips when plants reach top of support (optional).",
+        "support": "Trellis, fence, or netting for climbing varieties. Bush types need minimal support.",
+        "common_tasks": [
+            "Install trellis before planting",
+            "Harvest daily once pods begin forming",
+            "Pick pods in morning for sweetest flavor",
+            "Remove plants after harvest and compost (nitrogen-rich)"
+        ]
+    },
+    
+    # EGGPLANT
+    "eggplant": {
+        "family": CropFamily.SOLANACEAE,
+        "care_calendar": {
+            "week_1-2": "Transplant after soil warms to 70°F. Space 24-30 inches apart.",
+            "week_3-4": "Mulch around plants. Begin fertilization.",
+            "week_5-6": "Stake plants. Monitor for flea beetles.",
+            "week_7-8": "Flowers appearing. Hand-pollinate if needed.",
+            "week_9-10": "Fruits forming. Continue fertilization.",
+            "week_11-12": "Begin harvesting when fruits are glossy and firm.",
+            "week_13+": "Continue harvesting. Remove overripe fruits promptly.",
+        },
+        "fertilization": "Feed every 2 weeks with balanced fertilizer. Increase potassium when fruiting.",
+        "watering": "1-2 inches per week. Consistent moisture prevents bitter fruit.",
+        "pruning": "Pinch first flowers for stronger plants. Remove suckers below first flower.",
+        "support": "Stake or cage plants to support heavy fruits.",
+        "common_tasks": [
+            "Check for flea beetles and use row covers if needed",
+            "Harvest when skin is glossy - dull skin means overripe",
+            "Use pruning shears to cut fruit with stem attached",
+            "Remove overripe fruits to encourage continued production"
+        ]
+    },
 }
 
 
