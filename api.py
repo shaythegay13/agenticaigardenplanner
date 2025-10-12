@@ -240,7 +240,8 @@ async def _generate_garden_plan_logic(request: PlanRequest):
             sunlight=sunlight,
             soil_type=soil_type,
             experience=experience,
-            goals=UserGoals(crops=crop_interests, preferences=preferences)
+            goals=UserGoals(crops=crop_interests, preferences=preferences),
+            seasons=request.seasons  # Pass user's selected growing seasons
         )
         
         # Get climate data

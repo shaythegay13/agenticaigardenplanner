@@ -132,6 +132,7 @@ class UserInput(BaseModel):
     experience: Experience
     goals: UserGoals
     soil_type: SoilType = SoilType.UNKNOWN
+    seasons: Optional[List[str]] = None  # User's selected growing seasons (Spring, Summer, Fall, Winter)
     image_path: Optional[str] = None  # Optional path to the space image
 
 

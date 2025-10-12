@@ -350,6 +350,8 @@ def generate_plan(
         frost_last_spring=frost_last,
         frost_first_fall=frost_first,
         current_date=date.today(),
+        recommended_crops=crop_names,
+        user_seasons=user.seasons,  # User's selected growing seasons
     )
 
     # v4.0 Phase 1: Generate visual layout if we have recommended crops

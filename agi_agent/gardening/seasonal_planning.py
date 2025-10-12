@@ -312,62 +312,91 @@ def generate_cover_crop_recommendations(
 def generate_succession_planting_guide(
     frost_last_spring: Optional[date],
     frost_first_fall: Optional[date],
-    current_date: date
+    current_date: date,
+    recommended_crops: Optional[List[str]] = None,
+    user_seasons: Optional[List[str]] = None
 ) -> str:
     """
-    Generate succession planting guide with specific dates.
+    Generate succession planting guide with specific dates based on user's recommended crops.
     
     Args:
         frost_last_spring: Last spring frost date
         frost_first_fall: First fall frost date
         current_date: Current date
+        recommended_crops: List of crop names recommended to the user
+        user_seasons: List of seasons user selected (e.g., ["Spring", "Summer", "Fall"])
     
     Returns:
         Formatted succession planting guide
     """
-    guide = "Succession Planting Guide:\n\n"
-    guide += "Maximize harvests by planting small amounts of fast-growing crops every 2-3 weeks:\n\n"
+    guide = "Seasonal Planting Guide:\n\n"
+    guide += "Based on your recommended crops and selected growing seasons:\n\n"
     
-    succession_crops = recommend_succession_crops()
+    # Get all succession crop data
+    all_succession_crops = recommend_succession_crops()
     
-    # Determine current season
-    month = current_date.month
-    if month in [3, 4, 5]:
-        season = "spring"
-    elif month in [6, 7, 8]:
-        season = "summer"
-    elif month in [9, 10, 11]:
-        season = "fall"
+    # Filter to only crops that were recommended to the user
+    if recommended_crops:
+        succession_crops = [
+            crop for crop in all_succession_crops
+            if any(rec_crop.lower() in crop["name"].lower() or crop["name"].lower() in rec_crop.lower() 
+                   for rec_crop in recommended_crops)
+        ]
     else:
-        season = "winter"
+        succession_crops = all_succession_crops
     
-    if season == "spring":
-        guide += "**Spring Succession Crops** (plant now through early summer):\n"
-        for crop in succession_crops:
-            if crop["season"] == "cool":
-                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): {crop['notes']}\n"
-    
-    elif season == "summer":
-        guide += "**Summer Succession Crops**:\n"
-        for crop in succession_crops:
-            if crop["season"] == "warm":
-                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): {crop['notes']}\n"
-        guide += "\n**Late Summer/Fall Cool Crops** (start succession plantings):\n"
-        for crop in succession_crops:
-            if crop["season"] == "cool" and crop["name"] in ["Lettuce", "Spinach", "Arugula", "Radishes"]:
-                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): {crop['notes']}\n"
-    
-    elif season == "fall":
-        guide += "**Fall Succession Crops** (quick-maturing for late harvest):\n"
-        for crop in succession_crops:
-            if crop["season"] == "cool" and crop["days_to_harvest"] <= 45:
-                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): {crop['notes']}\n"
-    
+    # Use user's selected seasons or default to current season
+    seasons_to_show = []
+    if user_seasons:
+        seasons_to_show = [s.lower() for s in user_seasons]
     else:
+        # Determine current season as fallback
+        month = current_date.month
+        if month in [3, 4, 5]:
+            seasons_to_show = ["spring"]
+        elif month in [6, 7, 8]:
+            seasons_to_show = ["summer"]
+        elif month in [9, 10, 11]:
+            seasons_to_show = ["fall"]
+        else:
+            seasons_to_show = ["winter"]
+    
+    # Show planting info for each selected season
+    if "spring" in seasons_to_show:
+        guide += "**Spring Planting** (your recommended crops):\n"
+        spring_crops = [c for c in succession_crops if c["season"] == "cool"]
+        if spring_crops:
+            for crop in spring_crops:
+                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): {crop['notes']}\n"
+        else:
+            guide += "- Start warm-season crops indoors 6-8 weeks before last frost\n"
+        guide += "\n"
+    
+    if "summer" in seasons_to_show:
+        guide += "**Summer Planting** (your recommended crops):\n"
+        summer_crops = [c for c in succession_crops if c["season"] == "warm"]
+        if summer_crops:
+            for crop in summer_crops:
+                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): {crop['notes']}\n"
+        guide += "- Late summer: Start cool-season crops for fall harvest\n"
+        guide += "\n"
+    
+    if "fall" in seasons_to_show:
+        guide += "**Fall Planting** (your recommended crops):\n"
+        fall_crops = [c for c in succession_crops if c["season"] == "cool" and c["days_to_harvest"] <= 60]
+        if fall_crops:
+            for crop in fall_crops:
+                guide += f"- **{crop['name']}** ({crop['days_to_harvest']} days): Quick-maturing for late harvest\n"
+        else:
+            guide += "- Plant garlic and perennials in fall\n"
+        guide += "\n"
+    
+    if "winter" in seasons_to_show:
         guide += "**Winter Planning**:\n"
-        guide += "- Review your garden journal\n"
-        guide += "- Order seeds early\n"
-        guide += "- Plan succession schedules for spring\n"
+        guide += "- Review your garden journal and plan for spring\n"
+        guide += "- Order seeds early for best selection\n"
+        guide += "- Start planning crop rotation\n"
+        guide += "\n"
     
     guide += "\n**Pro Tips**:\n"
     guide += "- Mark plantings with date labels\n"
