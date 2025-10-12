@@ -33,6 +33,10 @@ from .regional_resources import (
 from .companion_planting import (
     generate_companion_planting_guide,
 )
+from .rotation_planner import (
+    generate_rotation_plan,
+    generate_soil_improvement_plan,
+)
 from .yield_estimator import (
     generate_yield_summary,
 )
@@ -250,6 +254,10 @@ def generate_plan(
     # v3.1 Feature 1: Companion Planting
     companion_guide = generate_companion_planting_guide(crop_names)
     
+    # v4.1 Feature: Multi-Year Rotation Planning
+    rotation_plan = generate_rotation_plan(crop_names, years=4)
+    soil_improvement = generate_soil_improvement_plan(crop_names)
+    
     # v3.1 Feature 2: Yield Estimates
     # Map experience to resource skill level
     skill_level_map = {
@@ -450,8 +458,9 @@ def generate_plan(
         + succession_guide
         + "\n\n"
         + cover_crop_guide
+        + rotation_plan
+        + soil_improvement
         + "\n\n"
-        + _multi_year_rotation()
         + disease_guide
         + future_climate_section
         + regional_resources_section
