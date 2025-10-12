@@ -439,10 +439,126 @@ CARE_DATABASE = {
 }
 
 
+def get_generic_care_guide(crop_name: str, family: CropFamily) -> Dict:
+    """
+    Generate a generic care guide based on crop family.
+    Used as fallback for crops without specific care guides.
+    """
+    # Family-based generic care templates
+    family_templates = {
+        CropFamily.SOLANACEAE: {
+            "care_calendar": {
+                "week_1-2": "Transplant after last frost when soil is warm. Space according to variety.",
+                "week_3-6": "Mulch, stake if needed, and begin regular fertilization.",
+                "week_7-10": "Monitor for pests. Maintain consistent watering during flowering and fruiting.",
+                "week_11+": "Harvest regularly to encourage continued production.",
+            },
+            "fertilization": "Feed every 2-3 weeks with balanced fertilizer. Reduce nitrogen when fruiting begins.",
+            "watering": "1-2 inches per week. Consistent moisture important for fruit development.",
+            "pruning": "Remove diseased leaves. Prune for air circulation.",
+            "support": "Stake or cage as needed for support.",
+            "common_tasks": ["Monitor for hornworms and aphids", "Harvest regularly", "Remove diseased foliage promptly"]
+        },
+        CropFamily.BRASSICACEAE: {
+            "care_calendar": {
+                "week_1-2": "Transplant or direct sow in cool weather. Space 12-24 inches apart.",
+                "week_3-6": "Mulch and fertilize with nitrogen-rich fertilizer. Use row covers for pest protection.",
+                "week_7-10": "Monitor for cabbage worms. Maintain consistent moisture.",
+                "week_11+": "Harvest when heads/leaves reach desired size.",
+            },
+            "fertilization": "Feed every 2 weeks with nitrogen-rich fertilizer (blood meal or fish emulsion).",
+            "watering": "1-2 inches per week. Consistent moisture prevents splitting and bolting.",
+            "pruning": "Remove yellowing lower leaves.",
+            "support": "None typically needed.",
+            "common_tasks": ["Check daily for cabbage worms", "Use row covers to prevent pests", "Harvest promptly"]
+        },
+        CropFamily.CUCURBITACEAE: {
+            "care_calendar": {
+                "week_1-2": "Plant after last frost in warm soil. Space 3-6 feet apart.",
+                "week_3-6": "Mulch heavily. Begin fertilization when vines start running.",
+                "week_7-10": "Hand-pollinate if needed. Monitor for squash bugs and vine borers.",
+                "week_11+": "Harvest regularly. Remove oversize fruits.",
+            },
+            "fertilization": "Feed every 2 weeks with balanced fertilizer. Side-dress with compost.",
+            "watering": "1-2 inches per week. Water at base to prevent powdery mildew.",
+            "pruning": "Remove diseased leaves. Harvest oversize fruits promptly.",
+            "support": "Trellis for vining types. None for bush varieties.",
+            "common_tasks": ["Check for squash bugs daily", "Hand-pollinate if few pollinators", "Harvest regularly"]
+        },
+        CropFamily.FABACEAE: {
+            "care_calendar": {
+                "week_1-2": "Direct sow or transplant. Install support for climbing varieties.",
+                "week_3-6": "Minimal fertilization needed - legumes fix nitrogen. Keep weeded.",
+                "week_7-10": "Harvest regularly once pods form.",
+                "week_11+": "Continue harvesting. Remove plants when production slows.",
+            },
+            "fertilization": "Minimal - legumes fix their own nitrogen. Compost at planting sufficient.",
+            "watering": "1 inch per week. Increase when flowering and podding.",
+            "pruning": "Pinch tips when plants reach support height (optional).",
+            "support": "Trellis or stakes for climbing varieties.",
+            "common_tasks": ["Harvest daily for best quality", "Install support early", "Compost plants after harvest"]
+        },
+        CropFamily.APIACEAE: {
+            "care_calendar": {
+                "week_1-4": "Direct sow or transplant. Keep soil moist for germination.",
+                "week_5-8": "Thin seedlings. Begin light fertilization.",
+                "week_9-12": "Maintain consistent watering. Hill soil for blanching if desired.",
+                "week_13+": "Harvest when roots/stems reach desired size.",
+            },
+            "fertilization": "Light feeding every 3 weeks with balanced fertilizer.",
+            "watering": "1 inch per week. Consistent moisture prevents woody roots.",
+            "pruning": "None needed.",
+            "support": "None needed.",
+            "common_tasks": ["Keep weed-free", "Thin seedlings early", "Harvest at proper size"]
+        },
+        CropFamily.ALLIACEAE: {
+            "care_calendar": {
+                "planting": "Plant sets or transplants in spring or fall.",
+                "growing": "Keep weed-free. Light fertilization in spring.",
+                "harvest": "Harvest when tops fall over naturally. Cure before storage.",
+            },
+            "fertilization": "Light nitrogen in spring. Stop 4 weeks before harvest.",
+            "watering": "1 inch per week. Stop when tops begin to yellow.",
+            "pruning": "None needed.",
+            "support": "None needed.",
+            "common_tasks": ["Keep weed-free", "Don't bend tops - let fall naturally", "Cure properly before storage"]
+        },
+    }
+    
+    # Get template for family or use generic
+    template = family_templates.get(family, {
+        "care_calendar": {"general": "Follow standard care practices for this crop family."},
+        "fertilization": "Feed according to crop needs.",
+        "watering": "Maintain consistent moisture.",
+        "pruning": "As needed.",
+        "support": "As needed.",
+        "common_tasks": ["Monitor for pests", "Harvest at proper maturity", "Maintain consistent care"]
+    })
+    
+    return {
+        "family": family,
+        **template
+    }
+}
+
+
 def get_care_guide(crop_name: str) -> Optional[Dict]:
-    """Get care guide for a specific crop"""
+    """
+    Get care guide for a specific crop.
+    Falls back to generic family-based guide if specific guide not available.
+    """
     crop_key = crop_name.lower().replace(" ", "_")
-    return CARE_DATABASE.get(crop_key)
+    
+    # Check for specific care guide first
+    if crop_key in CARE_DATABASE:
+        return CARE_DATABASE[crop_key]
+    
+    # Fall back to generic family-based guide
+    if crop_key in CROP_FAMILIES:
+        family = CROP_FAMILIES[crop_key]
+        return get_generic_care_guide(crop_name, family)
+    
+    return None
 
 
 def generate_care_calendar(crop_name: str) -> str:
