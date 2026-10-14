@@ -5,13 +5,77 @@ from datetime import date
 from statistics import median
 from .models import LocationInput, ClimateData
 
-# Google Maps API key from environment
-GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+# Identify this app on the public Nominatim service (required by its usage policy).
+_NOMINATIM_HEADERS = {
+    "User-Agent": "AskJaneGardenPlanner/4.2 (https://github.com/shaythegay13/agenticaigardenplanner)",
+    "Accept": "application/json",
+}
+
+
+def _google_maps_api_key() -> str:
+    """Return the Google Maps key when one is configured. Empty means use Nominatim."""
+    return os.environ.get("GOOGLE_MAPS_API_KEY", "").strip()
+
+
+def _geocode_google(address: str, api_key: str) -> Tuple[float, float]:
+    print(f"[GEOCODING] Using Google Maps API for address: {address}")
+    url = "https://maps.googleapis.com/maps/api/geocode/json"
+    params = {"address": address, "key": api_key}
+    try:
+        resp = requests.get(url, params=params, timeout=20)
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise ValueError(f"Failed to connect to Google Maps API: {str(e)}")
+
+    data = resp.json()
+    print(f"[GEOCODING] Google Maps API status: {data.get('status')}")
+    if data.get("status") == "OK" and data.get("results"):
+        result = data["results"][0]
+        lat = result["geometry"]["location"]["lat"]
+        lon = result["geometry"]["location"]["lng"]
+        print(f"[GEOCODING] Success: {lat}, {lon}")
+        return float(lat), float(lon)
+    if data.get("status") == "ZERO_RESULTS":
+        raise ValueError(f"Address not found: {address}")
+    if data.get("status") == "REQUEST_DENIED":
+        raise ValueError("Google Maps API request denied. Check your API key and enabled APIs.")
+    raise ValueError(
+        f"Geocoding error: {data.get('status')} - {data.get('error_message', 'Unknown error')}"
+    )
+
+
+def _geocode_nominatim(address: str) -> Tuple[float, float]:
+    """Free address lookup used when GOOGLE_MAPS_API_KEY is unset."""
+    print(f"[GEOCODING] Using OpenStreetMap Nominatim for address: {address}")
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {"q": address, "format": "jsonv2", "limit": 1}
+    try:
+        resp = requests.get(url, params=params, headers=_NOMINATIM_HEADERS, timeout=20)
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise ValueError(f"Failed to connect to OpenStreetMap Nominatim: {str(e)}")
+
+    data = resp.json()
+    if not data:
+        raise ValueError(f"Address not found: {address}")
+    lat = float(data[0]["lat"])
+    lon = float(data[0]["lon"])
+    print(f"[GEOCODING] Success: {lat}, {lon}")
+    return lat, lon
 
 
 def geocode_location(location: LocationInput) -> Tuple[float, float]:
     """
-    Resolve latitude/longitude from address or pass-through coordinates using Google Maps Geocoding API.
+    Resolve latitude/longitude from an address, or return coordinates already provided.
+
+    Uses the Google Maps Geocoding API when GOOGLE_MAPS_API_KEY is set.
+    Otherwise uses the OpenStreetMap Nominatim search API, which needs no key.
     """
     if location.has_coordinates():
         return location.latitude, location.longitude
@@ -19,94 +83,94 @@ def geocode_location(location: LocationInput) -> Tuple[float, float]:
     if not location.address:
         raise ValueError("Either coordinates or an address must be provided.")
 
-    # Check if API key is configured
-    if not GOOGLE_MAPS_API_KEY:
-        raise ValueError(
-            "GOOGLE_MAPS_API_KEY environment variable is not set. "
-            "Please configure the API key in your Render environment settings."
-        )
-    
-    # Use Google Maps Geocoding API
-    print(f"[GEOCODING] Using Google Maps API for address: {location.address}")
+    api_key = _google_maps_api_key()
+    if api_key:
+        return _geocode_google(location.address, api_key)
+    return _geocode_nominatim(location.address)
+
+
+def _reverse_geocode_google(lat: float, lon: float, api_key: str) -> Dict[str, Optional[str]]:
+    print(f"[REVERSE GEOCODING] Using Google Maps API for coordinates: {lat}, {lon}")
     url = "https://maps.googleapis.com/maps/api/geocode/json"
-    params = {
-        "address": location.address,
-        "key": GOOGLE_MAPS_API_KEY
-    }
-    
+    params = {"latlng": f"{lat},{lon}", "key": api_key}
     try:
         resp = requests.get(url, params=params, timeout=20)
         resp.raise_for_status()
-        data = resp.json()
-        
-        print(f"[GEOCODING] Google Maps API status: {data.get('status')}")
-        
-        if data.get("status") == "OK" and data.get("results"):
-            result = data["results"][0]
-            lat = result["geometry"]["location"]["lat"]
-            lon = result["geometry"]["location"]["lng"]
-            print(f"[GEOCODING] Success: {lat}, {lon}")
-            return float(lat), float(lon)
-        elif data.get("status") == "ZERO_RESULTS":
-            raise ValueError(f"Address not found: {location.address}")
-        elif data.get("status") == "REQUEST_DENIED":
-            raise ValueError(f"Google Maps API request denied. Check your API key and enabled APIs.")
-        else:
-            raise ValueError(f"Geocoding error: {data.get('status')} - {data.get('error_message', 'Unknown error')}")
     except requests.exceptions.RequestException as e:
         raise ValueError(f"Failed to connect to Google Maps API: {str(e)}")
+
+    data = resp.json()
+    print(f"[REVERSE GEOCODING] Google Maps API status: {data.get('status')}")
+    if data.get("status") == "OK" and data.get("results"):
+        result = data["results"][0]
+        components = {c["types"][0]: c["long_name"] for c in result.get("address_components", [])}
+        country_code = next(
+            (c["short_name"] for c in result.get("address_components", []) if "country" in c["types"]),
+            None,
+        )
+        location_data = {
+            "city": (
+                components.get("locality")
+                or components.get("sublocality")
+                or components.get("administrative_area_level_3")
+            ),
+            "state": components.get("administrative_area_level_1"),
+            "country": components.get("country"),
+            "country_code": country_code.lower() if country_code else None,
+        }
+        print(f"[REVERSE GEOCODING] Success: {location_data}")
+        return location_data
+    if data.get("status") == "ZERO_RESULTS":
+        raise ValueError(f"No address found for coordinates: {lat}, {lon}")
+    if data.get("status") == "REQUEST_DENIED":
+        raise ValueError("Google Maps API request denied. Check your API key and enabled APIs.")
+    raise ValueError(
+        f"Reverse geocoding error: {data.get('status')} - {data.get('error_message', 'Unknown error')}"
+    )
+
+
+def _reverse_geocode_nominatim(lat: float, lon: float) -> Dict[str, Optional[str]]:
+    print(f"[REVERSE GEOCODING] Using OpenStreetMap Nominatim for coordinates: {lat}, {lon}")
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {"lat": lat, "lon": lon, "format": "jsonv2"}
+    try:
+        resp = requests.get(url, params=params, headers=_NOMINATIM_HEADERS, timeout=20)
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise ValueError(f"Failed to connect to OpenStreetMap Nominatim: {str(e)}")
+
+    data = resp.json()
+    if data.get("error"):
+        raise ValueError(f"No address found for coordinates: {lat}, {lon}")
+    address = data.get("address") or {}
+    city = (
+        address.get("city")
+        or address.get("town")
+        or address.get("village")
+        or address.get("hamlet")
+        or address.get("municipality")
+    )
+    country_code = address.get("country_code")
+    location_data = {
+        "city": city,
+        "state": address.get("state"),
+        "country": address.get("country"),
+        "country_code": country_code.lower() if country_code else None,
+    }
+    print(f"[REVERSE GEOCODING] Success: {location_data}")
+    return location_data
 
 
 def reverse_geocode(lat: float, lon: float) -> Dict[str, Optional[str]]:
     """
-    Reverse geocode lat/lon to city/state/country using Google Maps Geocoding API.
+    Reverse geocode lat/lon to city, state, and country.
+
+    Uses Google Maps when GOOGLE_MAPS_API_KEY is set, otherwise OpenStreetMap Nominatim.
     """
-    # Check if API key is configured
-    if not GOOGLE_MAPS_API_KEY:
-        raise ValueError(
-            "GOOGLE_MAPS_API_KEY environment variable is not set. "
-            "Please configure the API key in your Render environment settings."
-        )
-    
-    # Use Google Maps Reverse Geocoding API
-    print(f"[REVERSE GEOCODING] Using Google Maps API for coordinates: {lat}, {lon}")
-    url = "https://maps.googleapis.com/maps/api/geocode/json"
-    params = {
-        "latlng": f"{lat},{lon}",
-        "key": GOOGLE_MAPS_API_KEY
-    }
-    
-    try:
-        resp = requests.get(url, params=params, timeout=20)
-        resp.raise_for_status()
-        data = resp.json()
-        
-        print(f"[REVERSE GEOCODING] Google Maps API status: {data.get('status')}")
-        
-        if data.get("status") == "OK" and data.get("results"):
-            # Parse address components from first result
-            result = data["results"][0]
-            components = {c["types"][0]: c["long_name"] for c in result.get("address_components", [])}
-            
-            location_data = {
-                "city": (components.get("locality") or 
-                        components.get("sublocality") or 
-                        components.get("administrative_area_level_3")),
-                "state": components.get("administrative_area_level_1"),
-                "country": components.get("country"),
-                "country_code": next((c["short_name"] for c in result.get("address_components", []) 
-                                    if "country" in c["types"]), None),
-            }
-            print(f"[REVERSE GEOCODING] Success: {location_data}")
-            return location_data
-        elif data.get("status") == "ZERO_RESULTS":
-            raise ValueError(f"No address found for coordinates: {lat}, {lon}")
-        elif data.get("status") == "REQUEST_DENIED":
-            raise ValueError(f"Google Maps API request denied. Check your API key and enabled APIs.")
-        else:
-            raise ValueError(f"Reverse geocoding error: {data.get('status')} - {data.get('error_message', 'Unknown error')}")
-    except requests.exceptions.RequestException as e:
-        raise ValueError(f"Failed to connect to Google Maps API: {str(e)}")
+    api_key = _google_maps_api_key()
+    if api_key:
+        return _reverse_geocode_google(lat, lon, api_key)
+    return _reverse_geocode_nominatim(lat, lon)
 
 
 def infer_us_region(state: Optional[str]) -> Optional[str]:
@@ -237,10 +301,21 @@ def fetch_simple_forecast(lat: float, lon: float) -> ClimateData:
         if highs and lows and precip else "Forecast unavailable"
     )
 
-    # Enrich with reverse geocoding and seasonal planning metadata
-    meta = reverse_geocode(lat, lon)
-    us_region = infer_us_region(meta.get("state")) if (meta.get("country_code") == "us") else None
-    zone, frost_last, frost_first = estimate_zone_and_frost(lat, lon)
+    # Place names and frost dates enrich the plan. Either lookup can fail
+    # without blocking the forecast the rest of the planner needs.
+    try:
+        meta = reverse_geocode(lat, lon)
+    except Exception as exc:
+        print(f"[REVERSE GEOCODING] Continuing without place names: {exc}")
+        meta = {"city": None, "state": None, "country": None, "country_code": None}
+
+    country_code = (meta.get("country_code") or "").lower()
+    us_region = infer_us_region(meta.get("state")) if country_code == "us" else None
+    try:
+        zone, frost_last, frost_first = estimate_zone_and_frost(lat, lon)
+    except Exception as exc:
+        print(f"[CLIMATE] Zone and frost estimate unavailable: {exc}")
+        zone, frost_last, frost_first = None, None, None
 
     return ClimateData(
         latitude=lat,

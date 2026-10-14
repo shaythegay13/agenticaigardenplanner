@@ -19,7 +19,6 @@ from .climate_adaptation import (
     get_climate_hub_for_location,
     generate_drought_adapted_recommendations,
     generate_climate_hub_section,
-    enhance_hardiness_zone_info,
 )
 from .future_climate import (
     get_future_projections,
@@ -333,12 +332,17 @@ def generate_plan(
     climate_hub_info = get_climate_hub_for_location(climate.state, climate.us_region)
     climate_hub_section = generate_climate_hub_section(climate_hub_info, climate.state)
     
-    # Enhanced hardiness zone info if available
+    # The zone comes from the coldest ERA5 daily low in the last 8 years.
+    # Do not label this week's forecast low as the annual extreme minimum.
     enhanced_zone_info = ""
     if climate.usda_zone:
-        # Get minimum temp from climate data (approximate)
-        min_temp_c = min(climate.daily_lows_c) if climate.daily_lows_c else -10
-        enhanced_zone_info = "\n" + enhance_hardiness_zone_info(climate.usda_zone, min_temp_c)
+        enhanced_zone_info = (
+            f"\nUSDA Hardiness Zone (estimated): {climate.usda_zone}\n"
+            "Estimated from the lowest daily temperature in Open-Meteo ERA5 records "
+            "for this point over the last 8 years, mapped to a whole-number USDA zone. "
+            "This is not a lookup of the official USDA Plant Hardiness Zone Map.\n"
+            "Official map: https://planthardiness.ars.usda.gov/\n"
+        )
     
     # Phase 2: Future climate projections
     future_climate_section = generate_future_climate_section(climate.us_region, climate.state)
@@ -455,19 +459,23 @@ def generate_plan(
     if elevation_analysis and elevation_analysis["elevation_meters"]:
         elevation_note = f" | Elevation: {int(elevation_analysis['elevation_meters'])}m (Temp adjustment: {elevation_analysis['temperature_adjustment']:.1f}°F)"
     
+    title = "CUSTOMIZED GARDENING PLAN"
+    if enhanced_data:
+        title += " (caller-supplied environmental data)"
+
     plan = (
         f"{'=' * 70}\n"
-        f"CUSTOMIZED GARDENING PLAN v4.1 (Google APIs Enhanced)\n"
+        f"{title}\n"
         f"{'=' * 70}\n\n"
         f"Location: {climate.city or ''} {climate.state or ''} {climate.country or ''} ({climate.latitude:.4f}, {climate.longitude:.4f}) | TZ: {climate.timezone}\n"
         f"Region: {climate.us_region or 'N/A'} | USDA Zone: {climate.usda_zone or 'Unknown'}{elevation_note}\n"
         f"Frost Window: Last Spring {climate.frost_last_spring or 'N/A'} | First Fall {climate.frost_first_fall or 'N/A'}\n\n"
         f"Your Garden Profile:\n"
-        f"  Method: {user.method}\n"
-        f"  Space Size: {user.size}\n"
-        f"  Sunlight: {user.sunlight}{sunlight_note}\n"
-        f"  Soil Type: {user.soil_type}\n"
-        f"  Experience: {user.experience}\n"
+        f"  Method: {user.method.value}\n"
+        f"  Space Size: {user.size.value}\n"
+        f"  Sunlight: {user.sunlight.value}{sunlight_note}\n"
+        f"  Soil Type: {user.soil_type.value}\n"
+        f"  Experience: {user.experience.value}\n"
         f"  Goals: {[c.value for c in user.goals.crops]}\n"
         f"  Preferences: {[p.value for p in user.goals.preferences]}\n"
         f"\nCurrent Climate Summary: {climate.summary}\n"

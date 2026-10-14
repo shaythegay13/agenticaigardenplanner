@@ -35,7 +35,7 @@ from agi_agent.gardening.google_enhanced_data import (
 
 app = FastAPI(
     title="AI Garden Planner API",
-    description="REST API for personalized garden planning with 270+ crops and Google APIs environmental data",
+    description="REST API for a written garden plan from location, space, and growing goals. Weather comes from Open-Meteo. A Google Maps key is optional.",
     version="4.2.0",
 )
 
@@ -97,17 +97,13 @@ async def root():
         "service": "AI Garden Planner API",
         "version": "4.2.0",
         "features": [
-            "270+ crops (fruits, vegetables, nuts, grains, legumes, rice)",
-            "100+ detailed crop varieties",
-            "300+ disease database with identification",
-            "Photo-based disease identifier",
-            "Google APIs environmental data",
-            "Air quality analysis",
-            "Solar exposure mapping",
-            "Pollen tracking",
-            "Elevation-based adjustments",
-            "Family-based disease prevention",
-            "Intelligent companion planting"
+            "Crop recommendations from the local plant and crop-family catalogs",
+            "Variety notes, companion planting, and an ASCII bed layout",
+            "7-day forecast, estimated USDA zone, and frost window",
+            "Irrigation notes from a local water-balance calculation",
+            "Care, rotation, disease-prevention, and learning notes",
+            "Symptom and crop-family disease lookup",
+            "Optional analysis of environmental data supplied by the caller",
         ],
         "endpoints": {
             "garden_plan": "/api/v1/garden-plan/generate",
@@ -304,22 +300,12 @@ async def generate_garden_plan_v1(request: PlanRequest):
 @app.post("/api/v1/disease/identify", response_model=DiseaseIdentificationResponse)
 async def identify_disease(request: DiseaseIdentificationRequest):
     """
-    Identify plant disease from image and/or symptoms
-    
-    Analyzes plant images and symptoms against comprehensive 300+ disease database.
-    Returns potential disease matches with confidence levels, symptoms, prevention, and treatment.
-    
-    Request body:
-    - image_base64: Base64 encoded image of diseased plant (optional)
-    - image_url: URL to image (optional)
-    - crop_name: Name of the crop (optional, improves accuracy)
-    - symptoms: List of observed symptoms (optional)
-    - location: Location for regional disease context (optional)
-    
-    Returns:
-    - List of potential disease matches with confidence levels
-    - Detailed symptoms, prevention, and treatment for each match
-    - General recommendations
+    Match a crop and described symptoms against the local disease notes.
+
+    image_base64 and image_url are accepted so clients can upload a photo,
+    but this service does not analyze image pixels. Matching uses the crop
+    family and symptom keywords, then returns notes on symptoms, prevention,
+    and treatment.
     """
     try:
         result = identify_disease_from_image(
