@@ -1,6 +1,8 @@
 """
-Disease Identification System
-Analyzes plant images to identify diseases from the comprehensive 300+ disease database
+Disease lookup.
+
+Matches a crop family and described symptoms against local disease notes.
+Image bytes are accepted by the API and are not analyzed.
 """
 
 from typing import List, Dict, Optional, Tuple
@@ -151,11 +153,13 @@ def identify_disease_from_image(
     recommendations = generate_recommendations(matches, crop_family)
     
     # Step 7: Create response
-    notes = "Disease identification based on symptom analysis and crop family. "
-    if not image_data:
-        notes += "For more accurate identification, please provide a clear photo of the affected plant. "
+    notes = "Matches come from symptom keywords and the crop family. "
+    if image_data:
+        notes += "A photo was received and was not analyzed. "
+    if not symptoms:
+        notes += "Add symptom words to narrow the matches. "
     if not crop_name:
-        notes += "Specifying the crop type will improve accuracy. "
+        notes += "Naming the crop narrows the family list. "
     
     return DiseaseIdentificationResponse(
         status="success",

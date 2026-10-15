@@ -294,10 +294,10 @@ def generate_climate_hub_section(hub_info: Optional[Dict[str, str]], state: Opti
     section += "- Extreme weather preparation resources\n"
     section += "- Connection to local research and extension\n"
     
-    if state:
-        section += f"\nState Resources:\n"
-        section += f"- {state} Extension Office: http://cce.cornell.edu/localoffices\n"
-        section += f"- {state} Climate Assessment: Search at https://nysclimateimpacts.org/ (if available)\n"
+    if state == "New York":
+        section += "\nState Resources:\n"
+        section += "- New York Extension Office: http://cce.cornell.edu/localoffices\n"
+        section += "- New York Climate Assessment: https://nysclimateimpacts.org/\n"
     
     return section
 
@@ -316,10 +316,10 @@ def enhance_hardiness_zone_info(zone: str, min_temp_c: float) -> str:
     min_temp_f = (min_temp_c * 9/5) + 32
     
     info = f"USDA Hardiness Zone: {zone}\n"
-    info += f"Average Annual Extreme Minimum: {min_temp_c:.1f}°C ({min_temp_f:.1f}°F)\n\n"
+    info += f"Reference minimum temperature: {min_temp_c:.1f}°C ({min_temp_f:.1f}°F)\n\n"
     info += "What this means:\n"
     info += f"- Perennial plants rated for zone {zone} or lower will typically survive winter\n"
-    info += "- This zone is based on 30-year average extreme minimum temperatures\n"
+    info += "- The official USDA map uses a 30-year average of annual extreme minimums. This note does not compute that average.\n"
     info += "- Individual winters may be colder or warmer than average\n"
     info += "- Microclimates in your garden may vary by 1-2 zones\n\n"
     info += "Official USDA Zone Map: https://planthardiness.ars.usda.gov/\n"
