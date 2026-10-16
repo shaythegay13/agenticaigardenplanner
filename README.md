@@ -55,14 +55,16 @@ Further suggestions are built from the family catalog. `recommend_plants` return
 
 - Python. `runtime.txt` asks for 3.11. The checks below also ran on 3.12.
 - FastAPI 0.104.1, Uvicorn 0.24.0, Pydantic 2.5.0
-- `requests` and `python-dotenv`
+- `requests`, `python-dotenv`, and `python-multipart` (multipart is what the voice upload and speak forms use)
 - NumPy and Pillow, for the optional image estimate
 - pandas is listed in `requirements.txt`. The planner modules do not import it.
 - [Open-Meteo](https://open-meteo.com/) forecast and ERA5 archive, both key-free
 - [OpenStreetMap Nominatim](https://nominatim.org/) for addresses when `GOOGLE_MAPS_API_KEY` is empty
 - Google Maps Geocoding when that key is set
 
-No model SDK is imported. `agi_agent/core/agent.py` defines `AGIAgent`, an in-memory placeholder with a canned reply. The CLI imports that class and does not call it. Planning stays in `generate_plan`.
+`agi_agent/core/agent.py` defines `AGIAgent`, an in-memory placeholder with a canned reply. The CLI imports that class and does not call it. Planning stays in `generate_plan`.
+
+Deepgram and OpenAI are not imported at startup. `agi_agent/gardening/voice.py` imports them only inside a speech or model call, and only when the matching key is set.
 
 ## Architecture
 
@@ -85,6 +87,11 @@ flowchart TD
   API --> PLAN
   WX --> PLAN
   PLAN --> CAT
+  CLI --> VOICE[Optional voice]
+  API --> VOICE
+  VOICE --> CAT
+  VOICE --> DG[Deepgram when a speech key is set]
+  VOICE --> OAI[OpenAI when that key is set]
 ```
 
 `api.py` exposes:
@@ -98,6 +105,11 @@ flowchart TD
 | POST | `/api/plan` | Garden plan |
 | POST | `/api/v1/garden-plan/generate` | Same plan handler |
 | POST | `/api/v1/disease/identify` | Symptom and crop-family match |
+| GET | `/api/voice/status` | Whether speech and OpenAI keys are set |
+| POST | `/api/voice/ask` | Text or audio question; audio out only when speech is on |
+| POST | `/api/voice/upload` | Audio file question; 503 when speech is off |
+| POST | `/api/voice/speak` | Text to speech; 503 when speech is off |
+| POST | `/api/voice/garden-plan` | Plan from a short description; speech optional |
 | GET | `/docs` | Interactive API docs |
 
 Disease matching compares the crop family and the words you send with a local keyword list. Image fields are accepted on the request and left unused.
@@ -130,12 +142,14 @@ API, with docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs):
 python -m uvicorn api:app --host 127.0.0.1 --port 8000
 ```
 
-Copy `.env.example` to `.env` only if you want to set something. Both names are blank in the example.
+Copy `.env.example` to `.env` only if you want to set something. Every name in the example is blank.
 
 | Name | Role |
 | --- | --- |
 | `GOOGLE_MAPS_API_KEY` | Optional. Empty uses Nominatim for addresses and reverse lookup. |
 | `PORT` | Port used when you start the API with `python api.py`. Uvicorn's `--port` flag overrides this. |
+| `DEEPGRAM_API_KEY` | Optional. Empty disables speech-to-text and text-to-speech. |
+| `OPENAI_API_KEY` | Optional. Empty answers questions from the local catalogs. |
 
 `.env` is gitignored. A forecast for coordinates works with both variables empty. Address lookup then uses Nominatim, which expects a identifiable User-Agent and light traffic.
 
@@ -155,6 +169,39 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/garden-plan/generate \
   }'
 ```
 
+## Voice
+
+Voice is optional. With `DEEPGRAM_API_KEY` and `OPENAI_API_KEY` empty, the interview, the plan routes, and text questions still run. Routes that need audio (`/api/voice/speak`, `/api/voice/upload`, and `/api/voice/ask` when the body is only audio) respond with HTTP 503 and the message that voice is disabled. They do not import Deepgram and they do not raise a traceback.
+
+`GET /health` and `GET /api/voice/status` report `voice: disabled` in that case. Health does not call Deepgram. It only checks that the key is non-empty.
+
+Text questions use the timing, companion, care, and disease catalogs in this repository. A season question such as "What vegetables should I plant in spring?" lists crops whose planting season is spring. When `OPENAI_API_KEY` is set and the `openai` package is installed, the same route asks `gpt-3.5-turbo` first and falls back to the catalogs if that call fails. `OPENAI_MODEL` overrides the model name. It is not required, and it is not listed in `.env.example`.
+
+Spoken audio uses Deepgram: Nova-3 for transcription and Aura (`aura-asteria-en`) for speech, which is the client shape from `feature/voice-integration`. If the installed `deepgram-sdk` is the older 3.x line, the same functions call `listen.prerecorded` and `speak.v("1").stream` instead. Install the clients only if you set the keys:
+
+```bash
+pip install -e '.[voice]'
+```
+
+One question from the command line, with no speech key:
+
+```bash
+python -m agi_agent.cli --status
+python -m agi_agent.cli --ask "What vegetables should I plant in spring?"
+```
+
+`--voice` speaks the answer when the Deepgram key is set. Without the key it prints the disabled message and still prints the text. `--transcribe path` needs the key; without it the process exits 2 and does not start the interview. The interview itself is unchanged: `python -m agi_agent.cli` with no flags.
+
+A text question against the API:
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/voice/ask \
+  -H 'Content-Type: application/json' \
+  -d '{"text_question": "What vegetables should I plant in spring?", "location": "New York, NY"}'
+```
+
+The JSON includes `answer_text`, `speech_enabled: false`, and `audio_base64: null` when no speech key is set. A spoken plan summary is the same idea: send `text` and `address` as form fields to `POST /api/voice/garden-plan`. The full plan is the written `generate_plan` document. Audio, when speech is on, is only the short summary. Unstated method, size, light, and experience become raised beds, medium, full sun, and beginner. Crop words in the sentence select interests; otherwise the plan uses the suggest option.
+
 ## Local run
 
 Interactive docs from this machine, with the API listening on port 8000:
@@ -173,12 +220,13 @@ generate_sample_plan.py         One New York plan, no prompts
 agi_agent/cli.py                Interactive interview
 agi_agent/core/agent.py         Unused in-memory placeholder
 agi_agent/gardening/planner.py  Plan assembly
+agi_agent/gardening/voice.py    Optional speech and catalog answers
 agi_agent/gardening/climate.py  Geocoding, forecast, zone, frost window
 agi_agent/gardening/knowledge.py
 agi_agent/gardening/*.py        Catalogs and section writers
 ```
 
-Scripts named `test_v3_*.py`, `test_v4_phase_2.py`, `test_layout_generator.py`, and `demo_water_management.py` print feature checks. They are not a pytest suite.
+Scripts named `test_v3_*.py`, `test_v4_phase_2.py`, `test_layout_generator.py`, and `demo_water_management.py` print feature checks. They are not a pytest suite. `test_voice.py` is a unittest module for the optional voice paths, including the API with speech keys unset.
 
 Older notes in the repository root (`CHANGELOG_v3*`, `V4_ROADMAP.md`, `CURRENT_STATUS.md`, and similar files) record development as it happened. Several of their counts and completion claims differ from the catalogs above. Use this README for what the code does today.
 
@@ -201,3 +249,6 @@ This repository does not include a `LICENSE` file.
 - The hardiness zone is the coldest daily low in about eight years of Open-Meteo ERA5 data, mapped to a whole USDA zone number. It is an estimate, separate from the [official Plant Hardiness Zone Map](https://planthardiness.ars.usda.gov/).
 - `PlanRequest` accepts `growing_location`, `time_commitment`, and garden-image fields. Plan generation does not read them.
 - CORS in `api.py` allows every origin and allows credentials.
+- Speech is not a live session. Audio is a whole file or a base64 body, and the spoken reply is a whole clip. The health check does not contact Deepgram.
+- Catalog answers are keyword lookups. They are shorter than a model reply, and a vague garden-plan sentence keeps the raised-bed defaults above.
+- The voice garden-plan route does not pull a city out of the sentence unless `OPENAI_API_KEY` is set and the model returns one. Pass `address`, or latitude and longitude, the same way the other plan routes do.

@@ -27,7 +27,14 @@ setup(
         'numpy>=1.21.0',
         'pandas>=1.3.0',
         'Pillow==10.0.0',
+        'python-multipart==0.0.9',
     ],
+    extras_require={
+        'voice': [
+            'deepgram-sdk>=3.0.0',
+            'openai>=1.0.0',
+        ],
+    },
     entry_points={
         'console_scripts': [
             'agi-agent=agi_agent.cli:main',

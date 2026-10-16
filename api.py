@@ -3,11 +3,25 @@ AI Garden Planner REST API
 FastAPI backend for Lovable frontend integration
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict
+import base64
 import os
+
+from agi_agent.gardening.voice import (
+    SPEECH_DISABLED_MESSAGE,
+    VoiceDependencyError,
+    VoiceDisabledError,
+    ask_question,
+    garden_plan_from_description,
+    openai_enabled,
+    speech_enabled,
+    synthesize_speech,
+    transcribe_audio,
+    voice_status,
+)
 
 from agi_agent.gardening.models import (
     UserInput, LocationInput, GardeningMethod, SpaceSize, Sunlight,
@@ -104,19 +118,31 @@ async def root():
             "Care, rotation, disease-prevention, and learning notes",
             "Symptom and crop-family disease lookup",
             "Optional analysis of environmental data supplied by the caller",
+            "Optional spoken questions and answers when DEEPGRAM_API_KEY is set",
         ],
+        "voice": "enabled" if speech_enabled() else "disabled",
         "endpoints": {
             "garden_plan": "/api/v1/garden-plan/generate",
             "disease_identifier": "/api/v1/disease/identify",
             "crop_list": "/api/crops",
-            "enums": "/api/enums"
+            "enums": "/api/enums",
+            "voice_status": "/api/voice/status",
+            "voice_question": "/api/voice/ask",
+            "voice_upload": "/api/voice/upload",
+            "text_to_speech": "/api/voice/speak",
+            "voice_garden_plan": "/api/voice/garden-plan",
         },
         "docs": "/docs"
     }
 
 @app.get("/health")
 async def health():
-    return {"status": "healthy"}
+    return {
+        "status": "healthy",
+        "voice": "enabled" if speech_enabled() else "disabled",
+        "speech": speech_enabled(),
+        "answers": "openai" if openai_enabled() else "local",
+    }
 
 @app.get("/api/enums")
 async def get_enums():
@@ -321,6 +347,181 @@ async def identify_disease(request: DiseaseIdentificationRequest):
             status_code=500,
             detail=f"Error identifying disease: {str(e)}\n{traceback.format_exc()}"
         )
+
+class VoiceQuestionRequest(BaseModel):
+    """A garden question as text, audio, or both. Audio is used when both are sent."""
+    audio_base64: Optional[str] = None
+    text_question: Optional[str] = None
+    location: Optional[str] = None
+    context: Optional[dict] = None
+
+
+class VoiceQuestionResponse(BaseModel):
+    transcript: Optional[str] = None
+    answer_text: str
+    audio_base64: Optional[str] = None
+    speech_enabled: bool
+    answer_source: str
+
+
+def _audio_b64(data: Optional[bytes]) -> Optional[str]:
+    if not data:
+        return None
+    return base64.b64encode(data).decode("ascii")
+
+
+def _voice_http(exc: Exception) -> HTTPException:
+    if isinstance(exc, VoiceDisabledError):
+        return HTTPException(status_code=503, detail=str(exc))
+    if isinstance(exc, VoiceDependencyError):
+        return HTTPException(status_code=503, detail=str(exc))
+    if isinstance(exc, ValueError):
+        return HTTPException(status_code=400, detail=str(exc))
+    return HTTPException(status_code=500, detail=f"Voice error: {exc}")
+
+
+@app.get("/api/voice/status")
+async def voice_status_route():
+    """Report whether speech keys are set. Does not call Deepgram or OpenAI."""
+    return voice_status()
+
+
+@app.post("/api/voice/ask", response_model=VoiceQuestionResponse)
+async def ask_voice_question(request: VoiceQuestionRequest):
+    """
+    Answer a garden question.
+
+    Text is answered from the local catalogs, or from OpenAI when that key is set.
+    Audio in or out requires DEEPGRAM_API_KEY. Without it, audio requests return 503
+    and text requests return an answer with no audio.
+    """
+    audio = None
+    if request.audio_base64:
+        try:
+            audio = base64.b64decode(request.audio_base64, validate=True)
+        except Exception:
+            raise HTTPException(status_code=400, detail="audio_base64 is not valid base64.")
+        if len(audio) > 8_000_000:
+            raise HTTPException(status_code=413, detail="Audio is larger than 8 MB.")
+    try:
+        result = ask_question(
+            text=request.text_question,
+            audio=audio,
+            context=request.context,
+            location=request.location,
+            speak=True,
+        )
+    except (VoiceDisabledError, VoiceDependencyError, ValueError) as exc:
+        raise _voice_http(exc)
+    return VoiceQuestionResponse(
+        transcript=result.transcript,
+        answer_text=result.answer_text,
+        audio_base64=_audio_b64(result.audio),
+        speech_enabled=result.speech_enabled,
+        answer_source=result.answer_source,
+    )
+
+
+@app.post("/api/voice/upload")
+async def upload_voice_question(
+    audio_file: UploadFile = File(...),
+    location: Optional[str] = Form(None),
+    context: Optional[str] = Form(None),
+):
+    """Upload an audio question. Returns 503 when speech is disabled."""
+    if not speech_enabled():
+        raise HTTPException(status_code=503, detail=SPEECH_DISABLED_MESSAGE)
+    audio_data = await audio_file.read()
+    if len(audio_data) > 8_000_000:
+        raise HTTPException(status_code=413, detail="Audio is larger than 8 MB.")
+    context_dict = None
+    if context:
+        import json
+        try:
+            parsed = json.loads(context)
+            context_dict = parsed if isinstance(parsed, dict) else {"notes": context}
+        except json.JSONDecodeError:
+            context_dict = {"notes": context}
+    try:
+        result = ask_question(
+            audio=audio_data,
+            context=context_dict,
+            location=location,
+            speak=True,
+        )
+    except (VoiceDisabledError, VoiceDependencyError, ValueError) as exc:
+        raise _voice_http(exc)
+    return {
+        "transcript": result.transcript,
+        "answer_text": result.answer_text,
+        "audio_base64": _audio_b64(result.audio),
+        "speech_enabled": result.speech_enabled,
+        "answer_source": result.answer_source,
+    }
+
+
+@app.post("/api/voice/speak")
+async def text_to_speech(text: str = Form(...)):
+    """Speak text. Returns 503 when DEEPGRAM_API_KEY is not set."""
+    if not speech_enabled():
+        raise HTTPException(status_code=503, detail=SPEECH_DISABLED_MESSAGE)
+    try:
+        audio_data = synthesize_speech(text)
+    except (VoiceDisabledError, VoiceDependencyError, ValueError) as exc:
+        raise _voice_http(exc)
+    return {
+        "text": text,
+        "audio_base64": _audio_b64(audio_data),
+        "format": "mp3",
+        "speech_enabled": True,
+    }
+
+
+@app.post("/api/voice/garden-plan")
+async def voice_garden_plan(
+    audio_file: Optional[UploadFile] = File(None),
+    address: Optional[str] = Form(None),
+    text: Optional[str] = Form(None),
+):
+    """
+    Turn a short description into a written garden plan.
+
+    Audio is transcribed only when speech is enabled. A text description still
+    produces a plan with no speech key. The forecast lookup is the same one the
+    other plan routes use.
+    """
+    description = (text or "").strip()
+    if audio_file is not None and speech_enabled():
+        audio_data = await audio_file.read()
+        try:
+            description = transcribe_audio(audio_data)
+        except (VoiceDisabledError, VoiceDependencyError, ValueError) as exc:
+            raise _voice_http(exc)
+    elif audio_file is not None and not description:
+        raise HTTPException(status_code=503, detail=SPEECH_DISABLED_MESSAGE)
+    if not description:
+        raise HTTPException(
+            status_code=400,
+            detail="Provide text or an audio file describing the garden.",
+        )
+    try:
+        result = garden_plan_from_description(description, address=address, speak=True)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except (VoiceDisabledError, VoiceDependencyError) as exc:
+        raise _voice_http(exc)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Error generating plan: {exc}")
+    return {
+        "transcript": result.transcript,
+        "extracted_params": result.extracted_params,
+        "plan": result.plan,
+        "summary": result.summary,
+        "audio_base64": _audio_b64(result.audio),
+        "speech_enabled": result.speech_enabled,
+        "parameter_source": result.parameter_source,
+    }
+
 
 if __name__ == "__main__":
     import uvicorn

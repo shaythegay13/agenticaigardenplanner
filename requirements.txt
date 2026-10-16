@@ -12,10 +12,15 @@ pandas>=1.3.0
 # Image processing
 Pillow==10.0.0
 
-# Optional AI dependencies (not required for basic functionality)
-# torch>=2.0.0
-# transformers>=4.30.0
-# langchain>=0.0.200
-# openai>=0.27.0
-# tiktoken>=0.3.0
+# Form uploads for the optional voice routes
+python-multipart==0.0.9
+
+# Test client used by test_voice.py
+httpx==0.27.2
+
+# Optional speech and model clients. The app runs without them.
+# Speech stays off until DEEPGRAM_API_KEY is set, and catalog answers
+# are used until OPENAI_API_KEY is set. Install with: pip install -e '.[voice]'
+# deepgram-sdk>=3.0.0
+# openai>=1.0.0
 
