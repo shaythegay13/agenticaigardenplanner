@@ -81,6 +81,14 @@ from .crop_varieties import (  # v4.0 Phase 2
     Difficulty,
     GrowingSeason,
 )
+from .voice import (  # optional speech; disabled when DEEPGRAM_API_KEY is empty
+    VoiceAnswer,
+    VoiceDisabledError,
+    answer_garden_question,
+    ask_question,
+    speech_enabled,
+    voice_status,
+)
 
 __all__ = [
     "GardeningMethod",
@@ -144,4 +152,11 @@ __all__ = [
     "get_recommended_varieties",
     "Difficulty",
     "GrowingSeason",
+    # optional voice
+    "VoiceAnswer",
+    "VoiceDisabledError",
+    "answer_garden_question",
+    "ask_question",
+    "speech_enabled",
+    "voice_status",
 ]

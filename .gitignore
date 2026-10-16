@@ -46,3 +46,8 @@ htmlcov/
 
 # Logs
 *.log
+
+# Spoken audio from the optional voice feature
+*.wav
+*.mp3
+*.ogg
